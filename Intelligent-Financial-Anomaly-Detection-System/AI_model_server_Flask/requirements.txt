@@ -1,0 +1,10 @@
+flask
+flask-cors
+flasgger
+razorpay
+firebase-admin
+python-dotenv
+numpy
+pandas
+scikit-learn
+tensorflow
