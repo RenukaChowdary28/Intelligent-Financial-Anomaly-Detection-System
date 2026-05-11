@@ -1,68 +1,185 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
-import { Button} from "@/components/ui/button";
 import { auth } from './firebase';
 import { signOut } from 'firebase/auth';
-
 import {
-  Home,
-  Ghost,
-  Send,
-  History,
-  FileText,
-  Users,
-  Settings,
-  HelpCircle as Help,
-  LogOut,
-  Upload,
-  BarChart2,
-  Play,
-  Activity,
-  GitCompare,
-  ScanSearch,
-  Layers,
-  Brain,
-  Microscope,
-  ShieldAlert,
-  Map,
-  Calendar,
-  Network,
-  Eye,
-  MessageSquare,
-  TrendingDown,
-  Zap,
-  Shield,
-  RefreshCw,
-  Blend,
-  Clock,
-  QrCode,
-  Wallet,
-  HandCoins,
-  BotMessageSquare,
-  Bell,
-  SplitSquareHorizontal,
-  Target,
-  Calculator,
-  FileWarning,
-  PiggyBank,
-  Fingerprint,
-  Flag,
-  TrendingUp,
-  HeartPulse,
-  Trophy,
-  Mic,
-  Dna,
-  Crosshair,
-  BookOpen,
-  ScanLine,
-  GitFork,
-  HeartHandshake,
-  ShieldCheck,
-  Phone,
-  CreditCard,
-  CalendarClock,
-  Sparkles,
+  Home, Ghost, Send, History, FileText, Users, Settings,
+  HelpCircle as Help, LogOut, Upload, BarChart2, Play, Activity,
+  GitCompare, ScanSearch, Layers, Brain, Microscope, ShieldAlert,
+  Map, Calendar, Network, Eye, MessageSquare, TrendingDown, Zap,
+  Shield, RefreshCw, Blend, Clock, QrCode, Wallet, HandCoins,
+  BotMessageSquare, Bell, SplitSquareHorizontal, Target, Calculator,
+  FileWarning, PiggyBank, Fingerprint, Flag, TrendingUp, HeartPulse,
+  Trophy, Mic, Dna, Crosshair, BookOpen, ScanLine, GitFork,
+  HeartHandshake, ShieldCheck, Phone, CreditCard, CalendarClock, Sparkles,
 } from 'lucide-react';
+
+/* ── Navigation structure ── */
+const navGroups = [
+  {
+    label: null,
+    items: [
+      { icon: Home,           label: "Dashboard",    path: "/dashboard" },
+      { icon: Bell,           label: "Notifications",path: "/notifications" },
+    ],
+  },
+  {
+    label: "Payments",
+    items: [
+      { icon: Send,                  label: "Send Money",        path: "/send-money" },
+      { icon: QrCode,                label: "QR Pay",            path: "/qr-pay" },
+      { icon: Phone,                 label: "Pay by Phone",      path: "/pay-by-phone" },
+      { icon: HandCoins,             label: "Request Money",     path: "/request-money" },
+      { icon: SplitSquareHorizontal, label: "Split Bill",        path: "/split-bill" },
+      { icon: RefreshCw,             label: "Recurring",         path: "/recurring-payments" },
+    ],
+  },
+  {
+    label: "Finance",
+    items: [
+      { icon: Wallet,       label: "Budget",           path: "/budget" },
+      { icon: Target,       label: "Savings Goals",    path: "/savings-goals" },
+      { icon: Calculator,   label: "EMI Calculator",   path: "/emi-calculator" },
+      { icon: PiggyBank,    label: "Budget Predictor", path: "/budget-predictor" },
+      { icon: CalendarClock,label: "Cash Flow",        path: "/cashflow-forecast" },
+      { icon: CreditCard,   label: "Link Bank",        path: "/bank-linking" },
+    ],
+  },
+  {
+    label: "Records",
+    items: [
+      { icon: History,  label: "Transactions",  path: "/transactions" },
+      { icon: FileText, label: "Statements",    path: "/statements" },
+      { icon: Users,    label: "Beneficiaries", path: "/beneficiaries" },
+    ],
+  },
+  {
+    label: "Security",
+    items: [
+      { icon: Zap,         label: "Live Fraud Feed",   path: "/live-fraud-feed" },
+      { icon: FileWarning, label: "Dispute Center",    path: "/dispute-center" },
+      { icon: Fingerprint, label: "Biometric Guard",   path: "/biometric-guard" },
+      { icon: ShieldCheck, label: "Pre-Payment Shield",path: "/prepayment-shield" },
+      { icon: Ghost,       label: "Ghost Hunter",      path: "/ghost-hunter" },
+    ],
+  },
+  {
+    label: "AI Intelligence",
+    items: [
+      { icon: BotMessageSquare, label: "AI Assistant",    path: "/ai-assistant" },
+      { icon: Brain,            label: "Spending Coach",  path: "/spending-coach" },
+      { icon: Mic,              label: "Voice Pay",       path: "/voice-pay" },
+      { icon: Dna,              label: "Spending DNA",    path: "/spending-dna" },
+      { icon: BookOpen,         label: "AI Chronicle",    path: "/financial-story" },
+      { icon: ScanLine,         label: "Anomaly Explainer",path: "/anomaly-explainer" },
+      { icon: Sparkles,         label: "Fin. Personality", path: "/financial-personality" },
+    ],
+  },
+  {
+    label: "Analytics",
+    items: [
+      { icon: TrendingUp,   label: "Fraud Timeline",  path: "/fraud-timeline" },
+      { icon: HeartPulse,   label: "Payment Health",  path: "/payment-health" },
+      { icon: Crosshair,    label: "Future Risk AI",  path: "/future-risk" },
+      { icon: GitFork,      label: "Fraud Ring",      path: "/fraud-ring" },
+      { icon: HeartHandshake,label: "Health Score",   path: "/health-score" },
+      { icon: Users,        label: "Contact Trust",   path: "/contact-trust" },
+      { icon: Flag,         label: "Community",       path: "/community-reports" },
+      { icon: ShieldAlert,  label: "Risk Profile",    path: "/risk-profile" },
+      { icon: Map,          label: "Fraud Heatmap",   path: "/fraud-heatmap" },
+      { icon: Trophy,       label: "Achievements",    path: "/security-badges" },
+    ],
+  },
+  {
+    label: "System",
+    items: [
+      { icon: Settings, label: "Settings",     path: "/settings" },
+      { icon: Help,     label: "Help & Support",path: "/help-support" },
+    ],
+  },
+];
+
+const mlNavItems = [
+  { icon: Upload,      label: "Upload Data",       path: "/upload-data" },
+  { icon: BarChart2,   label: "Explore Data",      path: "/explore-data" },
+  { icon: Play,        label: "Run Detection",     path: "/run-detection" },
+  { icon: Activity,    label: "Results",           path: "/detection-results" },
+  { icon: GitCompare,  label: "Model Comparison",  path: "/model-comparison" },
+  { icon: ScanSearch,  label: "Check Transaction", path: "/check-transaction" },
+  { icon: Layers,      label: "Batch Check",       path: "/batch-check" },
+  { icon: Brain,       label: "AI Hub",            path: "/ai-hub" },
+  { icon: Microscope,  label: "Feature Insights",  path: "/feature-insights" },
+  { icon: Brain,       label: "Bulk Explain",      path: "/bulk-explain" },
+  { icon: Clock,       label: "Score History",     path: "/score-history" },
+  { icon: Eye,         label: "Watchlist",         path: "/watchlist" },
+  { icon: Calendar,    label: "Fraud Calendar",    path: "/fraud-calendar" },
+  { icon: Network,     label: "Network Analysis",  path: "/network-analysis" },
+  { icon: TrendingDown,label: "Dataset Drift",     path: "/dataset-drift" },
+  { icon: RefreshCw,   label: "Retrain Readiness", path: "/retraining-readiness" },
+  { icon: Zap,         label: "Behavioral Analysis",path: "/behavioral-analysis" },
+  { icon: Shield,      label: "Rule Engine",       path: "/rule-engine" },
+  { icon: Blend,       label: "Risk Score Blend",  path: "/risk-score-blend" },
+  { icon: MessageSquare,label: "Feedback Center",  path: "/feedback-center" },
+];
+
+/* ── Single nav item ── */
+const NavItem = ({ icon: Icon, label, path, isActive }) => (
+  <Link to={path}>
+    <div
+      className={cn(
+        "flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-150 group cursor-pointer",
+        isActive
+          ? "text-[#dce1fb] border"
+          : "text-[rgba(188,201,205,0.55)] hover:text-[#dce1fb] hover:bg-[rgba(220,225,251,0.05)]"
+      )}
+      style={isActive ? {
+        background: "linear-gradient(90deg, rgba(76,215,246,0.12), rgba(208,188,255,0.06))",
+        borderColor: "rgba(76,215,246,0.22)",
+        boxShadow: "0 0 16px rgba(76,215,246,0.06), inset 0 1px 0 rgba(255,255,255,0.08)",
+      } : {}}
+    >
+      <div
+        className={cn(
+          "flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-150",
+          isActive
+            ? "bg-[rgba(76,215,246,0.15)] text-[#4cd7f6]"
+            : "text-[rgba(134,147,151,0.6)] group-hover:text-[rgba(188,201,205,0.8)] group-hover:bg-[rgba(220,225,251,0.06)]"
+        )}
+      >
+        <Icon className="h-3.5 w-3.5" />
+      </div>
+      <span className="flex-1 truncate leading-none">{label}</span>
+      {isActive && (
+        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: "#4cd7f6", boxShadow: "0 0 8px rgba(76,215,246,0.7)" }} />
+      )}
+    </div>
+  </Link>
+);
+
+/* ── Section label colour map ── */
+const SECTION_COLORS = {
+  "Payments":       "linear-gradient(90deg,#38bdf8,#6366f1)",
+  "Finance":        "linear-gradient(90deg,#34d399,#06b6d4)",
+  "Records":        "linear-gradient(90deg,#a78bfa,#818cf8)",
+  "Security":       "linear-gradient(90deg,#f87171,#fb923c)",
+  "AI Intelligence":"linear-gradient(90deg,#e879f9,#a855f7)",
+  "Analytics":      "linear-gradient(90deg,#fbbf24,#f59e0b)",
+  "System":         "linear-gradient(90deg,#94a3b8,#64748b)",
+  "ML Analytics":   "linear-gradient(90deg,#2dd4bf,#06b6d4)",
+};
+
+/* ── Section label ── */
+const SectionLabel = ({ label }) => {
+  const gradient = SECTION_COLORS[label] || "linear-gradient(90deg,#94a3b8,#64748b)";
+  return (
+    <p
+      className="text-[10px] font-extrabold uppercase tracking-[0.2em] px-3 pt-5 pb-1.5 first:pt-2"
+      style={{ background: gradient, WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent", display: "inline-block" }}
+    >
+      {label}
+    </p>
+  );
+};
 
 export default function SidebarContent() {
   const navigate = useNavigate();
@@ -77,219 +194,133 @@ export default function SidebarContent() {
     }
   };
 
-  const navItems = [
-    { icon: Home,                 label: "Dashboard",          path: "/dashboard" },
-    { icon: Send,                 label: "Send Money",          path: "/send-money" },
-    { icon: QrCode,               label: "QR Pay",              path: "/qr-pay" },
-    { icon: Phone,                label: "Pay by Phone",        path: "/pay-by-phone" },
-    { icon: HandCoins,            label: "Request Money",       path: "/request-money" },
-    { icon: Wallet,               label: "Budget",              path: "/budget" },
-    { icon: BotMessageSquare,     label: "AI Assistant",        path: "/ai-assistant" },
-    { icon: Bell,                 label: "Notifications",       path: "/notifications" },
-    { icon: History,              label: "Transactions",        path: "/transactions" },
-    { icon: FileText,             label: "Statements",          path: "/statements" },
-    { icon: Users,                label: "Beneficiaries",       path: "/beneficiaries" },
-    // Week 2
-    { icon: SplitSquareHorizontal, label: "Split Bill",         path: "/split-bill" },
-    { icon: RefreshCw,            label: "Recurring Payments",  path: "/recurring-payments" },
-    // Week 3
-    { icon: Target,               label: "Savings Goals",       path: "/savings-goals" },
-    { icon: Calculator,           label: "EMI Calculator",      path: "/emi-calculator" },
-    // Week 4
-    { icon: Zap,                  label: "Live Fraud Feed",     path: "/live-fraud-feed" },
-    { icon: FileWarning,          label: "Dispute Center",      path: "/dispute-center" },
-    // Week 5
-    { icon: Fingerprint,          label: "Biometric Guard",     path: "/biometric-guard" },
-    // Week 6
-    { icon: Brain,                label: "Spending Coach",      path: "/spending-coach" },
-    // Week 7
-    { icon: Users,                label: "Contact Trust",       path: "/contact-trust" },
-    { icon: Flag,                 label: "Community Reports",   path: "/community-reports" },
-    // Week 8
-    { icon: TrendingUp,           label: "Fraud Timeline",      path: "/fraud-timeline" },
-    { icon: HeartPulse,           label: "Payment Health",      path: "/payment-health" },
-    { icon: Trophy,               label: "Achievements",        path: "/security-badges" },
-    // Week 9–11 — Innovative
-    { icon: Mic,                  label: "Voice Pay",           path: "/voice-pay" },
-    { icon: Dna,                  label: "Spending DNA",        path: "/spending-dna" },
-    { icon: Crosshair,            label: "Future Risk AI",      path: "/future-risk" },
-    // Week 12–14
-    { icon: BookOpen,             label: "Financial Chronicle",  path: "/financial-story" },
-    { icon: PiggyBank,            label: "Budget Predictor",     path: "/budget-predictor" },
-    { icon: ScanLine,             label: "Anomaly Explainer",    path: "/anomaly-explainer" },
-    // Week 15–17
-    { icon: GitFork,              label: "Fraud Ring Detector",  path: "/fraud-ring" },
-    { icon: HeartHandshake,       label: "Health Score",         path: "/health-score" },
-    { icon: ShieldCheck,          label: "Pre-Payment Shield",   path: "/prepayment-shield" },
-    { icon: CreditCard,           label: "Link Bank Account",    path: "/bank-linking" },
-    { icon: Ghost,                label: "Ghost Hunter",         path: "/ghost-hunter" },
-    { icon: CalendarClock,        label: "Cash Flow Forecast",   path: "/cashflow-forecast" },
-    { icon: Sparkles,             label: "Financial Personality",path: "/financial-personality" },
-    // Existing
-    { icon: ShieldAlert,          label: "Risk Profile",        path: "/risk-profile" },
-    { icon: Map,                  label: "Fraud Heatmap",       path: "/fraud-heatmap" },
-    { icon: Settings,             label: "Settings",            path: "/settings" },
-    { icon: Help,                 label: "Help & Support",      path: "/help-support" },
-  ];
-
-  const mlNavItems = [
-    { icon: Upload, label: "Upload Data", path: "/upload-data" },
-    { icon: BarChart2, label: "Explore Data", path: "/explore-data" },
-    { icon: Play, label: "Run Detection", path: "/run-detection" },
-    { icon: Activity, label: "Results", path: "/detection-results" },
-    { icon: GitCompare, label: "Model Comparison", path: "/model-comparison" },
-    { icon: ScanSearch, label: "Check Transaction", path: "/check-transaction" },
-    { icon: Layers, label: "Batch Check", path: "/batch-check" },
-    { icon: Brain, label: "AI Hub", path: "/ai-hub" },
-    { icon: Microscope, label: "Feature Insights", path: "/feature-insights" },
-    { icon: Brain, label: "Bulk Explain", path: "/bulk-explain" },
-    { icon: Clock, label: "Score History", path: "/score-history" },
-    { icon: Eye, label: "Watchlist", path: "/watchlist" },
-    { icon: Calendar, label: "Fraud Calendar", path: "/fraud-calendar" },
-    { icon: Network, label: "Network Analysis", path: "/network-analysis" },
-    { icon: TrendingDown, label: "Dataset Drift", path: "/dataset-drift" },
-    { icon: RefreshCw, label: "Retrain Readiness", path: "/retraining-readiness" },
-    { icon: Zap, label: "Behavioral Analysis", path: "/behavioral-analysis" },
-    { icon: Shield, label: "Rule Engine", path: "/rule-engine" },
-    { icon: Blend, label: "Risk Score Blend", path: "/risk-score-blend" },
-    { icon: MessageSquare, label: "Feedback Center", path: "/feedback-center" },
-  ];
-
   return (
-    <>
-      <div className="p-6">
-        {/* ── Brand Logo ── */}
-        <div className="mb-8">
-          {/* Logo mark + wordmark row */}
-          <div className="flex items-center gap-3 mb-3">
-
-            {/* Hexagonal icon mark */}
-            <div className="relative flex-shrink-0 w-11 h-11">
-              {/* Ambient glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 via-blue-500 to-violet-600 rounded-2xl blur-lg opacity-60" />
-              {/* Hex shape via clip */}
-              <div
-                className="relative w-11 h-11 flex items-center justify-center"
-                style={{
-                  background: "linear-gradient(135deg, #06b6d4, #3b82f6, #7c3aed)",
-                  clipPath: "polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%)",
-                }}
-              >
-                {/* Neural dot grid inside hex */}
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  {/* Center node */}
-                  <circle cx="12" cy="12" r="2.5" fill="white" />
-                  {/* Outer nodes */}
-                  <circle cx="12" cy="5"  r="1.5" fill="rgba(255,255,255,0.7)" />
-                  <circle cx="12" cy="19" r="1.5" fill="rgba(255,255,255,0.7)" />
-                  <circle cx="5"  cy="8"  r="1.5" fill="rgba(255,255,255,0.7)" />
-                  <circle cx="19" cy="8"  r="1.5" fill="rgba(255,255,255,0.7)" />
-                  <circle cx="5"  cy="16" r="1.5" fill="rgba(255,255,255,0.7)" />
-                  <circle cx="19" cy="16" r="1.5" fill="rgba(255,255,255,0.7)" />
-                  {/* Connecting lines */}
-                  <line x1="12" y1="12" x2="12" y2="5"  stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                  <line x1="12" y1="12" x2="12" y2="19" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                  <line x1="12" y1="12" x2="5"  y2="8"  stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                  <line x1="12" y1="12" x2="19" y2="8"  stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                  <line x1="12" y1="12" x2="5"  y2="16" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                  <line x1="12" y1="12" x2="19" y2="16" stroke="rgba(255,255,255,0.4)" strokeWidth="1" />
-                </svg>
-              </div>
-              {/* Live pulse badge */}
-              <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-2 border-gray-950">
-                <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75" />
-              </span>
+    <div className="flex flex-col h-full">
+      {/* ── Brand ── */}
+      <div className="px-5 pt-6 pb-4 flex-shrink-0">
+        <div className="flex items-center gap-3 mb-4">
+          {/* Shield logo mark */}
+          <div className="relative flex-shrink-0 w-11 h-11">
+            {/* Glow layers aligned to design system */}
+            <div className="absolute inset-0 rounded-2xl blur-2xl opacity-55 scale-110" style={{ background: "linear-gradient(135deg,#4cd7f6,#d0bcff,#4edea3)" }} />
+            <div className="absolute inset-0 rounded-2xl blur-md opacity-25" style={{ background: "linear-gradient(135deg,#4cd7f6,#d0bcff)" }} />
+            <div
+              className="relative w-11 h-11 flex items-center justify-center rounded-2xl shadow-xl"
+              style={{ background: "linear-gradient(145deg, #4cd7f6 0%, #d0bcff 55%, #4edea3 100%)" }}
+            >
+              {/* Shield SVG with "A" lettermark */}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <defs>
+                  <linearGradient id="shieldInner" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="rgba(255,255,255,0.95)" />
+                    <stop offset="100%" stopColor="rgba(255,255,255,0.7)" />
+                  </linearGradient>
+                </defs>
+                {/* Shield outline */}
+                <path
+                  d="M12 2L4 5.5V11c0 4.5 3.3 8.7 8 9.9 4.7-1.2 8-5.4 8-9.9V5.5L12 2z"
+                  fill="rgba(255,255,255,0.15)"
+                  stroke="rgba(255,255,255,0.5)"
+                  strokeWidth="0.8"
+                  strokeLinejoin="round"
+                />
+                {/* "A" lettermark inside shield */}
+                <text x="12" y="15.5" textAnchor="middle" fontSize="9" fontWeight="900"
+                  fontFamily="Arial,sans-serif" fill="url(#shieldInner)" letterSpacing="-0.5">A</text>
+                {/* Top shield shine */}
+                <path d="M9 6.5L12 5l3 1.5V10c0 1.5-1.1 2.9-3 3.3C9.1 12.9 8 11.5 8 10V6.5z"
+                  fill="rgba(255,255,255,0.08)" />
+              </svg>
             </div>
-
-            {/* Wordmark */}
-            <div className="flex flex-col leading-none">
-              <div className="flex items-end gap-0.5">
-                <span
-                  className="text-xl font-black tracking-tight"
-                  style={{ background: "linear-gradient(90deg,#67e8f9,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-                >
-                  Aegis
-                </span>
-                <span className="text-xl font-black text-white tracking-tight">AI</span>
-              </div>
-              <span className="text-[9px] font-semibold tracking-[0.2em] uppercase text-white/25 mt-0.5">
-                Neural Fraud Defense
-              </span>
-            </div>
+            {/* Live indicator */}
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 border-2 border-slate-950 flex items-center justify-center shadow-lg shadow-emerald-500/40">
+              <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-50" />
+            </span>
           </div>
 
-          {/* Status bar */}
-          <div className="flex items-center justify-between px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.07]">
-            <div className="flex items-center gap-1.5">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+          {/* Wordmark */}
+          <div className="flex flex-col leading-none">
+            <div className="flex items-end gap-0.5">
+              <span className="text-xl font-black tracking-tight" style={{ background: "linear-gradient(90deg,#4cd7f6,#d0bcff)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent", display: "inline-block" }}>
+                Aegis
               </span>
-              <span className="text-[10px] font-semibold text-emerald-400">AI Engine Live</span>
+              <span className="text-xl font-black tracking-tight" style={{ background: "linear-gradient(90deg,#d0bcff,#4edea3)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent", display: "inline-block" }}>
+                AI
+              </span>
             </div>
-            <div className="flex items-center gap-1">
-              <Zap className="h-2.5 w-2.5 text-yellow-400" />
-              <span className="text-[9px] text-white/30 font-medium">Real-time</span>
-            </div>
+            <span className="mt-0.5" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", background: "linear-gradient(90deg,#4cd7f6,#d0bcff)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent", display: "inline-block" }}>
+              Neural Fraud Defense
+            </span>
           </div>
         </div>
-        <nav className="space-y-1">
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <Link to={item.path} key={item.label}>
-                <Button
-                  variant="ghost"
-                  className={cn(
-                    "w-full justify-start hover:text-white hover:bg-white/10",
-                    isActive
-                      ? "text-white bg-white/10 font-semibold"
-                      : "text-white/70"
-                  )}
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.label}
-                </Button>
-              </Link>
-            );
-          })}
-        </nav>
 
-        <div className="mt-4 pt-4 border-t border-white/10">
-          <p className="text-xs text-white/30 uppercase tracking-widest mb-2 px-1">ML Analytics</p>
-          <nav className="space-y-1">
-            {mlNavItems.map((item) => {
-              const isActive = location.pathname === item.path;
-              return (
-                <Link to={item.path} key={item.label}>
-                  <Button
-                    variant="ghost"
-                    className={cn(
-                      "w-full justify-start hover:text-white hover:bg-white/10",
-                      isActive
-                        ? "text-white bg-blue-500/20 border border-blue-500/30 font-semibold"
-                        : "text-white/70"
-                    )}
-                  >
-                    <item.icon className="h-4 w-4" />
-                    {item.label}
-                  </Button>
-                </Link>
-              );
-            })}
-          </nav>
+        {/* Status pill */}
+        <div className="flex items-center justify-between px-3 py-2 rounded-xl border" style={{ background: "rgba(78,222,163,0.07)", borderColor: "rgba(78,222,163,0.18)" }}>
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: "#4edea3" }} />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: "#4edea3", boxShadow: "0 0 6px rgba(78,222,163,0.8)" }} />
+            </span>
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", color: "#4edea3" }}>AI ENGINE LIVE</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Zap className="h-2.5 w-2.5 text-amber-400" />
+            <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", color: "rgba(134,147,151,0.6)", fontWeight: 500 }}>Real-time</span>
+          </div>
         </div>
       </div>
-      <div className="mt-auto p-6 border-t border-white/10">
-        <Button
-          variant="ghost"
+
+      {/* ── Scrollable nav ── */}
+      <div className="flex-1 overflow-y-auto px-3 pb-4 space-y-0.5">
+        {navGroups.map((group, gi) => (
+          <div key={gi}>
+            {group.label && <SectionLabel label={group.label} />}
+            <div className="space-y-0.5">
+              {group.items.map((item) => (
+                <NavItem
+                  key={item.path}
+                  icon={item.icon}
+                  label={item.label}
+                  path={item.path}
+                  isActive={location.pathname === item.path}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* ML Analytics section */}
+        <div className="pt-4 mt-2 border-t border-white/[0.06]">
+          <SectionLabel label="ML Analytics" />
+          <div className="space-y-0.5">
+            {mlNavItems.map((item) => (
+              <NavItem
+                key={item.path}
+                icon={item.icon}
+                label={item.label}
+                path={item.path}
+                isActive={location.pathname === item.path}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Logout ── */}
+      <div className="flex-shrink-0 px-3 py-4 border-t" style={{ borderColor: "rgba(220,225,251,0.06)" }}>
+        <button
           onClick={handleLogout}
-          className="w-full justify-start text-red-400 hover:text-red-300 hover:bg-red-500/10"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group"
+          style={{ color: "rgba(134,147,151,0.6)" }}
+          onMouseEnter={e => { e.currentTarget.style.color = "#ffb4ab"; e.currentTarget.style.background = "rgba(255,180,171,0.07)"; }}
+          onMouseLeave={e => { e.currentTarget.style.color = "rgba(134,147,151,0.6)"; e.currentTarget.style.background = ""; }}
         >
-          <LogOut className="mr-2 h-4 w-4" />
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors" style={{ background: "rgba(220,225,251,0.04)" }}>
+            <LogOut className="h-3.5 w-3.5" />
+          </div>
           Logout
-        </Button>
+        </button>
       </div>
-    </>
+    </div>
   );
 }

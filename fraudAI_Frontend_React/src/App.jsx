@@ -8,15 +8,22 @@ class AppErrorBoundary extends Component {
   componentDidCatch(error, info) { console.error('[AegisAI] Uncaught error:', error, info); }
   render() {
     if (this.state.hasError) return (
-      <div className="min-h-screen bg-gray-950 flex items-center justify-center p-8 text-center">
-        <div className="max-w-md space-y-4">
-          <div className="text-5xl">⚠️</div>
-          <p className="text-xl font-bold text-white">Something went wrong</p>
-          <p className="text-sm text-gray-400 font-mono break-all">
-            {this.state.error?.message || 'Unknown error'}
-          </p>
-          <button onClick={() => { this.setState({ hasError: false }); window.location.href = '/dashboard'; }}
-            className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition-colors">
+      <div className="min-h-screen flex items-center justify-center p-8 text-center" style={{background:"#020817"}}>
+        <div className="max-w-md space-y-5">
+          <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/25 flex items-center justify-center mx-auto">
+            <span className="text-2xl">⚠️</span>
+          </div>
+          <div>
+            <p className="text-lg font-bold text-white mb-1">Something went wrong</p>
+            <p className="text-sm text-slate-500 font-mono break-all leading-relaxed">
+              {this.state.error?.message || 'Unknown error'}
+            </p>
+          </div>
+          <button
+            onClick={() => { this.setState({ hasError: false }); window.location.href = '/dashboard'; }}
+            className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90"
+            style={{background:"linear-gradient(135deg,#06b6d4,#3b82f6)"}}
+          >
             Go to Dashboard
           </button>
         </div>
@@ -99,7 +106,7 @@ const PrivateRoute = ({ element }) => {
     return unsubscribe;
   }, []);
 
-  if (authState === 'loading') return <div className="min-h-screen bg-gray-900" />;
+  if (authState === 'loading') return <div className="min-h-screen" style={{background:"#020817"}} />;
   return authState === 'authenticated' ? element : <Navigate to="/" replace />;
 };
 

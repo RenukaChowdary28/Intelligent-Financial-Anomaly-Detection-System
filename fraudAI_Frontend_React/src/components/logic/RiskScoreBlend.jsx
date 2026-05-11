@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -82,34 +82,34 @@ export default function RiskScoreBlend() {
   })) || [];
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <Layers className="h-6 w-6" /> Risk Score Blend
             </h1>
-            <p className="text-gray-400 text-sm mb-6">Combine multiple risk signals into a single composite fraud score.</p>
+            <p className="text-slate-400 text-sm mb-6">Combine multiple risk signals into a single composite fraud score.</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Inputs */}
             <div className="space-y-4">
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-300">Risk Signal Inputs</CardTitle>
+                  <CardTitle className="text-sm text-slate-300">Risk Signal Inputs</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {/* RF probability */}
                   <div>
-                    <label className="text-xs text-gray-400 block mb-1">RF Fraud Probability (0–1)</label>
+                    <label className="text-xs text-slate-400 block mb-1">RF Fraud Probability (0–1)</label>
                     <Input type="number" step="0.01" min="0" max="1" value={inputs.rf_fraud_probability}
                       onChange={e => setInputs(i => ({ ...i, rf_fraud_probability: e.target.value }))}
-                      className="bg-gray-700 border-gray-600 text-white text-sm" />
+                      className="bg-white/[0.06] border-white/[0.08] text-white text-sm" />
                   </div>
 
                   {/* Score fields */}
@@ -121,10 +121,10 @@ export default function RiskScoreBlend() {
                     { key: "recipient_trust_score", label: "Recipient Trust Score (0–100, higher=safer)" },
                   ].map(({ key, label }) => (
                     <div key={key}>
-                      <label className="text-xs text-gray-400 block mb-1">{label}</label>
+                      <label className="text-xs text-slate-400 block mb-1">{label}</label>
                       <Input type="number" step="1" min="0" max="100" value={inputs[key]}
                         onChange={e => setInputs(i => ({ ...i, [key]: e.target.value }))}
-                        className="bg-gray-700 border-gray-600 text-white text-sm" />
+                        className="bg-white/[0.06] border-white/[0.08] text-white text-sm" />
                     </div>
                   ))}
 
@@ -134,11 +134,11 @@ export default function RiskScoreBlend() {
                     { key: "geo_risk", label: "Geo Risk", opts: ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
                   ].map(({ key, label, opts }) => (
                     <div key={key}>
-                      <label className="text-xs text-gray-400 block mb-1">{label}</label>
+                      <label className="text-xs text-slate-400 block mb-1">{label}</label>
                       <div className="flex gap-1.5 flex-wrap">
                         {opts.map(o => (
                           <button key={o} onClick={() => setInputs(i => ({ ...i, [key]: o }))}
-                            className={`text-xs px-3 py-1 rounded-full border transition-colors ${inputs[key] === o ? "bg-blue-600 border-blue-500 text-white" : "border-gray-600 text-gray-400"}`}>
+                            className={`text-xs px-3 py-1 rounded-full border transition-colors ${inputs[key] === o ? "bg-blue-600 border-blue-500 text-white" : "border-white/[0.09] text-slate-400"}`}>
                             {o}
                           </button>
                         ))}
@@ -149,25 +149,25 @@ export default function RiskScoreBlend() {
               </Card>
 
               {/* Custom weights */}
-              <Card className="bg-gray-800 border-gray-700">
-                <button className="w-full flex items-center justify-between p-4 text-sm text-gray-300 hover:text-white"
+              <Card className="bg-slate-900/80 border-white/[0.07]">
+                <button className="w-full flex items-center justify-between p-4 text-sm text-slate-300 hover:text-white"
                   onClick={() => setCustomWeights(v => !v)}>
                   <span>Custom Weights (optional)</span>
-                  <span className="text-xs text-gray-500">{customWeights ? "Using custom" : "Using defaults"}</span>
+                  <span className="text-xs text-slate-500">{customWeights ? "Using custom" : "Using defaults"}</span>
                 </button>
                 {customWeights && (
                   <CardContent className="pt-0 pb-4">
                     <div className="grid grid-cols-2 gap-2">
                       {Object.entries(weights).map(([k, v]) => (
                         <div key={k}>
-                          <label className="text-xs text-gray-500 block mb-0.5">{k.replace(/_/g, " ")}</label>
+                          <label className="text-xs text-slate-500 block mb-0.5">{k.replace(/_/g, " ")}</label>
                           <Input type="number" step="0.01" min="0" max="1" value={v}
                             onChange={e => setWeights(w => ({ ...w, [k]: e.target.value }))}
-                            className="bg-gray-700 border-gray-600 text-white text-xs h-7 px-2" />
+                            className="bg-white/[0.06] border-white/[0.08] text-white text-xs h-7 px-2" />
                         </div>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">Weights should sum to 1.0</p>
+                    <p className="text-xs text-slate-500 mt-2">Weights should sum to 1.0</p>
                   </CardContent>
                 )}
               </Card>
@@ -186,10 +186,10 @@ export default function RiskScoreBlend() {
             {/* Results */}
             <div className="space-y-4">
               {!result && !loading && (
-                <Card className="bg-gray-800/50 border-gray-700 border-dashed">
+                <Card className="bg-slate-900/60 border-white/[0.06] border-dashed">
                   <CardContent className="pt-16 pb-16 text-center">
-                    <Layers className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                    <p className="text-gray-500 text-sm">Set risk signals and click Compute.</p>
+                    <Layers className="h-8 w-8 text-slate-600 mx-auto mb-2" />
+                    <p className="text-slate-500 text-sm">Set risk signals and click Compute.</p>
                   </CardContent>
                 </Card>
               )}
@@ -205,7 +205,7 @@ export default function RiskScoreBlend() {
                           <p className={`font-bold text-xl ${RISK_LEVEL_COLOR[riskLevel]}`}>
                             {result.composite_risk_score?.toFixed(1)} / 100
                           </p>
-                          <p className="text-xs text-gray-400">{riskLevel} RISK</p>
+                          <p className="text-xs text-slate-400">{riskLevel} RISK</p>
                         </div>
                       </div>
                       <span className={`text-sm font-bold px-3 py-1 rounded-full ${ACTION_STYLE[result.recommended_action]}`}>
@@ -219,7 +219,7 @@ export default function RiskScoreBlend() {
 
                   {/* Radar chart */}
                   {radarData.length > 2 && (
-                    <Card className="bg-gray-800 border-gray-700">
+                    <Card className="bg-slate-900/80 border-white/[0.07]">
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm text-purple-400">Signal Radar</CardTitle>
                       </CardHeader>
@@ -240,20 +240,20 @@ export default function RiskScoreBlend() {
 
                   {/* Signal breakdown */}
                   {result.signal_breakdown?.length > 0 && (
-                    <Card className="bg-gray-800 border-gray-700">
+                    <Card className="bg-slate-900/80 border-white/[0.07]">
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-sm text-gray-300">Signal Breakdown</CardTitle>
+                        <CardTitle className="text-sm text-slate-300">Signal Breakdown</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-2">
                           {result.signal_breakdown.sort((a, b) => b.weighted_contribution - a.weighted_contribution).map((s, i) => (
                             <div key={i} className="flex items-center gap-2">
-                              <span className="text-xs text-gray-400 w-32 truncate">{s.signal.replace(/_/g, " ")}</span>
-                              <div className="flex-1 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                              <span className="text-xs text-slate-400 w-32 truncate">{s.signal.replace(/_/g, " ")}</span>
+                              <div className="flex-1 h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                                 <div className={`h-full rounded-full ${s.level === "HIGH" ? "bg-red-500" : s.level === "MEDIUM" ? "bg-yellow-500" : "bg-green-500"}`}
                                   style={{ width: `${Math.min(100, s.raw_score)}%` }} />
                               </div>
-                              <span className="text-xs text-gray-400 w-16 text-right font-mono">
+                              <span className="text-xs text-slate-400 w-16 text-right font-mono">
                                 +{s.weighted_contribution?.toFixed(1)}
                               </span>
                             </div>
@@ -265,7 +265,7 @@ export default function RiskScoreBlend() {
 
                   {/* Top signals */}
                   {result.top_contributing_signals?.length > 0 && (
-                    <Card className="bg-gray-800 border-gray-700">
+                    <Card className="bg-slate-900/80 border-white/[0.07]">
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm text-yellow-400">Top Contributing Signals</CardTitle>
                       </CardHeader>
@@ -285,7 +285,7 @@ export default function RiskScoreBlend() {
                   {result.ai_summary && (
                     <Card className="bg-blue-500/5 border-blue-500/20">
                       <CardContent className="pt-4">
-                        <p className="text-xs text-gray-300 leading-relaxed">{result.ai_summary}</p>
+                        <p className="text-xs text-slate-300 leading-relaxed">{result.ai_summary}</p>
                       </CardContent>
                     </Card>
                   )}

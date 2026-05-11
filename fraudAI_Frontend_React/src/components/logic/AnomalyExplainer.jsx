@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
+﻿import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, where, limit, doc, getDoc, orderBy } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase';
@@ -11,7 +12,7 @@ import {
   Microscope, Search, AlertTriangle, CheckCircle, ShieldAlert,
   Zap, ChevronRight, Clock, DollarSign, MapPin, User,
   TrendingUp, Activity, Info, X, Eye, Layers, RefreshCw,
-  Fingerprint, BarChart2, Brain,
+  Fingerprint, BarChart2, Brain, ArrowLeft,
 } from 'lucide-react';
 
 /* ── helpers ─────────────────────────────────────────────── */
@@ -186,6 +187,7 @@ function ScoreRing({ score, color }) {
    MAIN COMPONENT
 ═══════════════════════════════════════════════════════════ */
 export default function AnomalyExplainer() {
+  const navigate = useNavigate();
   const [txs, setTxs]               = useState([]);
   const [selected, setSelected]      = useState(null);
   const [explanation, setExplanation] = useState(null);
@@ -254,7 +256,7 @@ export default function AnomalyExplainer() {
 
   /* ── loading ─────────────────────────────────────────── */
   if (loading) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <motion.div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-indigo-500/30 border-t-indigo-500"
           animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }} />
@@ -275,6 +277,9 @@ export default function AnomalyExplainer() {
           {/* Header */}
           <div className="p-5 border-b border-white/[0.07]">
             <div className="flex items-center gap-3 mb-4">
+              <button onClick={() => navigate(-1)} className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all flex-shrink-0">
+                <ArrowLeft className="h-4 w-4" />
+              </button>
               <div className="w-9 h-9 rounded-xl bg-indigo-500/20 flex items-center justify-center">
                 <Microscope className="h-4.5 w-4.5 text-indigo-400" />
               </div>

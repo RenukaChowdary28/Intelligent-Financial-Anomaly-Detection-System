@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -38,7 +38,7 @@ const REASON_COLORS = {
   "Phishing":      "bg-yellow-500/15 border-yellow-500/40 text-yellow-400",
   "Lottery fraud": "bg-purple-500/15 border-purple-500/40 text-purple-400",
   "KYC fraud":     "bg-pink-500/15 border-pink-500/40 text-pink-400",
-  "Other":         "bg-gray-500/15 border-gray-500/40 text-gray-400",
+  "Other":         "bg-white/[0.03]0/15 border-gray-500/40 text-slate-400",
 }
 
 const TABS = ["Feed", "Leaderboard", "My Reports"]
@@ -98,9 +98,9 @@ function ReportForm({ onSubmit, submitting }) {
   }
 
   return (
-    <Card className="bg-gray-800 border-gray-700">
+    <Card className="bg-slate-900/80 border-white/[0.07]">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold text-gray-100 flex items-center gap-2">
+        <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
           <Flag className="h-4 w-4 text-red-400" />
           Report a Suspicious UPI
         </CardTitle>
@@ -109,21 +109,21 @@ function ReportForm({ onSubmit, submitting }) {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* UPI ID */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-gray-400">
+            <label className="text-xs font-medium text-slate-400">
               UPI ID to report <span className="text-red-400">*</span>
             </label>
             <Input
               placeholder="e.g. scammer@ybl"
               value={form.upiId}
               onChange={e => setForm(p => ({ ...p, upiId: e.target.value }))}
-              className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500"
+              className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500"
               required
             />
           </div>
 
           {/* Reason */}
           <div className="space-y-2">
-            <label className="text-xs font-medium text-gray-400">Reason</label>
+            <label className="text-xs font-medium text-slate-400">Reason</label>
             <div className="flex flex-wrap gap-2">
               {REASONS.map(r => (
                 <button
@@ -133,7 +133,7 @@ function ReportForm({ onSubmit, submitting }) {
                   className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
                     form.reason === r
                       ? "bg-red-600 border-red-500 text-white"
-                      : "border-gray-600 text-gray-400 hover:border-gray-400 hover:text-gray-200 bg-gray-700/50"
+                      : "border-white/[0.09] text-slate-400 hover:border-gray-400 hover:text-slate-200 bg-white/[0.04]"
                   }`}
                 >
                   {r}
@@ -144,13 +144,13 @@ function ReportForm({ onSubmit, submitting }) {
 
           {/* Description */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-gray-400">Describe what happened</label>
+            <label className="text-xs font-medium text-slate-400">Describe what happened</label>
             <textarea
               placeholder="Briefly describe the fraudulent activity..."
               value={form.description}
               onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
               rows={3}
-              className="w-full rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-500 text-sm px-3 py-2 resize-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-colors"
+              className="w-full rounded-lg bg-white/[0.07] border border-white/[0.09] text-white placeholder-gray-500 text-sm px-3 py-2 resize-none focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-transparent transition-colors"
             />
           </div>
 
@@ -189,19 +189,19 @@ function Leaderboard({ reports, onUpvote, currentUid }) {
     .sort((a, b) => b.count - a.count)
     .slice(0, 10)
 
-  const RANK_COLORS = ["text-yellow-400", "text-gray-300", "text-amber-600"]
+  const RANK_COLORS = ["text-yellow-400", "text-slate-300", "text-amber-600"]
 
   return (
-    <Card className="bg-gray-800 border-gray-700">
+    <Card className="bg-slate-900/80 border-white/[0.07]">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold text-gray-100 flex items-center gap-2">
+        <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
           <TrendingUp className="h-4 w-4 text-orange-400" />
           Most Reported UPIs
         </CardTitle>
       </CardHeader>
       <CardContent>
         {sorted.length === 0 ? (
-          <p className="text-sm text-gray-500 text-center py-6">No reports yet</p>
+          <p className="text-sm text-slate-500 text-center py-6">No reports yet</p>
         ) : (
           <div className="space-y-2">
             {sorted.map((item, idx) => {
@@ -212,16 +212,16 @@ function Leaderboard({ reports, onUpvote, currentUid }) {
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.04 }}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-gray-700/50 border border-gray-600 hover:border-gray-500 transition-colors"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.09] hover:border-gray-500 transition-colors"
                 >
                   {/* Rank */}
-                  <span className={`text-sm font-bold w-6 text-center flex-shrink-0 ${RANK_COLORS[idx] ?? "text-gray-500"}`}>
+                  <span className={`text-sm font-bold w-6 text-center flex-shrink-0 ${RANK_COLORS[idx] ?? "text-slate-500"}`}>
                     #{idx + 1}
                   </span>
 
                   {/* UPI + reason */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-mono text-gray-200 truncate">{item.upiId}</p>
+                    <p className="text-sm font-mono text-slate-200 truncate">{item.upiId}</p>
                     {topReason && (
                       <span className={`text-xs px-2 py-0.5 rounded-full border mt-1 inline-block ${REASON_COLORS[topReason] ?? REASON_COLORS["Other"]}`}>
                         {topReason}
@@ -232,13 +232,13 @@ function Leaderboard({ reports, onUpvote, currentUid }) {
                   {/* Count */}
                   <div className="text-center flex-shrink-0">
                     <p className="text-sm font-bold text-red-400">{item.count}</p>
-                    <p className="text-xs text-gray-500">reports</p>
+                    <p className="text-xs text-slate-500">reports</p>
                   </div>
 
                   {/* Upvote */}
                   <button
                     onClick={() => item.topDoc && onUpvote(item.topDoc.id)}
-                    className="flex flex-col items-center gap-0.5 text-gray-500 hover:text-blue-400 transition-colors flex-shrink-0"
+                    className="flex flex-col items-center gap-0.5 text-slate-500 hover:text-cyan-400 transition-colors flex-shrink-0"
                     title="Upvote"
                   >
                     <ChevronUp className="h-4 w-4" />
@@ -267,26 +267,26 @@ function FeedItem({ report, onCorroborate, currentUid }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, height: 0 }}
       transition={{ duration: 0.25 }}
-      className="p-4 rounded-xl bg-gray-800 border border-gray-700 hover:border-gray-600 transition-colors"
+      className="p-4 rounded-xl bg-gray-800 border border-white/[0.07] hover:border-white/[0.09] transition-colors"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <ShieldAlert className="h-3.5 w-3.5 text-red-400 flex-shrink-0" />
-            <span className="text-sm font-mono font-semibold text-gray-100 truncate">{report.upiId}</span>
+            <span className="text-sm font-mono font-semibold text-white truncate">{report.upiId}</span>
             <span className={`text-xs px-2 py-0.5 rounded-full border ${reasonColor}`}>
               {report.reason}
             </span>
           </div>
           {report.description && (
-            <p className="text-xs text-gray-400 line-clamp-2 mt-1">{report.description}</p>
+            <p className="text-xs text-slate-400 line-clamp-2 mt-1">{report.description}</p>
           )}
-          <div className="flex items-center gap-3 mt-2 text-xs text-gray-600">
+          <div className="flex items-center gap-3 mt-2 text-xs text-slate-600">
             <span className="flex items-center gap-1">
               <Clock className="h-3 w-3" /> {timeAgo(report.createdAt)}
             </span>
             {(report.corroborators?.length ?? 0) > 0 && (
-              <span className="flex items-center gap-1 text-blue-400">
+              <span className="flex items-center gap-1 text-cyan-400">
                 <Users className="h-3 w-3" /> {report.corroborators.length} corroborated
               </span>
             )}
@@ -299,7 +299,7 @@ function FeedItem({ report, onCorroborate, currentUid }) {
           className={`flex-shrink-0 flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border transition-all ${
             alreadyCorroborated
               ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400 cursor-default"
-              : "border-gray-600 text-gray-400 hover:border-blue-500/50 hover:text-blue-400 hover:bg-blue-500/10"
+              : "border-white/[0.09] text-slate-400 hover:border-blue-500/50 hover:text-cyan-400 hover:bg-blue-500/10"
           }`}
           title={alreadyCorroborated ? "You corroborated this" : "Corroborate this report"}
         >
@@ -321,11 +321,11 @@ function MyReports({ reports, currentUid }) {
 
   if (mine.length === 0) {
     return (
-      <Card className="bg-gray-800/50 border-gray-700">
+      <Card className="bg-slate-900/60 border-white/[0.06]">
         <CardContent className="flex flex-col items-center py-12 gap-3">
-          <Flag className="h-10 w-10 text-gray-600" />
-          <p className="text-gray-400 font-medium">No reports yet</p>
-          <p className="text-xs text-gray-600">Reports you submit will appear here</p>
+          <Flag className="h-10 w-10 text-slate-600" />
+          <p className="text-slate-400 font-medium">No reports yet</p>
+          <p className="text-xs text-slate-600">Reports you submit will appear here</p>
         </CardContent>
       </Card>
     )
@@ -339,27 +339,27 @@ function MyReports({ reports, currentUid }) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.04 }}
-          className="p-4 rounded-xl bg-gray-800 border border-gray-700"
+          className="p-4 rounded-xl bg-gray-800 border border-white/[0.07]"
         >
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-1">
-                <span className="text-sm font-mono font-semibold text-gray-100">{r.upiId}</span>
+                <span className="text-sm font-mono font-semibold text-white">{r.upiId}</span>
                 <span className={`text-xs px-2 py-0.5 rounded-full border ${REASON_COLORS[r.reason] ?? REASON_COLORS["Other"]}`}>
                   {r.reason}
                 </span>
               </div>
               {r.description && (
-                <p className="text-xs text-gray-400 line-clamp-2">{r.description}</p>
+                <p className="text-xs text-slate-400 line-clamp-2">{r.description}</p>
               )}
-              <p className="text-xs text-gray-600 mt-1">{timeAgo(r.createdAt)}</p>
+              <p className="text-xs text-slate-600 mt-1">{timeAgo(r.createdAt)}</p>
             </div>
             <div className="text-right flex-shrink-0">
               <span className="text-xs px-2 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
                 Submitted
               </span>
               {(r.corroborators?.length ?? 0) > 0 && (
-                <p className="text-xs text-blue-400 mt-1">{r.corroborators.length} corroboration{r.corroborators.length !== 1 ? "s" : ""}</p>
+                <p className="text-xs text-cyan-400 mt-1">{r.corroborators.length} corroboration{r.corroborators.length !== 1 ? "s" : ""}</p>
               )}
             </div>
           </div>
@@ -465,8 +465,8 @@ export default function CommunityReports() {
   const topReason     = Object.entries(reasonCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "—"
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -485,8 +485,8 @@ export default function CommunityReports() {
                 <Users className="h-6 w-6 text-orange-400" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-100">Community Fraud Reports</h1>
-                <p className="text-sm text-gray-400">Crowdsourced fraud intelligence — report suspicious UPIs to protect others</p>
+                <h1 className="text-2xl font-bold text-white">Community Fraud Reports</h1>
+                <p className="text-sm text-slate-400">Crowdsourced fraud intelligence — report suspicious UPIs to protect others</p>
               </div>
             </div>
           </motion.div>
@@ -506,12 +506,12 @@ export default function CommunityReports() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Card className="bg-gray-800 border-gray-700">
+                  <Card className="bg-slate-900/80 border-white/[0.07]">
                     <CardContent className="p-3 flex items-center gap-3">
                       <Icon className={`h-5 w-5 ${s.color} flex-shrink-0`} />
                       <div className="min-w-0">
                         <p className={`font-bold ${s.color} ${s.small ? "text-sm" : "text-xl"} truncate`}>{s.value}</p>
-                        <p className="text-xs text-gray-500 truncate">{s.label}</p>
+                        <p className="text-xs text-slate-500 truncate">{s.label}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -526,7 +526,7 @@ export default function CommunityReports() {
           </div>
 
           {/* ── Tabs ─────────────────────────────────────────────────────────── */}
-          <div className="flex gap-1 mb-5 bg-gray-800 border border-gray-700 rounded-xl p-1">
+          <div className="flex gap-1 mb-5 bg-gray-800 border border-white/[0.07] rounded-xl p-1">
             {TABS.map(tab => (
               <button
                 key={tab}
@@ -534,7 +534,7 @@ export default function CommunityReports() {
                 className={`flex-1 text-sm font-medium py-2 rounded-lg transition-all duration-150 ${
                   activeTab === tab
                     ? "bg-blue-600 text-white shadow-md"
-                    : "text-gray-400 hover:text-gray-200"
+                    : "text-slate-400 hover:text-slate-200"
                 }`}
               >
                 {tab}
@@ -569,11 +569,11 @@ export default function CommunityReports() {
                 {activeTab === "Feed" && (
                   <div className="space-y-3">
                     {reports.length === 0 ? (
-                      <Card className="bg-gray-800/50 border-gray-700">
+                      <Card className="bg-slate-900/60 border-white/[0.06]">
                         <CardContent className="flex flex-col items-center py-12 gap-3">
-                          <Users className="h-10 w-10 text-gray-600" />
-                          <p className="text-gray-400 font-medium">No community reports yet</p>
-                          <p className="text-xs text-gray-600">Be the first to report a suspicious UPI</p>
+                          <Users className="h-10 w-10 text-slate-600" />
+                          <p className="text-slate-400 font-medium">No community reports yet</p>
+                          <p className="text-xs text-slate-600">Be the first to report a suspicious UPI</p>
                         </CardContent>
                       </Card>
                     ) : (

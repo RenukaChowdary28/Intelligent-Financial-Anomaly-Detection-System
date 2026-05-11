@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
@@ -26,14 +26,14 @@ const MODEL_COLORS = { isolation_forest: "#3b82f6", autoencoder: "#a855f7" };
 
 function ConfusionMatrix({ matrix }) {
   if (!matrix || matrix.length < 2)
-    return <p className="text-gray-500 text-sm">No labels in dataset (unsupervised mode)</p>;
+    return <p className="text-slate-500 text-sm">No labels in dataset (unsupervised mode)</p>;
   const [[tn, fp], [fn, tp]] = matrix;
   const total = tn + fp + fn + tp;
   const cells = [
     { label: "True Negative",  value: tn, color: "bg-green-500/20 border-green-500/40 text-green-400" },
     { label: "False Positive", value: fp, color: "bg-red-500/20 border-red-500/40 text-red-400" },
     { label: "False Negative", value: fn, color: "bg-yellow-500/20 border-yellow-500/40 text-yellow-400" },
-    { label: "True Positive",  value: tp, color: "bg-blue-500/20 border-blue-500/40 text-blue-400" },
+    { label: "True Positive",  value: tp, color: "bg-blue-500/20 border-blue-500/40 text-cyan-400" },
   ];
   return (
     <div>
@@ -46,10 +46,10 @@ function ConfusionMatrix({ matrix }) {
           </div>
         ))}
       </div>
-      <div className="text-xs text-gray-500 text-center">
-        <span className="text-gray-400">Predicted: </span>
+      <div className="text-xs text-slate-500 text-center">
+        <span className="text-slate-400">Predicted: </span>
         <span className="mr-4">← Negative &nbsp;&nbsp; Positive →</span>
-        <span className="text-gray-400">Actual: </span>
+        <span className="text-slate-400">Actual: </span>
         <span>↑ Negative &nbsp;&nbsp; Positive ↓</span>
       </div>
     </div>
@@ -72,9 +72,9 @@ function RiskTierBar({ tiers }) {
         <div key={key}>
           <div className="flex justify-between text-xs mb-1">
             <span className={text}>{label}</span>
-            <span className="text-gray-400">{tiers[key] ?? 0} ({pct(tiers[key] ?? 0)}%)</span>
+            <span className="text-slate-400">{tiers[key] ?? 0} ({pct(tiers[key] ?? 0)}%)</span>
           </div>
-          <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-white/[0.07] rounded-full overflow-hidden">
             <div className={`h-full rounded-full ${color}`} style={{ width: `${pct(tiers[key] ?? 0)}%` }} />
           </div>
         </div>
@@ -191,8 +191,8 @@ export default function DetectionResults() {
   const diagLine = [{ fpr: 0, tpr: 0 }, { fpr: 1, tpr: 1 }];
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -203,14 +203,14 @@ export default function DetectionResults() {
           {/* ── Page title + model tabs + export ── */}
           <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
             <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-              className="text-2xl font-bold text-blue-400">
+              className="text-2xl font-bold text-cyan-400">
               Detection Results
             </motion.h1>
             <div className="flex gap-2 flex-wrap">
               {results && Object.keys(results).map((k) => (
                 <button key={k} onClick={() => setSelected(k)}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
-                    selected === k ? "border-blue-500 bg-blue-500/20 text-blue-300" : "border-gray-700 text-gray-400 hover:border-gray-500"
+                    selected === k ? "border-blue-500 bg-blue-500/20 text-blue-300" : "border-white/[0.07] text-slate-400 hover:border-gray-500"
                   }`}>
                   {MODEL_LABELS[k] ?? k}
                 </button>
@@ -218,11 +218,11 @@ export default function DetectionResults() {
               {model && !model.error && (
                 <>
                   <Button onClick={exportCSV} size="sm" variant="outline"
-                    className="border-gray-600 text-gray-300 hover:text-white flex items-center gap-1">
+                    className="border-white/[0.09] text-slate-300 hover:text-white flex items-center gap-1">
                     <Download className="h-4 w-4" /> Export CSV
                   </Button>
                   <Button onClick={exportFromBackend} size="sm" variant="outline" disabled={exportLoading}
-                    className="border-blue-600 text-blue-400 hover:text-white flex items-center gap-1">
+                    className="border-blue-600 text-cyan-400 hover:text-white flex items-center gap-1">
                     <Download className="h-4 w-4" /> {exportLoading ? "Exporting…" : "Full Export"}
                   </Button>
                 </>
@@ -233,8 +233,8 @@ export default function DetectionResults() {
           {/* ── Next Steps bar — always visible at top ── */}
           {results && (
             <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-              className="flex flex-wrap gap-2 mb-6 p-3 bg-gray-800/80 border border-gray-700 rounded-xl">
-              <span className="text-xs text-gray-500 self-center mr-1 shrink-0">Next step:</span>
+              className="flex flex-wrap gap-2 mb-6 p-3 bg-gray-800/80 border border-white/[0.07] rounded-xl">
+              <span className="text-xs text-slate-500 self-center mr-1 shrink-0">Next step:</span>
               {[
                 { label: "Model Comparison", path: "/model-comparison", icon: GitCompare,   color: "bg-purple-600 hover:bg-purple-700" },
                 { label: "Check Transaction", path: "/check-transaction", icon: ScanSearch,  color: "bg-yellow-600 hover:bg-yellow-700" },
@@ -281,10 +281,10 @@ export default function DetectionResults() {
                   { label: "Recall",    value: model.recall    != null ? `${(model.recall*100).toFixed(1)}%`    : "—", icon: TrendingUp, color: "yellow" },
                   { label: "AUC-ROC",   value: model.auc       != null ? model.auc.toFixed(3) : "—",            icon: TrendingUp, color: "purple" },
                 ].map((m) => (
-                  <Card key={m.label} className="bg-gray-800 border-gray-700">
+                  <Card key={m.label} className="bg-slate-900/80 border-white/[0.07]">
                     <CardContent className="pt-4 pb-3">
                       <div className="flex justify-between items-start">
-                        <p className="text-xs text-gray-400">{m.label}</p>
+                        <p className="text-xs text-slate-400">{m.label}</p>
                         <m.icon className={`h-3.5 w-3.5 text-${m.color}-400`} />
                       </div>
                       <p className={`text-xl font-bold text-${m.color}-400 mt-1`}>{m.value}</p>
@@ -296,7 +296,7 @@ export default function DetectionResults() {
               {/* Risk Tier Breakdown */}
               {model.risk_tiers && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                  <Card className="bg-gray-800 border-gray-700">
+                  <Card className="bg-slate-900/80 border-white/[0.07]">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base text-orange-400 flex items-center gap-2">
                         <ShieldAlert className="h-4 w-4" /> Risk Tier Breakdown
@@ -312,27 +312,27 @@ export default function DetectionResults() {
               {/* Top Anomalous Features */}
               {model.top_anomalous_features?.length > 0 && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
-                  <Card className="bg-gray-800 border-gray-700">
+                  <Card className="bg-slate-900/80 border-white/[0.07]">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base text-red-400 flex items-center gap-2">
                         <Target className="h-4 w-4" /> Top Anomalous Features
-                        <span className="text-xs text-gray-500 font-normal ml-1">— across all flagged transactions</span>
+                        <span className="text-xs text-slate-500 font-normal ml-1">— across all flagged transactions</span>
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-2">
                       {model.top_anomalous_features.map((feat, i) => (
                         <div key={i}>
                           <div className="flex justify-between text-xs mb-0.5">
-                            <span className="text-gray-300">{feat.feature}</span>
+                            <span className="text-slate-300">{feat.feature}</span>
                             <span className="text-red-400 font-mono">{feat.mean_z_score}σ</span>
                           </div>
-                          <div className="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                          <div className="w-full h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                             <div className="h-full rounded-full bg-red-500"
                               style={{ width: `${Math.min(100, feat.mean_z_score * 25)}%` }} />
                           </div>
                         </div>
                       ))}
-                      <p className="text-xs text-gray-600 mt-1">σ = average standard deviations from normal mean in flagged transactions</p>
+                      <p className="text-xs text-slate-600 mt-1">σ = average standard deviations from normal mean in flagged transactions</p>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -342,7 +342,7 @@ export default function DetectionResults() {
               <div>
                 {!showSummary ? (
                   <Button onClick={loadAiSummary} disabled={summaryLoading}
-                    variant="outline" className="w-full border-blue-500/40 text-blue-400 hover:bg-blue-500/10 flex items-center justify-center gap-2">
+                    variant="outline" className="w-full border-blue-500/40 text-cyan-400 hover:bg-blue-500/10 flex items-center justify-center gap-2">
                     {summaryLoading
                       ? <><div className="h-4 w-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin" /> Generating AI Report…</>
                       : <><Brain className="h-4 w-4" /> Generate AI Summary Report</>
@@ -352,23 +352,23 @@ export default function DetectionResults() {
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                     <Card className="bg-gray-800 border-blue-500/20">
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-base text-blue-400 flex items-center gap-2">
+                        <CardTitle className="text-base text-cyan-400 flex items-center gap-2">
                           <Brain className="h-4 w-4" /> AI Summary Report
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
                         {/* Overall assessment */}
-                        <div className="bg-gray-700/50 rounded-lg p-3">
-                          <p className="text-xs font-semibold text-gray-400 mb-1 uppercase tracking-wider">Overall Assessment</p>
-                          <p className="text-sm text-gray-200">{aiSummary.overall_ai_assessment}</p>
+                        <div className="bg-white/[0.04] rounded-lg p-3">
+                          <p className="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wider">Overall Assessment</p>
+                          <p className="text-sm text-slate-200">{aiSummary.overall_ai_assessment}</p>
                         </div>
 
                         {/* Recommended actions */}
                         {aiSummary.recommended_actions?.length > 0 && (
                           <div className="space-y-1.5">
-                            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Recommended Actions</p>
+                            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Recommended Actions</p>
                             {aiSummary.recommended_actions.map((action, i) => (
-                              <div key={i} className="flex items-start gap-2 text-xs text-gray-300">
+                              <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
                                 <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
                                 {action}
                               </div>
@@ -379,7 +379,7 @@ export default function DetectionResults() {
                         {/* Risk distribution */}
                         {aiSummary.risk_distribution && (
                           <div>
-                            <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Combined Risk Distribution</p>
+                            <p className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">Combined Risk Distribution</p>
                             <RiskTierBar tiers={aiSummary.risk_distribution} />
                           </div>
                         )}
@@ -391,15 +391,15 @@ export default function DetectionResults() {
 
               <div className="grid md:grid-cols-2 gap-5">
                 {/* Confusion Matrix */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base text-blue-400">Confusion Matrix</CardTitle>
+                    <CardTitle className="text-base text-cyan-400">Confusion Matrix</CardTitle>
                   </CardHeader>
                   <CardContent><ConfusionMatrix matrix={model.confusion_matrix} /></CardContent>
                 </Card>
 
                 {/* ROC Curve */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-green-400">
                       ROC Curve {model.auc != null ? `(AUC = ${model.auc})` : ""}
@@ -423,7 +423,7 @@ export default function DetectionResults() {
                         </LineChart>
                       </ResponsiveContainer>
                     ) : (
-                      <p className="text-gray-500 text-sm">ROC curve requires a label column in dataset</p>
+                      <p className="text-slate-500 text-sm">ROC curve requires a label column in dataset</p>
                     )}
                   </CardContent>
                 </Card>
@@ -431,7 +431,7 @@ export default function DetectionResults() {
 
               {/* Score distribution */}
               {model.score_distribution?.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-yellow-400">Anomaly Score Distribution</CardTitle>
                   </CardHeader>
@@ -446,7 +446,7 @@ export default function DetectionResults() {
                         <Bar dataKey="count" fill="#f59e0b" radius={[3, 3, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
-                    <p className="text-xs text-gray-500 mt-2 text-center">
+                    <p className="text-xs text-slate-500 mt-2 text-center">
                       Higher scores = more anomalous. Right tail = likely fraud.
                     </p>
                   </CardContent>
@@ -454,20 +454,20 @@ export default function DetectionResults() {
               )}
 
               {/* ── Explain Transaction by Index ── */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base text-cyan-400 flex items-center gap-2">
                     <Search className="h-4 w-4" /> Explain Transaction by Index
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-xs text-gray-400">Enter a dataset row index (0-based) to get a full AI explanation for that transaction.</p>
+                  <p className="text-xs text-slate-400">Enter a dataset row index (0-based) to get a full AI explanation for that transaction.</p>
                   <div className="flex gap-2">
                     <input
                       type="number" min="0" value={explainIdx}
                       onChange={(e) => { setExplainIdx(e.target.value); setExplainResult(null); setExplainError(""); }}
                       placeholder="e.g. 42"
-                      className="flex-1 bg-gray-700 border border-gray-600 text-white text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                      className="flex-1 bg-white/[0.07] border border-white/[0.09] text-white text-sm rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                     />
                     <Button onClick={explainTransaction} disabled={explainLoading || !explainIdx}
                       className="bg-cyan-600 hover:bg-cyan-700 flex items-center gap-1">
@@ -487,24 +487,24 @@ export default function DetectionResults() {
                           <span className={`font-bold text-lg ${explainResult.verdict === "FRAUD" ? "text-red-400" : "text-green-400"}`}>
                             {explainResult.verdict}
                           </span>
-                          <span className="text-gray-400 text-sm ml-2">· {explainResult.fraud_probability}% · {explainResult.risk_level}</span>
+                          <span className="text-slate-400 text-sm ml-2">· {explainResult.fraud_probability}% · {explainResult.risk_level}</span>
                         </div>
-                        <button onClick={() => setExplainResult(null)} className="text-gray-500 hover:text-white">
+                        <button onClick={() => setExplainResult(null)} className="text-slate-500 hover:text-white">
                           <X className="h-4 w-4" />
                         </button>
                       </div>
                       {explainResult.ai_insight && (
-                        <p className="text-xs text-gray-300 italic">{explainResult.ai_insight}</p>
+                        <p className="text-xs text-slate-300 italic">{explainResult.ai_insight}</p>
                       )}
                       {explainResult.suspicious_features?.length > 0 && (
                         <div>
-                          <p className="text-xs text-gray-400 mb-1.5">Suspicious Features:</p>
+                          <p className="text-xs text-slate-400 mb-1.5">Suspicious Features:</p>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                             {explainResult.suspicious_features.map((f, i) => (
-                              <div key={i} className="bg-gray-700/60 rounded p-2 text-xs">
+                              <div key={i} className="bg-white/[0.07]/60 rounded p-2 text-xs">
                                 <span className="text-yellow-400 font-medium">{f.feature}: </span>
                                 <span className="text-white font-mono">{typeof f.value === "number" ? f.value.toFixed(3) : f.value}</span>
-                                <span className="text-gray-400"> — {f.reason}</span>
+                                <span className="text-slate-400"> — {f.reason}</span>
                               </div>
                             ))}
                           </div>
@@ -521,7 +521,7 @@ export default function DetectionResults() {
                   <CardTitle className="text-base text-blue-300 flex items-center gap-2">
                     <ChevronRight className="h-4 w-4" /> Continue Your Analysis
                   </CardTitle>
-                  <p className="text-xs text-gray-400">Detection complete — choose your next step below.</p>
+                  <p className="text-xs text-slate-400">Detection complete — choose your next step below.</p>
                 </CardHeader>
                 <CardContent className="pt-0">
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -575,9 +575,9 @@ export default function DetectionResults() {
                         label: "Run Detection Again",
                         desc: "Try different model settings or a new dataset.",
                         path: "/run-detection",
-                        color: "border-gray-600 bg-gray-800 hover:bg-gray-700",
+                        color: "border-white/[0.09] bg-gray-800 hover:bg-white/[0.07]",
                         badge: null,
-                        textColor: "text-gray-300",
+                        textColor: "text-slate-300",
                       },
                     ].map((step, i) => (
                       <motion.button
@@ -596,7 +596,7 @@ export default function DetectionResults() {
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-gray-400 leading-relaxed">{step.desc}</p>
+                        <p className="text-xs text-slate-400 leading-relaxed">{step.desc}</p>
                         <div className={`flex items-center gap-1 mt-2 text-xs ${step.textColor} opacity-70`}>
                           Go <ChevronRight className="h-3 w-3" />
                         </div>

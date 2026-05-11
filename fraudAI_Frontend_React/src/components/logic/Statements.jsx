@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React, { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -117,11 +117,11 @@ const Statements = () => {
       if (!cu) return
       const userDoc = await getDoc(doc(db, "users", cu.uid))
       if (!userDoc.exists()) return
-      const userData = userDoc.data()
-      setUser(userData)
+      setUser(userDoc.data())
+      // Fetch ALL transactions where userId == current user (covers both outgoing + incoming)
       const snap = await getDocs(query(
         collection(db, "transactions"),
-        where("senderUPI", "==", userData.upiId)
+        where("userId", "==", cu.uid)
       ))
       setTransactions(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     }
@@ -147,11 +147,15 @@ const Statements = () => {
   const monthTx       = activeMonth ? groupedByMonth[activeMonth] || [] : []
   const prevMonthTx   = activeIdx >= 0 && months[activeIdx + 1] ? groupedByMonth[months[activeIdx + 1]] : []
 
-  const filtered = monthTx.filter(tx =>
-    !search ||
-    tx.recipientUPI?.toLowerCase().includes(search.toLowerCase()) ||
-    tx.remarks?.toLowerCase().includes(search.toLowerCase())
-  )
+  const filtered = monthTx.filter(tx => {
+    if (!search) return true
+    const q = search.toLowerCase()
+    return (
+      tx.recipientUPI?.toLowerCase().includes(q) ||
+      tx.senderUPI?.toLowerCase().includes(q) ||
+      tx.remarks?.toLowerCase().includes(q)
+    )
+  })
 
   const totalDebits  = monthTx.filter(tx => tx.type !== "incoming").reduce((s, tx) => s + tx.amount, 0)
   const totalCredits = monthTx.filter(tx => tx.type === "incoming").reduce((s, tx) => s + tx.amount, 0)
@@ -172,8 +176,8 @@ const Statements = () => {
   const MomIcon  = insight?.momPct == null ? null : insight.momPct > 0 ? TrendingUp : TrendingDown
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-gray-100">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
 
@@ -190,10 +194,10 @@ const Statements = () => {
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div>
               <div className="flex items-center gap-3">
-                <FileText className="h-7 w-7 text-blue-400" />
-                <h1 className="text-2xl font-bold text-gray-100">Account Statements</h1>
+                <FileText className="h-7 w-7 text-cyan-400" />
+                <h1 className="text-2xl font-bold text-white">Account Statements</h1>
               </div>
-              <p className="text-sm text-gray-400 mt-1 ml-10">
+              <p className="text-sm text-slate-400 mt-1 ml-10">
                 AI-powered spending analysis & transaction history
               </p>
             </div>
@@ -201,7 +205,7 @@ const Statements = () => {
               variant="outline"
               disabled={!monthTx.length}
               onClick={() => downloadCSV(monthTx, activeMonth)}
-              className="flex items-center gap-2 border-gray-600 text-gray-300 hover:bg-gray-700 disabled:opacity-40"
+              className="flex items-center gap-2 border-white/[0.09] text-slate-300 hover:bg-white/[0.07] disabled:opacity-40"
             >
               <Download className="h-4 w-4" />
               Export CSV
@@ -210,15 +214,15 @@ const Statements = () => {
 
           <div className="grid gap-6 md:grid-cols-4">
             {/* ── Month Selector ───────────────────────────────────────── */}
-            <Card className="bg-gray-800 border-gray-700 md:col-span-1">
+            <Card className="bg-slate-900/80 border-white/[0.07] md:col-span-1">
               <CardHeader className="pb-2">
-                <CardTitle className="text-xs font-medium text-gray-400 flex items-center gap-2">
+                <CardTitle className="text-xs font-medium text-slate-400 flex items-center gap-2">
                   <Calendar className="h-4 w-4" /> Select Month
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-1 pt-0">
                 {months.length === 0 ? (
-                  <p className="text-gray-500 text-sm py-2">No statements yet</p>
+                  <p className="text-slate-500 text-sm py-2">No statements yet</p>
                 ) : months.map(month => {
                   const mTx = groupedByMonth[month] || []
                   const mFraud = mTx.filter(tx => tx.fraudVerdict === "FRAUD").length
@@ -226,12 +230,12 @@ const Statements = () => {
                     <button key={month} onClick={() => setSelectedMonth(month)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all flex items-center justify-between ${
                         activeMonth === month
-                          ? "bg-blue-600 text-white"
-                          : "text-gray-300 hover:bg-gray-700"
+                          ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.3)]"
+                          : "text-slate-300 hover:bg-white/[0.07]"
                       }`}>
                       <span>{month}</span>
                       <div className="flex items-center gap-1.5">
-                        <span className={`text-xs ${activeMonth === month ? "text-blue-200" : "text-gray-500"}`}>
+                        <span className={`text-xs ${activeMonth === month ? "text-blue-200" : "text-slate-500"}`}>
                           {mTx.length}
                         </span>
                         {mFraud > 0 && (
@@ -255,11 +259,11 @@ const Statements = () => {
                   { label: "Total Credits", value: `₹${totalCredits.toLocaleString("en-IN")}`, color: "green",  icon: ArrowDownLeft },
                   { label: "AI Flagged",    value: fraudCount,                   color: fraudCount > 0 ? "red" : "green", icon: fraudCount > 0 ? ShieldX : ShieldCheck },
                 ].map(({ label, value, color, icon: Icon }) => (
-                  <Card key={label} className="bg-gray-800 border-gray-700">
+                  <Card key={label} className="bg-slate-900/80 border-white/[0.07]">
                     <CardContent className="pt-4 pb-3">
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="text-xs text-gray-400">{label}</p>
+                          <p className="text-xs text-slate-400">{label}</p>
                           <p className={`text-xl font-bold text-${color}-400 mt-0.5`}>{value}</p>
                         </div>
                         <Icon className={`h-4 w-4 text-${color}-400 mt-0.5`} />
@@ -288,7 +292,7 @@ const Statements = () => {
                       <CardHeader className="pb-3">
                         <div className="flex items-center gap-2">
                           <BrainCircuit className="h-5 w-5 text-purple-400" />
-                          <CardTitle className="text-sm font-semibold text-gray-100">
+                          <CardTitle className="text-sm font-semibold text-white">
                             AI Monthly Insight — {activeMonth}
                           </CardTitle>
                           {fraudCount > 0 && (
@@ -303,7 +307,7 @@ const Statements = () => {
                           {/* Bullets */}
                           <div className="space-y-1.5">
                             {insight.bullets.map((b, i) => (
-                              <div key={i} className="flex items-start gap-2 text-xs text-gray-300">
+                              <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
                                 <span className="text-purple-400 mt-0.5 flex-shrink-0">•</span>
                                 {b}
                               </div>
@@ -313,8 +317,8 @@ const Statements = () => {
                           {/* Category bar chart */}
                           {catChartData.length > 0 && (
                             <div>
-                              <p className="text-xs text-gray-400 mb-2 flex items-center gap-1.5">
-                                <BarChart2 className="h-3.5 w-3.5 text-blue-400" /> Spending by Category
+                              <p className="text-xs text-slate-400 mb-2 flex items-center gap-1.5">
+                                <BarChart2 className="h-3.5 w-3.5 text-cyan-400" /> Spending by Category
                               </p>
                               <ResponsiveContainer width="100%" height={100}>
                                 <BarChart data={catChartData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
@@ -342,7 +346,7 @@ const Statements = () => {
                             : "bg-purple-500/5 border border-purple-500/20"
                         }`}>
                           <Lightbulb className={`h-4 w-4 flex-shrink-0 mt-0.5 ${fraudCount > 0 ? "text-red-400" : "text-yellow-400"}`} />
-                          <p className="text-xs text-gray-300 leading-relaxed">{insight.tip}</p>
+                          <p className="text-xs text-slate-300 leading-relaxed">{insight.tip}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -351,23 +355,23 @@ const Statements = () => {
               </AnimatePresence>
 
               {/* ── Transaction List ─────────────────────────────────── */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between gap-3 flex-wrap">
-                    <CardTitle className="text-base font-semibold text-gray-100">
+                    <CardTitle className="text-base font-semibold text-white">
                       {activeMonth || "No Month Selected"}
                     </CardTitle>
                     <div className="relative">
-                      <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
+                      <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
                       <Input
                         placeholder="Search by UPI or remarks…"
                         value={search}
                         onChange={e => setSearch(e.target.value)}
-                        className="pl-8 pr-8 bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-8 text-sm w-52"
+                        className="pl-8 pr-8 bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-8 text-sm w-52"
                       />
                       {search && (
                         <button onClick={() => setSearch("")}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200">
+                          className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200">
                           <X className="h-3.5 w-3.5" />
                         </button>
                       )}
@@ -377,8 +381,8 @@ const Statements = () => {
 
                 <CardContent>
                   {filtered.length === 0 ? (
-                    <div className="text-center py-10 text-gray-500">
-                      <FileText className="h-10 w-10 mx-auto mb-3 text-gray-600" />
+                    <div className="text-center py-10 text-slate-500">
+                      <FileText className="h-10 w-10 mx-auto mb-3 text-slate-600" />
                       <p>{search ? "No transactions match your search." : "No transactions for this period."}</p>
                     </div>
                   ) : (
@@ -386,6 +390,7 @@ const Statements = () => {
                       {filtered.map((tx, idx) => {
                         const isDebit   = tx.type !== "incoming"
                         const isFlagged = tx.fraudVerdict === "FRAUD"
+                        const counterparty = isDebit ? tx.recipientUPI : tx.senderUPI
                         return (
                           <motion.div
                             key={tx.id}
@@ -395,21 +400,26 @@ const Statements = () => {
                             className={`flex items-center justify-between p-3 rounded-xl transition-colors ${
                               isFlagged
                                 ? "bg-red-500/5 border border-red-500/20 hover:bg-red-500/10"
-                                : "bg-gray-700/60 border border-gray-700 hover:bg-gray-700"
+                                : "bg-white/[0.04] border border-white/[0.07] hover:bg-white/[0.07]"
                             }`}
                           >
                             {/* Left */}
                             <div className="flex items-center gap-3 min-w-0">
-                              <div className={`p-2 rounded-full flex-shrink-0 ${isDebit ? "bg-red-500/20" : "bg-green-500/20"}`}>
+                              <div className={`p-2 rounded-full flex-shrink-0 ${isDebit ? "bg-red-500/15" : "bg-green-500/15"}`}>
                                 {isDebit
                                   ? <ArrowUpRight className="h-4 w-4 text-red-400" />
                                   : <ArrowDownLeft className="h-4 w-4 text-green-400" />
                                 }
                               </div>
                               <div className="min-w-0">
-                                <p className="text-sm font-medium text-gray-100 truncate">{tx.recipientUPI}</p>
+                                <div className="flex items-center gap-1.5">
+                                  <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${isDebit ? "bg-red-500/15 text-red-400" : "bg-green-500/15 text-green-400"}`}>
+                                    {isDebit ? "To" : "From"}
+                                  </span>
+                                  <p className="text-sm font-medium text-white truncate">{counterparty}</p>
+                                </div>
                                 <div className="flex items-center gap-2 mt-0.5">
-                                  <p className="text-xs text-gray-400">
+                                  <p className="text-xs text-slate-400">
                                     {new Date(tx.createdAt.seconds * 1000).toLocaleDateString("en-IN")}
                                   </p>
                                   {tx.remarks && (
@@ -441,7 +451,7 @@ const Statements = () => {
                                   {isDebit ? "-" : "+"}₹{tx.amount.toLocaleString("en-IN")}
                                 </p>
                                 <p className={`text-xs mt-0.5 ${
-                                  tx.status === "Completed" ? "text-gray-500"
+                                  tx.status === "Completed" ? "text-slate-500"
                                   : tx.status === "Pending"  ? "text-yellow-500"
                                   : "text-red-500"
                                 }`}>

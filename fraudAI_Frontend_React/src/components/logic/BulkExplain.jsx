@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -44,11 +44,11 @@ function newRow() {
 function ExplanationCard({ exp, idx }) {
   const [open, setOpen] = useState(false);
   const VIcon = exp.verdict === "FRAUD" ? ShieldX : ShieldCheck;
-  const riskColor = RISK_COLOR[exp.risk_level] || "text-gray-400";
+  const riskColor = RISK_COLOR[exp.risk_level] || "text-slate-400";
 
   return (
     <motion.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}
-      className={`rounded-xl border p-4 ${RISK_BG[exp.risk_level] || "bg-gray-800 border-gray-700"}`}>
+      className={`rounded-xl border p-4 ${RISK_BG[exp.risk_level] || "bg-slate-900/80 border-white/[0.07]"}`}>
       <div className="flex items-center justify-between cursor-pointer" onClick={() => setOpen(o => !o)}>
         <div className="flex items-center gap-3">
           <VIcon className={`h-5 w-5 flex-shrink-0 ${exp.verdict === "FRAUD" ? "text-red-400" : "text-green-400"}`} />
@@ -58,15 +58,15 @@ function ExplanationCard({ exp, idx }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-400">{exp.suspicious_feature_count} suspicious features</span>
-          {open ? <ChevronUp className="h-4 w-4 text-gray-400" /> : <ChevronDown className="h-4 w-4 text-gray-400" />}
+          <span className="text-xs text-slate-400">{exp.suspicious_feature_count} suspicious features</span>
+          {open ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}
         </div>
       </div>
 
       {open && (
         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
-          className="mt-3 pt-3 border-t border-gray-700/60 space-y-2">
-          {exp.ai_insight && <p className="text-xs text-gray-400 italic">{exp.ai_insight}</p>}
+          className="mt-3 pt-3 border-t border-white/[0.07]/60 space-y-2">
+          {exp.ai_insight && <p className="text-xs text-slate-400 italic">{exp.ai_insight}</p>}
           {exp.top_suspicious_features?.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {exp.top_suspicious_features.map((f, i) => (
@@ -75,11 +75,11 @@ function ExplanationCard({ exp, idx }) {
             </div>
           )}
           {exp.feature_analysis?.filter(f => f.suspicious).map((f, i) => (
-            <div key={i} className="text-xs bg-gray-700/50 rounded p-2">
+            <div key={i} className="text-xs bg-white/[0.04] rounded p-2">
               <span className="text-yellow-400 font-medium">{f.feature}: </span>
               <span className="text-white font-mono">{f.value?.toFixed(3)}</span>
-              <span className="text-gray-400"> (p{f.percentile?.toFixed(0)}): </span>
-              <span className="text-gray-300">{f.reason}</span>
+              <span className="text-slate-400"> (p{f.percentile?.toFixed(0)}): </span>
+              <span className="text-slate-300">{f.reason}</span>
             </div>
           ))}
         </motion.div>
@@ -134,54 +134,54 @@ export default function BulkExplain() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <Brain className="h-6 w-6" /> Bulk Explain
             </h1>
-            <p className="text-gray-400 text-sm mb-6">Explain multiple transactions at once with AI-powered feature analysis.</p>
+            <p className="text-slate-400 text-sm mb-6">Explain multiple transactions at once with AI-powered feature analysis.</p>
           </motion.div>
 
           {/* Input rows */}
-          <Card className="bg-gray-800 border-gray-700 mb-5">
+          <Card className="bg-slate-900/80 border-white/[0.07] mb-5">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-300">Transactions to Explain ({rows.length})</CardTitle>
+              <CardTitle className="text-sm text-slate-300">Transactions to Explain ({rows.length})</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {rows.map((row, ri) => (
-                <div key={row.id} className="border border-gray-700 rounded-lg overflow-hidden">
-                  <button className="w-full flex items-center justify-between p-3 bg-gray-700/40 hover:bg-gray-700/60 text-left"
+                <div key={row.id} className="border border-white/[0.07] rounded-lg overflow-hidden">
+                  <button className="w-full flex items-center justify-between p-3 bg-white/[0.03] border border-white/[0.05] hover:bg-white/[0.06]/60 text-left"
                     onClick={() => setExpandedRow(expandedRow === row.id ? null : row.id)}>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-400">#{ri + 1}</span>
+                      <span className="text-xs text-slate-400">#{ri + 1}</span>
                       <Input value={row.txn_id}
                         onChange={(e) => { e.stopPropagation(); updateTxnId(row.id, e.target.value); }}
                         onClick={(e) => e.stopPropagation()}
                         placeholder={`txn_${ri + 1}`}
-                        className="bg-gray-700 border-gray-600 text-white text-xs h-6 px-2 w-32" />
+                        className="bg-white/[0.06] border-white/[0.08] text-white text-xs h-6 px-2 w-32" />
                     </div>
                     <div className="flex items-center gap-2">
                       <button onClick={(e) => { e.stopPropagation(); removeRow(row.id); }}
-                        disabled={rows.length <= 1} className="text-gray-500 hover:text-red-400 disabled:opacity-30">
+                        disabled={rows.length <= 1} className="text-slate-500 hover:text-red-400 disabled:opacity-30">
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
-                      {expandedRow === row.id ? <ChevronUp className="h-4 w-4 text-gray-400" /> : <ChevronDown className="h-4 w-4 text-gray-400" />}
+                      {expandedRow === row.id ? <ChevronUp className="h-4 w-4 text-slate-400" /> : <ChevronDown className="h-4 w-4 text-slate-400" />}
                     </div>
                   </button>
                   {expandedRow === row.id && (
                     <div className="p-3 grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {RF_FEATURES.map((f) => (
                         <div key={f}>
-                          <label className="text-xs text-gray-500 block mb-0.5 truncate">{f}</label>
+                          <label className="text-xs text-slate-500 block mb-0.5 truncate">{f}</label>
                           <Input type="number" value={row.features[f]} step="any"
                             onChange={(e) => updateFeature(row.id, f, e.target.value)}
-                            className="bg-gray-700 border-gray-600 text-white text-xs h-6 px-2" />
+                            className="bg-white/[0.06] border-white/[0.08] text-white text-xs h-6 px-2" />
                         </div>
                       ))}
                     </div>
@@ -191,7 +191,7 @@ export default function BulkExplain() {
 
               <div className="flex gap-3 pt-2">
                 <Button onClick={addRow} variant="outline" size="sm"
-                  className="border-gray-600 text-gray-300 hover:bg-gray-700" disabled={rows.length >= 50}>
+                  className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07]" disabled={rows.length >= 50}>
                   <Plus className="h-4 w-4 mr-1" /> Add Transaction
                 </Button>
                 <Button onClick={submit} disabled={loading} className="bg-blue-600 hover:bg-blue-700 flex-1">
@@ -212,28 +212,28 @@ export default function BulkExplain() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
               {/* Summary */}
               <div className="grid grid-cols-3 gap-3">
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-4 pb-3">
-                    <p className="text-xs text-gray-400">Total Explained</p>
-                    <p className="text-2xl font-bold text-blue-400">{result.total}</p>
+                    <p className="text-xs text-slate-400">Total Explained</p>
+                    <p className="text-2xl font-bold text-cyan-400">{result.total}</p>
                   </CardContent>
                 </Card>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-4 pb-3">
-                    <p className="text-xs text-gray-400">Fraud</p>
+                    <p className="text-xs text-slate-400">Fraud</p>
                     <p className="text-2xl font-bold text-red-400">{result.fraud_count}</p>
                   </CardContent>
                 </Card>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-4 pb-3">
-                    <p className="text-xs text-gray-400">Legitimate</p>
+                    <p className="text-xs text-slate-400">Legitimate</p>
                     <p className="text-2xl font-bold text-green-400">{result.legitimate_count}</p>
                   </CardContent>
                 </Card>
               </div>
 
               <div className="flex justify-end">
-                <Button onClick={exportCSV} variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                <Button onClick={exportCSV} variant="outline" size="sm" className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07]">
                   <Download className="h-4 w-4 mr-1" /> Export CSV
                 </Button>
               </div>

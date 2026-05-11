@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -71,56 +71,56 @@ export default function RequestMoney() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-2xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <HandCoins className="h-6 w-6" /> Request Money
             </h1>
-            <p className="text-gray-400 text-sm mb-6">
+            <p className="text-slate-400 text-sm mb-6">
               Generate a payment link or QR to request money from anyone.
             </p>
           </motion.div>
 
           <div className="space-y-4">
             {/* Form */}
-            <Card className="bg-gray-800 border-gray-700">
+            <Card className="bg-slate-900/80 border-white/[0.07]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm text-gray-300">Request Details</CardTitle>
+                <CardTitle className="text-sm text-slate-300">Request Details</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Your UPI */}
                 <div>
-                  <label className="text-xs text-gray-400 block mb-1">Your UPI ID (receiver)</label>
-                  <div className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-sm font-mono text-blue-300">
+                  <label className="text-xs text-slate-400 block mb-1">Your UPI ID (receiver)</label>
+                  <div className="bg-white/[0.07] border border-white/[0.09] rounded-lg px-3 py-2 text-sm font-mono text-blue-300">
                     {upiId || "Loading…"}
                   </div>
                 </div>
 
                 {/* Amount */}
                 <div>
-                  <label className="text-xs text-gray-400 block mb-1">Amount (optional)</label>
+                  <label className="text-xs text-slate-400 block mb-1">Amount (optional)</label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">₹</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">₹</span>
                     <Input
                       type="number"
                       min="1"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="Leave blank to let payer choose"
-                      className="pl-7 bg-gray-700 border-gray-600 text-white"
+                      className="pl-7 bg-white/[0.06] border-white/[0.08] text-white"
                     />
                   </div>
                 </div>
 
                 {/* Note / purpose */}
                 <div>
-                  <label className="text-xs text-gray-400 block mb-1.5">Purpose (optional)</label>
+                  <label className="text-xs text-slate-400 block mb-1.5">Purpose (optional)</label>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {REMARKS.map((r) => (
                       <button
@@ -129,7 +129,7 @@ export default function RequestMoney() {
                         className={`text-xs px-3 py-1 rounded-full border transition-colors ${
                           note === r.toLowerCase()
                             ? "bg-blue-600 border-blue-500 text-white"
-                            : "border-gray-600 text-gray-400 hover:border-gray-400"
+                            : "border-white/[0.09] text-slate-400 hover:border-gray-400"
                         }`}
                       >
                         {r}
@@ -140,7 +140,7 @@ export default function RequestMoney() {
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
                     placeholder="Or type a custom note…"
-                    className="bg-gray-700 border-gray-600 text-white text-sm"
+                    className="bg-white/[0.06] border-white/[0.08] text-white text-sm"
                   />
                 </div>
 
@@ -158,14 +158,14 @@ export default function RequestMoney() {
             {generatedLink && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
                 {/* Link card */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm text-green-400 flex items-center gap-1.5">
                       <Check className="h-4 w-4" /> Payment Link Ready
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    <div className="bg-gray-700/60 rounded-lg px-3 py-2 text-xs font-mono text-gray-300 break-all">
+                    <div className="bg-white/[0.07]/60 rounded-lg px-3 py-2 text-xs font-mono text-slate-300 break-all">
                       {generatedLink}
                     </div>
                     <div className="flex gap-2">
@@ -173,7 +173,7 @@ export default function RequestMoney() {
                         onClick={handleCopy}
                         variant="outline"
                         size="sm"
-                        className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 text-xs"
+                        className="flex-1 border-white/[0.09] text-slate-300 hover:bg-white/[0.07] text-xs"
                       >
                         {copied ? (
                           <><Check className="h-3.5 w-3.5 mr-1 text-green-400" /> Copied!</>
@@ -193,9 +193,9 @@ export default function RequestMoney() {
                 </Card>
 
                 {/* QR for the link */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-6 pb-6 flex flex-col items-center gap-4">
-                    <p className="text-xs text-gray-400">Scan to pay instantly</p>
+                    <p className="text-xs text-slate-400">Scan to pay instantly</p>
                     <div className="bg-white p-4 rounded-2xl shadow-lg">
                       <QRCodeSVG
                         value={generatedLink}
@@ -208,11 +208,11 @@ export default function RequestMoney() {
                     </div>
                     {amount && (
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-blue-400">₹{parseFloat(amount).toLocaleString()}</p>
-                        {note && <p className="text-xs text-gray-400 mt-0.5">{note}</p>}
+                        <p className="text-2xl font-bold text-cyan-400">₹{parseFloat(amount).toLocaleString()}</p>
+                        {note && <p className="text-xs text-slate-400 mt-0.5">{note}</p>}
                       </div>
                     )}
-                    <p className="text-xs text-gray-500 text-center max-w-xs">
+                    <p className="text-xs text-slate-500 text-center max-w-xs">
                       Share this QR or the link above. Anyone who clicks it will see the Send Money form pre-filled with your details.
                     </p>
                   </CardContent>

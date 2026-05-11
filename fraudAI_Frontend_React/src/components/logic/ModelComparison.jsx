@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -87,10 +87,10 @@ export default function ModelComparison() {
   }, []);
 
   if (!results && !error) return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto"><SidebarContent /></aside>
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0"><SidebarContent /></aside>
       <div className="flex-1 p-6"><Header user={user} />
-        <div className="text-blue-400 animate-pulse mt-10 text-center">Loading results…</div>
+        <div className="text-cyan-400 animate-pulse mt-10 text-center">Loading results…</div>
       </div>
     </div>
   );
@@ -117,20 +117,20 @@ export default function ModelComparison() {
   ] : [];
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto"><SidebarContent /></aside>
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0"><SidebarContent /></aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-5xl mx-auto">
           <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold text-blue-400 mb-6">
+            className="text-2xl font-bold text-cyan-400 mb-6">
             Model Comparison
           </motion.h1>
 
           {error && (
             <div className="flex items-center gap-2 text-red-400 bg-red-400/10 border border-red-400/30 rounded-lg p-3 mb-4">
               <AlertCircle className="h-4 w-4 flex-shrink-0" />{error}
-              <Button variant="ghost" size="sm" className="ml-auto text-blue-400" onClick={() => navigate("/run-detection")}>
+              <Button variant="ghost" size="sm" className="ml-auto text-cyan-400" onClick={() => navigate("/run-detection")}>
                 Run Both Models
               </Button>
             </div>
@@ -141,7 +141,7 @@ export default function ModelComparison() {
               {!isMultiModel && (
                 <div className="flex items-center justify-between bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-sm text-blue-300">
                   <span>Showing 1 model. Train both Isolation Forest + Autoencoder to compare side-by-side.</span>
-                  <Button variant="ghost" size="sm" className="text-blue-400 hover:text-blue-300 shrink-0 ml-2"
+                  <Button variant="ghost" size="sm" className="text-cyan-400 hover:text-blue-300 shrink-0 ml-2"
                     onClick={() => navigate("/run-detection")}>
                     Run Both Models
                   </Button>
@@ -154,17 +154,17 @@ export default function ModelComparison() {
                   <Card className={`border ${
                     recommendation.confidence === "high"   ? "border-green-500/30 bg-green-500/8"  :
                     recommendation.confidence === "medium" ? "border-blue-500/30 bg-blue-500/8"    :
-                                                             "border-gray-600/30 bg-gray-800"
+                                                             "border-white/[0.09]/30 bg-gray-800"
                   }`}>
                     <CardHeader className="pb-2">
                       <CardTitle className={`text-sm flex items-center gap-2 ${
-                        recommendation.confidence === "high" ? "text-green-400" : "text-blue-400"
+                        recommendation.confidence === "high" ? "text-green-400" : "text-cyan-400"
                       }`}>
                         <Brain className="h-4 w-4" /> AI Deployment Recommendation
                         <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${
                           recommendation.confidence === "high"   ? "bg-green-500/20 text-green-300" :
                           recommendation.confidence === "medium" ? "bg-blue-500/20 text-blue-300"   :
-                                                                   "bg-gray-600 text-gray-300"
+                                                                   "bg-white/[0.09] text-slate-300"
                         }`}>
                           {recommendation.confidence.toUpperCase()} CONFIDENCE
                         </span>
@@ -173,9 +173,9 @@ export default function ModelComparison() {
                     <CardContent className="space-y-3">
                       <div className="flex items-start gap-3">
                         <Trophy className={`h-5 w-5 flex-shrink-0 mt-0.5 ${
-                          recommendation.confidence === "high" ? "text-yellow-400" : "text-gray-400"
+                          recommendation.confidence === "high" ? "text-yellow-400" : "text-slate-400"
                         }`} />
-                        <p className="text-sm text-gray-300">{recommendation.reason}</p>
+                        <p className="text-sm text-slate-300">{recommendation.reason}</p>
                       </div>
 
                       {/* Model traits */}
@@ -198,13 +198,13 @@ export default function ModelComparison() {
                             ],
                           },
                         ].filter(m => keys.includes(m.key)).map((m) => (
-                          <div key={m.key} className="bg-gray-700/40 rounded-lg p-3 space-y-1.5">
+                          <div key={m.key} className="bg-white/[0.03] rounded-lg p-3 space-y-1.5">
                             <p className="text-xs font-semibold" style={{ color: COLORS[m.key] ?? "#9ca3af" }}>
                               {MODEL_LABELS[m.key]}
                             </p>
                             {m.traits.map((t, i) => (
-                              <div key={i} className="flex items-center gap-1.5 text-xs text-gray-400">
-                                <t.icon className="h-3 w-3 text-gray-500" />{t.text}
+                              <div key={i} className="flex items-center gap-1.5 text-xs text-slate-400">
+                                <t.icon className="h-3 w-3 text-slate-500" />{t.text}
                               </div>
                             ))}
                           </div>
@@ -216,22 +216,22 @@ export default function ModelComparison() {
               )}
 
               {/* Performance metrics table */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base text-blue-400">Performance Metrics</CardTitle>
+                  <CardTitle className="text-base text-cyan-400">Performance Metrics</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="border-b border-gray-700">
-                          <th className="text-left text-gray-400 py-2 pr-6">Metric</th>
+                        <tr className="border-b border-white/[0.07]">
+                          <th className="text-left text-slate-400 py-2 pr-6">Metric</th>
                           {keys.map((k) => (
                             <th key={k} className="text-right py-2 px-4" style={{ color: COLORS[k] ?? "#9ca3af" }}>
                               {MODEL_LABELS[k] ?? k}
                             </th>
                           ))}
-                          {isMultiModel && <th className="text-right py-2 px-4 text-gray-400">Winner</th>}
+                          {isMultiModel && <th className="text-right py-2 px-4 text-slate-400">Winner</th>}
                         </tr>
                       </thead>
                       <tbody>
@@ -248,10 +248,10 @@ export default function ModelComparison() {
                             : Math.min(...vals.filter((v) => v != null));
                           const winner = isMultiModel ? keys.find((k) => results[k][row.key] === best) : null;
                           return (
-                            <tr key={row.label} className="border-b border-gray-700/50">
-                              <td className="py-2 pr-6 text-gray-300">{row.label}</td>
+                            <tr key={row.label} className="border-b border-white/[0.07]/50">
+                              <td className="py-2 pr-6 text-slate-300">{row.label}</td>
                               {keys.map((k) => (
-                                <td key={k} className={`text-right py-2 px-4 font-mono ${k === winner ? "font-bold text-white" : "text-gray-400"}`}>
+                                <td key={k} className={`text-right py-2 px-4 font-mono ${k === winner ? "font-bold text-white" : "text-slate-400"}`}>
                                   {row.format(results[k][row.key])}{k === winner && results[k][row.key] != null && " ✓"}
                                 </td>
                               ))}
@@ -271,7 +271,7 @@ export default function ModelComparison() {
 
               {/* Radar Chart */}
               {radarData.length > 0 && isMultiModel && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-purple-400">Capability Radar</CardTitle>
                   </CardHeader>
@@ -296,7 +296,7 @@ export default function ModelComparison() {
 
               {/* Metrics bar chart */}
               {metricsData.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-green-400">Metrics Comparison Chart</CardTitle>
                   </CardHeader>
@@ -319,17 +319,17 @@ export default function ModelComparison() {
               )}
 
               {/* Fraud detection counts */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-base text-yellow-400">Fraud Detection Counts</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className={`grid gap-4 mb-4 ${isMultiModel ? "grid-cols-2" : "grid-cols-1 max-w-xs"}`}>
                     {keys.map((k) => (
-                      <div key={k} className="bg-gray-700/50 rounded-lg p-4 text-center">
-                        <p className="text-xs text-gray-400 mb-1">{MODEL_LABELS[k] ?? k}</p>
+                      <div key={k} className="bg-white/[0.04] rounded-lg p-4 text-center">
+                        <p className="text-xs text-slate-400 mb-1">{MODEL_LABELS[k] ?? k}</p>
                         <p className="text-3xl font-bold" style={{ color: COLORS[k] }}>{results[k].fraud_detected}</p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-slate-400">
                           / {results[k].total} total ({results[k].total ? ((results[k].fraud_detected / results[k].total) * 100).toFixed(1) : 0}%)
                         </p>
                       </div>
@@ -340,7 +340,7 @@ export default function ModelComparison() {
 
               {/* Top Feature Importance from /model-comparison */}
               {comparisonData?.rf_feature_importance_top10?.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-cyan-400">Top 10 RF Feature Importances</CardTitle>
                   </CardHeader>
@@ -348,10 +348,10 @@ export default function ModelComparison() {
                     {comparisonData.rf_feature_importance_top10.map((f, i) => (
                       <div key={i}>
                         <div className="flex justify-between text-xs mb-0.5">
-                          <span className="text-gray-300 truncate">{f.feature}</span>
+                          <span className="text-slate-300 truncate">{f.feature}</span>
                           <span className="text-cyan-400 font-mono ml-2">{f.importance_pct?.toFixed(2)}%</span>
                         </div>
-                        <div className="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                           <div className="h-full rounded-full bg-cyan-500" style={{ width: `${Math.min(100, f.importance_pct)}%` }} />
                         </div>
                       </div>
@@ -364,12 +364,12 @@ export default function ModelComparison() {
               {comparisonData?.ai_summary && (
                 <Card className="bg-blue-500/5 border-blue-500/20">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-blue-400 flex items-center gap-2">
+                    <CardTitle className="text-sm text-cyan-400 flex items-center gap-2">
                       <Brain className="h-4 w-4" /> AI Model Summary
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-gray-300 leading-relaxed">{comparisonData.ai_summary}</p>
+                    <p className="text-sm text-slate-300 leading-relaxed">{comparisonData.ai_summary}</p>
                     {comparisonData.best_model && (
                       <p className="text-xs text-green-400 mt-2">
                         Best model: {MODEL_LABELS[comparisonData.best_model] ?? comparisonData.best_model}

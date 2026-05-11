@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+﻿import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -50,13 +50,13 @@ const EXAMPLES = [
 ];
 
 const INTENT_META = {
-  send_money:    { label: "Send Money",    color: "text-blue-400",    badge: "bg-blue-500/20 border-blue-500/40" },
+  send_money:    { label: "Send Money",    color: "text-cyan-400",    badge: "bg-blue-500/20 border-blue-500/40" },
   check_upi:     { label: "Check UPI",     color: "text-yellow-400",  badge: "bg-yellow-500/20 border-yellow-500/40" },
   check_balance: { label: "Balance",       color: "text-green-400",   badge: "bg-green-500/20 border-green-500/40" },
   view_history:  { label: "History",       color: "text-purple-400",  badge: "bg-purple-500/20 border-purple-500/40" },
   fraud_check:   { label: "Fraud Check",   color: "text-red-400",     badge: "bg-red-500/20 border-red-500/40" },
   navigate:      { label: "Navigate",      color: "text-cyan-400",    badge: "bg-cyan-500/20 border-cyan-500/40" },
-  unknown:       { label: "Unknown",       color: "text-gray-400",    badge: "bg-gray-500/20 border-gray-500/40" },
+  unknown:       { label: "Unknown",       color: "text-slate-400",    badge: "bg-white/[0.03]0/20 border-gray-500/40" },
 };
 
 // Stable random heights for waveform bars — generated once, never change
@@ -187,7 +187,7 @@ function Bubble({ msg }) {
       <div className={`max-w-[85%] text-sm leading-relaxed shadow
         ${isUser
           ? "bg-gradient-to-br from-violet-600 to-blue-600 text-white rounded-2xl rounded-tr-sm px-4 py-3"
-          : "bg-gray-900/90 border border-gray-800 text-gray-100 rounded-2xl rounded-tl-sm px-4 py-3"
+          : "bg-gray-900/90 border border-white/[0.05] text-white rounded-2xl rounded-tl-sm px-4 py-3"
         }`}
       >
         {msg.content && <p>{msg.content}</p>}
@@ -222,7 +222,7 @@ function Bubble({ msg }) {
               onChange={e => setInputVal(e.target.value)}
               onKeyDown={e => e.key === "Enter" && inputVal.includes("@") && msg.onSubmit?.(inputVal)}
               placeholder="e.g. rajan@ybl, alice@paytm"
-              className="w-full bg-gray-900/70 border border-gray-600 focus:border-violet-500
+              className="w-full bg-gray-900/70 border border-white/[0.09] focus:border-violet-500
                          rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500
                          outline-none transition-colors"
               autoFocus
@@ -236,8 +236,8 @@ function Bubble({ msg }) {
                     const val  = base + suffix;
                     setInputVal(val);
                   }}
-                  className="text-[10px] bg-gray-700/60 hover:bg-violet-600/40 border border-gray-600
-                             hover:border-violet-500 rounded-full px-2 py-0.5 transition-colors text-gray-300">
+                  className="text-[10px] bg-white/[0.07]/60 hover:bg-violet-600/40 border border-white/[0.09]
+                             hover:border-violet-500 rounded-full px-2 py-0.5 transition-colors text-slate-300">
                   {suffix}
                 </button>
               ))}
@@ -258,14 +258,14 @@ function Bubble({ msg }) {
         {msg.form === "amount" && (
           <div className="mt-3 space-y-2">
             <div className="flex gap-2">
-              <span className="text-gray-400 self-center text-base">₹</span>
+              <span className="text-slate-400 self-center text-base">₹</span>
               <input
                 type="number"
                 value={inputVal}
                 onChange={e => setInputVal(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && inputVal && msg.onSubmit?.(inputVal)}
                 placeholder="Enter amount"
-                className="flex-1 bg-gray-900/70 border border-gray-600 focus:border-violet-500
+                className="flex-1/70 border border-white/[0.09] focus:border-violet-500
                            rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500
                            outline-none transition-colors"
                 autoFocus
@@ -274,8 +274,8 @@ function Bubble({ msg }) {
             <div className="flex flex-wrap gap-1.5">
               {["100","500","1000","2000","5000"].map(v => (
                 <button key={v} onClick={() => setInputVal(v)}
-                  className="text-[11px] bg-gray-700/60 hover:bg-violet-600/40 border border-gray-600
-                             hover:border-violet-500 rounded-full px-2.5 py-0.5 transition-colors text-gray-300">
+                  className="text-[11px] bg-white/[0.07]/60 hover:bg-violet-600/40 border border-white/[0.09]
+                             hover:border-violet-500 rounded-full px-2.5 py-0.5 transition-colors text-slate-300">
                   ₹{v}
                 </button>
               ))}
@@ -304,7 +304,7 @@ function Bubble({ msg }) {
       </div>
 
       {isUser && (
-        <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center
+        <div className="w-8 h-8 rounded-full bg-white/[0.07] flex items-center justify-center
                         flex-shrink-0 mt-0.5 text-sm">
           🎤
         </div>
@@ -331,10 +331,10 @@ function SlotPills({ slots }) {
           className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs border transition-all
             ${item.value
               ? "bg-gray-900 border-violet-500/50 text-white"
-              : "bg-gray-900/50 border-gray-700 text-gray-600 border-dashed"
+              : "bg-gray-900/50 border-white/[0.07] text-slate-600 border-dashed"
             }`}
         >
-          <span className={item.value ? "text-violet-400" : "text-gray-600"}>{item.icon}</span>
+          <span className={item.value ? "text-violet-400" : "text-slate-600"}>{item.icon}</span>
           {item.value
             ? (
               <>
@@ -718,7 +718,7 @@ export default function VoicePayAssistant() {
 
   return (
     <div className="flex min-h-screen bg-[#0a0a0f] text-white">
-      <aside className="hidden lg:flex flex-col w-64 flex-shrink-0 min-h-screen bg-gray-950 border-r border-gray-800/60">
+      <aside className="hidden lg:flex flex-col w-64 flex-shrink-0 min-h-screen bg-gray-950 border-r border-white/[0.05]/60">
         <SidebarContent />
       </aside>
 
@@ -731,7 +731,7 @@ export default function VoicePayAssistant() {
           <div className="flex-1 flex flex-col min-w-0 min-h-0">
 
             {/* Title bar */}
-            <div className="flex-shrink-0 px-6 pt-5 pb-3 flex items-center justify-between border-b border-gray-800/40">
+            <div className="flex-shrink-0 px-6 pt-5 pb-3 flex items-center justify-between border-b border-white/[0.06]/40">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-600
                                 flex items-center justify-center shadow-lg shadow-violet-500/30">
@@ -739,11 +739,11 @@ export default function VoicePayAssistant() {
                 </div>
                 <div>
                   <h1 className="text-lg font-bold text-white leading-none">Voice Pay Assistant</h1>
-                  <p className="text-xs text-gray-500 mt-0.5">AI-powered · multi-turn · natural language</p>
+                  <p className="text-xs text-slate-500 mt-0.5">AI-powered · multi-turn · natural language</p>
                 </div>
               </div>
               <button onClick={resetChat}
-                className="text-gray-500 hover:text-gray-300 p-1.5 rounded-lg hover:bg-gray-800 transition-colors">
+                className="text-slate-500 hover:text-slate-300 p-1.5 rounded-lg hover:bg-white/[0.04] transition-colors">
                 <RefreshCw className="h-4 w-4" />
               </button>
             </div>
@@ -761,7 +761,7 @@ export default function VoicePayAssistant() {
                 key={guideText}
                 initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
                 className={`text-sm font-medium ${
-                  orbState === "idle"      ? "text-gray-500"   :
+                  orbState === "idle"      ? "text-slate-500"   :
                   orbState === "listening" ? "text-rose-400"   :
                   orbState === "thinking"  ? "text-amber-400"  :
                                             "text-emerald-400"
@@ -774,10 +774,10 @@ export default function VoicePayAssistant() {
               {transcript && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                  className="mx-6 px-4 py-2 bg-gray-900/60 border border-gray-700/50 rounded-2xl
-                             text-sm text-gray-300 text-center max-w-sm"
+                  className="mx-6 px-4 py-2 bg-gray-900/60 border border-white/[0.07]/50 rounded-2xl
+                             text-sm text-slate-300 text-center max-w-sm"
                 >
-                  <span className="text-gray-500 text-xs mr-1">Heard</span>
+                  <span className="text-slate-500 text-xs mr-1">Heard</span>
                   "{transcript}"
                 </motion.div>
               )}
@@ -799,7 +799,7 @@ export default function VoicePayAssistant() {
                     className="w-full px-4"
                     onClick={e => e.stopPropagation()}
                   >
-                    <p className="text-center text-[10px] text-gray-600 uppercase tracking-wider mb-2 flex items-center justify-center gap-1">
+                    <p className="text-center text-[10px] text-slate-600 uppercase tracking-wider mb-2 flex items-center justify-center gap-1">
                       <Wand2 className="h-3 w-3" /> AI understood
                     </p>
                     <SlotPills slots={detectedSlots} />
@@ -815,12 +815,12 @@ export default function VoicePayAssistant() {
                     className="flex items-center gap-2 flex-wrap justify-center px-4"
                     onClick={e => e.stopPropagation()}
                   >
-                    <span className="text-[10px] text-gray-600 uppercase tracking-wider mr-1">Quick amount:</span>
+                    <span className="text-[10px] text-slate-600 uppercase tracking-wider mr-1">Quick amount:</span>
                     {["100","500","1000","2000","5000"].map(v => (
                       <button key={v}
                         onClick={() => tryExample(`₹${v}`)}
-                        className="text-xs bg-gray-900 border border-gray-700 hover:border-violet-500/50
-                                   hover:text-violet-300 rounded-full px-3 py-1 transition-all text-gray-400">
+                        className="text-xs bg-gray-900 border border-white/[0.07] hover:border-violet-500/50
+                                   hover:text-violet-300 rounded-full px-3 py-1 transition-all text-slate-400">
                         ₹{Number(v).toLocaleString("en-IN")}
                       </button>
                     ))}
@@ -846,9 +846,9 @@ export default function VoicePayAssistant() {
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
                         onClick={() => tryExample(card.text)}
-                        className="flex-shrink-0 flex items-center gap-2 bg-gray-900/80 border border-gray-800
-                                   hover:border-violet-500/40 rounded-2xl px-3 py-2 text-xs text-gray-400
-                                   hover:text-gray-200 transition-all"
+                        className="flex-shrink-0 flex items-center gap-2 bg-gray-900/80 border border-white/[0.05]
+                                   hover:border-violet-500/40 rounded-2xl px-3 py-2 text-xs text-slate-400
+                                   hover:text-slate-200 transition-all"
                       >
                         <span>{card.icon}</span>
                         <span>{card.label}</span>
@@ -869,32 +869,32 @@ export default function VoicePayAssistant() {
           </div>
 
           {/* ── Right panel ── */}
-          <div className="hidden xl:flex flex-col w-72 border-l border-gray-800/40 bg-gray-950/50 overflow-y-auto">
+          <div className="hidden xl:flex flex-col w-72 border-l border-white/[0.05]/40 bg-gray-950/50 overflow-y-auto">
 
             {/* Section 1: Quick Pay */}
-            <div className="p-4 border-b border-gray-800/40">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <div className="p-4 border-b border-white/[0.06]/40">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
                 <Zap className="h-3.5 w-3.5 text-yellow-400" /> Quick Pay
               </p>
               <div className="space-y-2">
                 {EXAMPLES.map((ex, i) => (
                   <motion.button key={i} whileHover={{ x: 3 }} onClick={() => tryExample(ex.text)}
                     className="w-full text-left flex items-start gap-2.5 px-3 py-2.5 rounded-xl
-                               bg-gray-900/60 hover:bg-gray-800/80 border border-gray-800
-                               hover:border-gray-700 transition-all group">
+                               bg-gray-900/60 hover:bg-white/[0.04]/80 border border-white/[0.05]
+                               hover:border-white/[0.07] transition-all group">
                     <span className="text-base flex-shrink-0 mt-0.5">{ex.icon}</span>
-                    <p className="text-xs text-gray-400 group-hover:text-gray-200 transition-colors leading-relaxed flex-1">
+                    <p className="text-xs text-slate-400 group-hover:text-slate-200 transition-colors leading-relaxed flex-1">
                       {ex.text}
                     </p>
-                    <ArrowRight className="h-3 w-3 text-gray-700 group-hover:text-violet-400 flex-shrink-0 mt-1 transition-colors" />
+                    <ArrowRight className="h-3 w-3 text-slate-300 group-hover:text-violet-400 flex-shrink-0 mt-1 transition-colors" />
                   </motion.button>
                 ))}
               </div>
             </div>
 
             {/* Section 2: Payment Builder / AI Understanding */}
-            <div className="p-4 border-t border-gray-800/40">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <div className="p-4 border-t border-white/[0.05]/40">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
                 <Wand2 className="h-3.5 w-3.5 text-violet-400" /> AI Understanding
               </p>
               <div className="space-y-2">
@@ -904,8 +904,8 @@ export default function VoicePayAssistant() {
                   { icon: <FileText className="h-3.5 w-3.5" />,     label: "Reason",   value: detectedSlots.reason    || null },
                 ].map(item => (
                   <div key={item.label} className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5 text-gray-500 text-xs">
-                      <span className={item.value ? "text-violet-400" : "text-gray-600"}>{item.icon}</span>
+                    <div className="flex items-center gap-1.5 text-slate-500 text-xs">
+                      <span className={item.value ? "text-violet-400" : "text-slate-600"}>{item.icon}</span>
                       {item.label}
                     </div>
                     {item.value
@@ -915,7 +915,7 @@ export default function VoicePayAssistant() {
                           <span className="truncate">{item.value}</span>
                         </div>
                       )
-                      : <span className="text-[11px] text-gray-600">Not detected</span>
+                      : <span className="text-[11px] text-slate-600">Not detected</span>
                     }
                   </div>
                 ))}
@@ -930,7 +930,7 @@ export default function VoicePayAssistant() {
             </div>
 
             {/* Section 3: Hints */}
-            <div className="p-4 border-t border-gray-800/40 space-y-3">
+            <div className="p-4 border-t border-white/[0.05]/40 space-y-3">
               <div className="bg-violet-500/10 border border-violet-500/20 rounded-xl p-3">
                 <p className="text-[11px] text-violet-300 leading-relaxed">
                   <strong className="text-violet-200">Multi-turn context:</strong> If I ask "how much?", just say the amount next — I remember what you said before.

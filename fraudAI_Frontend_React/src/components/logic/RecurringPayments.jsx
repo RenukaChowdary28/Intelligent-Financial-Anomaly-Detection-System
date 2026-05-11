@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import {
@@ -23,7 +23,7 @@ const FREQ_OPTS = [
 ];
 
 const FREQ_COLOR = {
-  daily:   "text-blue-400 bg-blue-500/10 border-blue-500/30",
+  daily:   "text-cyan-400 bg-blue-500/10 border-blue-500/30",
   weekly:  "text-purple-400 bg-purple-500/10 border-purple-500/30",
   monthly: "text-green-400 bg-green-500/10 border-green-500/30",
 };
@@ -48,7 +48,7 @@ function RecurCard({ pay, onPause, onDelete, onSimulate }) {
 
   return (
     <motion.div layout initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, x: 40 }}>
-      <Card className={`border ${isActive ? "border-gray-700 bg-gray-800/60" : "border-gray-700/50 bg-gray-800/30 opacity-60"}`}>
+      <Card className={`border ${isActive ? "border-white/[0.07] bg-gray-800/60" : "border-white/[0.07]/50 bg-gray-800/30 opacity-60"}`}>
         <CardContent className="p-4">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
@@ -61,15 +61,15 @@ function RecurCard({ pay, onPause, onDelete, onSimulate }) {
                   <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400">Paused</span>
                 )}
               </div>
-              <p className="text-xs text-gray-400 mt-0.5 font-mono">{pay.recipientUPI}</p>
-              {pay.remarks && <p className="text-xs text-gray-500 mt-0.5">"{pay.remarks}"</p>}
+              <p className="text-xs text-slate-400 mt-0.5 font-mono">{pay.recipientUPI}</p>
+              {pay.remarks && <p className="text-xs text-slate-500 mt-0.5">"{pay.remarks}"</p>}
               <div className="flex items-center gap-3 mt-2">
-                <div className="flex items-center gap-1 text-xs text-gray-400">
+                <div className="flex items-center gap-1 text-xs text-slate-400">
                   <Calendar className="h-3 w-3" />
                   Next: <span className="text-white font-medium ml-0.5">{isActive ? nextDate : "Paused"}</span>
                 </div>
                 {pay.endDate && (
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-slate-500">
                     Until {new Date(pay.endDate).toLocaleDateString("en-IN")}
                   </div>
                 )}
@@ -78,12 +78,12 @@ function RecurCard({ pay, onPause, onDelete, onSimulate }) {
             <div className="text-right flex-shrink-0">
               <p className="text-xl font-bold text-white">₹{parseFloat(pay.amount).toLocaleString("en-IN")}</p>
               {pay.executionCount > 0 && (
-                <p className="text-[10px] text-gray-500 mt-0.5">{pay.executionCount}× executed</p>
+                <p className="text-[10px] text-slate-500 mt-0.5">{pay.executionCount}× executed</p>
               )}
               <div className="flex gap-1.5 mt-2 justify-end">
                 {isActive && (
                   <button onClick={() => onSimulate(pay)}
-                    className="p-1.5 rounded-lg hover:bg-white/10 text-blue-400 hover:text-blue-300 transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-white/10 text-cyan-400 hover:text-blue-300 transition-colors"
                     title="Simulate payment now">
                     <Zap className="h-3.5 w-3.5" />
                   </button>
@@ -208,8 +208,8 @@ export default function RecurringPayments() {
     }, 0);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -222,7 +222,7 @@ export default function RecurringPayments() {
               <h1 className="text-2xl font-bold flex items-center gap-2">
                 <RefreshCw className="h-6 w-6 text-green-400" /> Recurring Payments
               </h1>
-              <p className="text-sm text-gray-400 mt-1">Automate regular transfers to anyone</p>
+              <p className="text-sm text-slate-400 mt-1">Automate regular transfers to anyone</p>
             </div>
             <Button onClick={() => { setShowForm(p => !p); setFormErr(""); }}
               className="bg-green-600 hover:bg-green-700 gap-1.5">
@@ -232,15 +232,15 @@ export default function RecurringPayments() {
 
           {/* Stats */}
           <div className="grid grid-cols-2 gap-3 mb-6">
-            <Card className="bg-gray-800/60 border-gray-700">
+            <Card className="bg-gray-800/60 border-white/[0.07]">
               <CardContent className="p-4">
-                <p className="text-xs text-gray-400 mb-1">Active Payments</p>
+                <p className="text-xs text-slate-400 mb-1">Active Payments</p>
                 <p className="text-2xl font-bold text-white">{activeCount}</p>
               </CardContent>
             </Card>
-            <Card className="bg-gray-800/60 border-gray-700">
+            <Card className="bg-gray-800/60 border-white/[0.07]">
               <CardContent className="p-4">
-                <p className="text-xs text-gray-400 mb-1">Monthly Outflow</p>
+                <p className="text-xs text-slate-400 mb-1">Monthly Outflow</p>
                 <p className="text-2xl font-bold text-green-400">₹{totalMonthly.toLocaleString("en-IN")}</p>
               </CardContent>
             </Card>
@@ -257,8 +257,8 @@ export default function RecurringPayments() {
           <AnimatePresence>
             {showForm && (
               <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="mb-6">
-                <Card className="bg-gray-800 border-gray-700">
-                  <CardHeader className="pb-3 border-b border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
+                  <CardHeader className="pb-3 border-b border-white/[0.07]">
                     <h2 className="font-semibold text-white flex items-center gap-2">
                       <RefreshCw className="h-4 w-4 text-green-400" /> Set Up Recurring Payment
                     </h2>
@@ -266,40 +266,40 @@ export default function RecurringPayments() {
                   <CardContent className="pt-4 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Recipient Name</label>
+                        <label className="text-xs text-slate-400 block mb-1">Recipient Name</label>
                         <Input value={form.recipientName} onChange={e => update("recipientName", e.target.value)}
-                          placeholder="e.g. Electricity Board" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. Electricity Board" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Recipient UPI ID *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Recipient UPI ID *</label>
                         <Input value={form.recipientUPI} onChange={e => update("recipientUPI", e.target.value)}
-                          placeholder="e.g. bills@sbi" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. bills@sbi" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Amount (₹) *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Amount (₹) *</label>
                         <Input type="number" value={form.amount} onChange={e => update("amount", e.target.value)}
-                          placeholder="e.g. 1500" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. 1500" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Remarks / Note</label>
+                        <label className="text-xs text-slate-400 block mb-1">Remarks / Note</label>
                         <Input value={form.remarks} onChange={e => update("remarks", e.target.value)}
-                          placeholder="e.g. Monthly rent" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. Monthly rent" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                     </div>
 
                     {/* Frequency */}
                     <div>
-                      <label className="text-xs text-gray-400 block mb-2">Frequency *</label>
+                      <label className="text-xs text-slate-400 block mb-2">Frequency *</label>
                       <div className="flex gap-2">
                         {FREQ_OPTS.map(f => (
                           <button key={f.value} onClick={() => update("frequency", f.value)}
                             className={`flex-1 py-2 rounded-lg text-xs font-medium border transition-colors ${
                               form.frequency === f.value
                                 ? "bg-green-600 border-green-500 text-white"
-                                : "border-gray-600 text-gray-400 hover:border-gray-500"
+                                : "border-white/[0.09] text-slate-400 hover:border-gray-500"
                             }`}>
                             {f.icon} {f.label}
                           </button>
@@ -309,14 +309,14 @@ export default function RecurringPayments() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Start Date *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Start Date *</label>
                         <Input type="date" value={form.startDate} onChange={e => update("startDate", e.target.value)}
-                          className="bg-gray-700 border-gray-600 text-white h-9" />
+                          className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">End Date (optional)</label>
+                        <label className="text-xs text-slate-400 block mb-1">End Date (optional)</label>
                         <Input type="date" value={form.endDate} onChange={e => update("endDate", e.target.value)}
-                          className="bg-gray-700 border-gray-600 text-white h-9" />
+                          className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                     </div>
 
@@ -341,11 +341,11 @@ export default function RecurringPayments() {
           {loading ? (
             <div className="space-y-3">{[1, 2].map(i => <div key={i} className="h-24 rounded-xl bg-gray-800 animate-pulse" />)}</div>
           ) : payments.length === 0 ? (
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-slate-900/60 border-white/[0.06]">
               <CardContent className="flex flex-col items-center py-16 gap-3">
-                <RefreshCw className="h-12 w-12 text-gray-600" />
-                <p className="text-gray-400">No recurring payments yet</p>
-                <p className="text-xs text-gray-600">Set up automatic transfers for rent, bills, subscriptions</p>
+                <RefreshCw className="h-12 w-12 text-slate-600" />
+                <p className="text-slate-400">No recurring payments yet</p>
+                <p className="text-xs text-slate-600">Set up automatic transfers for rent, bills, subscriptions</p>
               </CardContent>
             </Card>
           ) : (

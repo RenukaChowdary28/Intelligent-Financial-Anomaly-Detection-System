@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -42,7 +42,7 @@ function FraudGauge({ probability }) {
       <div className="-mt-1 text-center">
         <span className="text-3xl font-bold" style={{ color }}>{p}%</span>
         <p className="text-xs font-semibold mt-0.5" style={{ color }}>{label}</p>
-        <p className="text-xs text-gray-500">Fraud Probability</p>
+        <p className="text-xs text-slate-500">Fraud Probability</p>
       </div>
     </div>
   );
@@ -162,8 +162,8 @@ export default function CheckTransaction() {
   const normalizeScore = (score) => Math.min(100, Math.round((score ?? 0) * 100));
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -173,8 +173,8 @@ export default function CheckTransaction() {
 
           {/* ── Next step bar ── */}
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap gap-2 mb-5 p-3 bg-gray-800/80 border border-gray-700 rounded-xl">
-            <span className="text-xs text-gray-500 self-center mr-1 shrink-0">Next step:</span>
+            className="flex flex-wrap gap-2 mb-5 p-3 bg-gray-800/80 border border-white/[0.07] rounded-xl">
+            <span className="text-xs text-slate-500 self-center mr-1 shrink-0">Next step:</span>
             {[
               { label: "Batch Check",      path: "/batch-check",      icon: Layers,     color: "bg-green-600 hover:bg-green-700" },
               { label: "AI Hub",           path: "/ai-hub",           icon: Brain,      color: "bg-cyan-600 hover:bg-cyan-700" },
@@ -189,10 +189,10 @@ export default function CheckTransaction() {
           </motion.div>
 
           <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold text-blue-400 mb-2">
+            className="text-2xl font-bold text-cyan-400 mb-2">
             Check Single Transaction
           </motion.h1>
-          <p className="text-gray-400 text-sm mb-6">
+          <p className="text-slate-400 text-sm mb-6">
             Enter transaction feature values to get an instant AI fraud verdict with detailed risk analysis.
           </p>
 
@@ -219,20 +219,20 @@ export default function CheckTransaction() {
           )}
 
           <form onSubmit={handleSubmit}>
-            <Card className="bg-gray-800 border-gray-700 mb-4">
+            <Card className="bg-slate-900/80 border-white/[0.07] mb-4">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm text-gray-400">
+                  <CardTitle className="text-sm text-slate-400">
                     Transaction Features
                     {features.length > 0 && (
-                      <span className="ml-2 text-xs text-gray-500">({features.length} features from uploaded dataset)</span>
+                      <span className="ml-2 text-xs text-slate-500">({features.length} features from uploaded dataset)</span>
                     )}
                   </CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
                 {features.length === 0 ? (
-                  <p className="text-gray-500 text-sm">Feature fields will appear here once a dataset is uploaded and detection has run.</p>
+                  <p className="text-slate-500 text-sm">Feature fields will appear here once a dataset is uploaded and detection has run.</p>
                 ) : (
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {features.map((feat) => {
@@ -241,13 +241,13 @@ export default function CheckTransaction() {
                       const isSuspicious = binary ? val === "1" : val !== "" && !isNaN(parseFloat(val)) && parseFloat(val) > 100;
                       return (
                         <div key={feat}>
-                          <label className="text-xs text-gray-400 block mb-1">
-                            {feat}{binary && <span className="ml-1 text-gray-600">(0/1)</span>}
+                          <label className="text-xs text-slate-400 block mb-1">
+                            {feat}{binary && <span className="ml-1 text-slate-600">(0/1)</span>}
                           </label>
                           <Input type="number" step="any" placeholder="0" value={val}
                             onChange={(e) => handleChange(feat, e.target.value)}
                             className={`text-white text-sm h-8 transition-colors ${
-                              isSuspicious ? "bg-red-900/30 border-red-500/50 focus:border-red-400" : "bg-gray-700 border-gray-600"
+                              isSuspicious ? "bg-red-900/30 border-red-500/50 focus:border-red-400" : "bg-white/[0.06] border-white/[0.08]"
                             }`} />
                         </div>
                       );
@@ -258,7 +258,7 @@ export default function CheckTransaction() {
                 {features.length > 0 && (
                   <div className="flex gap-2 mt-4 flex-wrap">
                     <Button type="button" variant="outline" size="sm"
-                      className="border-gray-600 text-gray-400 hover:text-white text-xs" onClick={handleReset}>
+                      className="border-white/[0.09] text-slate-400 hover:text-white text-xs" onClick={handleReset}>
                       <RefreshCw className="h-3 w-3 mr-1" /> Reset to 0
                     </Button>
                     <Button type="button" variant="outline" size="sm"
@@ -308,10 +308,10 @@ export default function CheckTransaction() {
                           <riskConfig.icon className={`h-9 w-9 ${riskConfig.color} flex-shrink-0`} />
                           <div>
                             <p className={`text-lg font-bold ${riskConfig.color}`}>{riskConfig.label}</p>
-                            <p className="text-sm text-gray-400 mt-0.5">
+                            <p className="text-sm text-slate-400 mt-0.5">
                               Consensus from <span className="text-white">{Object.keys(result.results ?? {}).length}</span> model{Object.keys(result.results ?? {}).length > 1 ? "s" : ""}
                               {result.ensemble_confidence != null && (
-                                <span className="ml-2 text-xs text-gray-500">
+                                <span className="ml-2 text-xs text-slate-500">
                                   · <span className={result.ensemble_confidence >= 80 ? "text-green-400" : "text-yellow-400"}>
                                     {result.ensemble_confidence}% confidence
                                   </span>
@@ -326,11 +326,11 @@ export default function CheckTransaction() {
                         {resultTime && (
                           <div className="flex items-center gap-2 flex-shrink-0">
                             {result.processing_time_ms != null && (
-                              <span className="text-xs text-gray-600 flex items-center gap-1">
+                              <span className="text-xs text-slate-600 flex items-center gap-1">
                                 <Zap className="h-3 w-3" />{result.processing_time_ms}ms
                               </span>
                             )}
-                            <span className="text-xs text-gray-500 flex items-center gap-1">
+                            <span className="text-xs text-slate-500 flex items-center gap-1">
                               <Clock className="h-3 w-3" />{resultTime}
                             </span>
                           </div>
@@ -341,7 +341,7 @@ export default function CheckTransaction() {
                       {result.ai_insight && (
                         <div className="mt-3 flex items-start gap-2 bg-gray-900/50 rounded-lg px-3 py-2">
                           <Lightbulb className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                          <p className="text-xs text-gray-300 leading-relaxed">{result.ai_insight}</p>
+                          <p className="text-xs text-slate-300 leading-relaxed">{result.ai_insight}</p>
                         </div>
                       )}
                     </div>
@@ -371,12 +371,12 @@ export default function CheckTransaction() {
                   <div className="grid grid-cols-3 gap-3">
                     {[
                       { label: "Suspicious Features", value: result.suspicious_feature_count, color: result.suspicious_feature_count > 3 ? "text-red-400" : "text-yellow-400" },
-                      { label: "Models Voted Fraud",  value: `${Object.values(result.results ?? {}).filter(r => r.verdict === "FRAUD").length} / ${Object.keys(result.results ?? {}).length}`, color: "text-blue-400" },
+                      { label: "Models Voted Fraud",  value: `${Object.values(result.results ?? {}).filter(r => r.verdict === "FRAUD").length} / ${Object.keys(result.results ?? {}).length}`, color: "text-cyan-400" },
                       { label: "Ensemble Confidence", value: result.ensemble_confidence != null ? `${result.ensemble_confidence}%` : "—", color: result.ensemble_confidence >= 80 ? "text-green-400" : "text-yellow-400" },
                     ].map((stat) => (
-                      <Card key={stat.label} className="bg-gray-800 border-gray-700">
+                      <Card key={stat.label} className="bg-slate-900/80 border-white/[0.07]">
                         <CardContent className="pt-3 pb-2">
-                          <p className="text-xs text-gray-500">{stat.label}</p>
+                          <p className="text-xs text-slate-500">{stat.label}</p>
                           <p className={`text-xl font-bold ${stat.color}`}>{stat.value}</p>
                         </CardContent>
                       </Card>
@@ -405,32 +405,32 @@ export default function CheckTransaction() {
                         <CardContent className="text-sm space-y-2">
                           {prob != null && (
                             <div className="flex justify-between text-xs">
-                              <span className="text-gray-400">Fraud Probability</span>
+                              <span className="text-slate-400">Fraud Probability</span>
                               <span className={`font-bold ${isFraud ? "text-red-400" : "text-green-400"}`}>{prob}%</span>
                             </div>
                           )}
                           {scorePercent != null && (
                             <div>
                               <div className="flex justify-between text-xs mb-1">
-                                <span className="text-gray-400">Anomaly Score</span>
+                                <span className="text-slate-400">Anomaly Score</span>
                                 <span className="text-white font-mono">{modelResult.score}</span>
                               </div>
-                              <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                              <div className="w-full h-2 bg-white/[0.07] rounded-full overflow-hidden">
                                 <div className={`h-full rounded-full transition-all ${isFraud ? "bg-red-500" : "bg-green-500"}`}
                                   style={{ width: `${scorePercent}%` }} />
                               </div>
-                              <div className="flex justify-between text-xs text-gray-600 mt-0.5"><span>Low</span><span>High</span></div>
+                              <div className="flex justify-between text-xs text-slate-600 mt-0.5"><span>Low</span><span>High</span></div>
                             </div>
                           )}
                           {modelResult.reconstruction_error != null && (
                             <div className="space-y-1">
                               <div className="flex justify-between">
-                                <span className="text-gray-400">Reconstruction Error</span>
+                                <span className="text-slate-400">Reconstruction Error</span>
                                 <span className="text-white font-mono">{modelResult.reconstruction_error}</span>
                               </div>
                               {modelResult.threshold != null && (
                                 <div className="flex justify-between">
-                                  <span className="text-gray-400">Threshold</span>
+                                  <span className="text-slate-400">Threshold</span>
                                   <span className={`font-mono ${modelResult.reconstruction_error > modelResult.threshold ? "text-red-400" : "text-green-400"}`}>
                                     {modelResult.threshold}
                                   </span>
@@ -446,12 +446,12 @@ export default function CheckTransaction() {
 
                 {/* Feature Risk Analysis */}
                 {result.feature_analysis?.length > 0 && (
-                  <Card className="bg-gray-800 border-gray-700">
+                  <Card className="bg-slate-900/80 border-white/[0.07]">
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-sm text-gray-300 flex items-center gap-2">
-                        <BarChart2 className="h-4 w-4 text-blue-400" />
+                      <CardTitle className="text-sm text-slate-300 flex items-center gap-2">
+                        <BarChart2 className="h-4 w-4 text-cyan-400" />
                         Feature Risk Analysis
-                        <span className="text-xs text-gray-500 font-normal ml-1">— deviation from normal patterns</span>
+                        <span className="text-xs text-slate-500 font-normal ml-1">— deviation from normal patterns</span>
                         {result.suspicious_feature_count > 0 && (
                           <span className="ml-auto text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">
                             {result.suspicious_feature_count} suspicious
@@ -471,29 +471,29 @@ export default function CheckTransaction() {
                                   {feat.suspicious
                                     ? <span className="text-red-400 flex-shrink-0">●</span>
                                     : <span className="text-green-500 flex-shrink-0">○</span>}
-                                  <span className={`truncate font-medium ${feat.suspicious ? "text-red-300" : "text-gray-400"}`}>
+                                  <span className={`truncate font-medium ${feat.suspicious ? "text-red-300" : "text-slate-400"}`}>
                                     {feat.feature}
                                   </span>
                                 </div>
                                 <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-                                  <span className="text-gray-500 font-mono">val:{feat.value}</span>
-                                  <span className="text-gray-500 font-mono">μ:{feat.dataset_mean}</span>
+                                  <span className="text-slate-500 font-mono">val:{feat.value}</span>
+                                  <span className="text-slate-500 font-mono">μ:{feat.dataset_mean}</span>
                                   {feat.percentile != null && (
-                                    <span className="text-gray-600 font-mono">p{feat.percentile}</span>
+                                    <span className="text-slate-600 font-mono">p{feat.percentile}</span>
                                   )}
-                                  <span className={`font-mono font-bold ${feat.suspicious ? "text-red-400" : "text-gray-400"}`}>
+                                  <span className={`font-mono font-bold ${feat.suspicious ? "text-red-400" : "text-slate-400"}`}>
                                     z={feat.z_score}σ
                                   </span>
                                 </div>
                               </div>
-                              <div className="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                              <div className="w-full h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                                 <div className={`h-full rounded-full ${barColor}`} style={{ width: `${barWidth}%` }} />
                               </div>
                             </div>
                           );
                         })}
                       </div>
-                      <p className="text-xs text-gray-600 mt-3">
+                      <p className="text-xs text-slate-600 mt-3">
                         Red ● = matches fraud pattern · σ = standard deviations from dataset mean · p = percentile rank
                       </p>
                     </CardContent>
@@ -506,15 +506,15 @@ export default function CheckTransaction() {
                     onClick={() => generateSingleTransactionReport(result, new Date())}
                     variant="outline"
                     size="sm"
-                    className="border-blue-500/40 text-blue-400 hover:bg-blue-500/10 flex items-center gap-1.5"
+                    className="border-blue-500/40 text-cyan-400 hover:bg-blue-500/10 flex items-center gap-1.5"
                   >
                     <Download className="h-4 w-4" /> Download PDF Report
                   </Button>
                 </div>
 
                 {/* ── Bottom next steps ── */}
-                <div className="flex flex-wrap gap-2 p-3 bg-gray-800/80 border border-gray-700 rounded-xl">
-                  <span className="text-xs text-gray-500 self-center mr-1 shrink-0">Next step:</span>
+                <div className="flex flex-wrap gap-2 p-3 bg-gray-800/80 border border-white/[0.07] rounded-xl">
+                  <span className="text-xs text-slate-500 self-center mr-1 shrink-0">Next step:</span>
                   {[
                     { label: "Batch Check",      path: "/batch-check",      icon: Layers,     color: "bg-green-600 hover:bg-green-700" },
                     { label: "AI Hub",           path: "/ai-hub",           icon: Brain,      color: "bg-cyan-600 hover:bg-cyan-700" },
@@ -527,7 +527,7 @@ export default function CheckTransaction() {
                     </button>
                   ))}
                   <button onClick={handleReset}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-600 text-gray-400 hover:bg-gray-700 transition-all ml-auto">
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.09] text-slate-400 hover:bg-white/[0.07] transition-all ml-auto">
                     <RefreshCw className="h-3.5 w-3.5" /> Check Another
                   </button>
                 </div>

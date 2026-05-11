@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import {
@@ -76,7 +76,7 @@ function ScamGuardModal({ analysis, amount, recipient, onProceed, onCancel }) {
       <motion.div
         initial={{ opacity: 0, scale: 0.92, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-sm bg-gray-950 border border-gray-800 rounded-3xl shadow-2xl overflow-hidden">
+        className="w-full max-w-sm bg-gray-950 border border-white/[0.05] rounded-3xl shadow-2xl overflow-hidden">
 
         {/* Top risk bar */}
         <div className={`h-1.5 w-full ${isHigh ? 'bg-red-500' : score >= 25 ? 'bg-amber-500' : 'bg-blue-500'}`}
@@ -87,24 +87,24 @@ function ScamGuardModal({ analysis, amount, recipient, onProceed, onCancel }) {
           <div className="flex items-center gap-3">
             <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0
               ${isHigh ? 'bg-red-900/50' : score >= 25 ? 'bg-amber-900/50' : 'bg-blue-900/50'}`}>
-              <Shield className={`w-5 h-5 ${isHigh ? 'text-red-400' : score >= 25 ? 'text-amber-400' : 'text-blue-400'}`} />
+              <Shield className={`w-5 h-5 ${isHigh ? 'text-red-400' : score >= 25 ? 'text-amber-400' : 'text-cyan-400'}`} />
             </div>
             <div>
               <p className="text-sm font-bold text-white">SmartScamGuard Analysis</p>
-              <p className="text-xs text-gray-400">Pre-payment risk check</p>
+              <p className="text-xs text-slate-400">Pre-payment risk check</p>
             </div>
             <div className="ml-auto text-right">
               <p className={`text-xl font-bold ${isHigh ? 'text-red-400' : score >= 25 ? 'text-amber-400' : 'text-emerald-400'}`}>
                 {score}
               </p>
-              <p className="text-[10px] text-gray-500 uppercase tracking-wide">Risk Score</p>
+              <p className="text-[10px] text-slate-500 uppercase tracking-wide">Risk Score</p>
             </div>
           </div>
 
           {/* Payment summary */}
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl px-4 py-3 flex items-center gap-3">
+          <div className="bg-gray-900 border border-white/[0.05] rounded-2xl px-4 py-3 flex items-center gap-3">
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-gray-500">Paying to</p>
+              <p className="text-xs text-slate-500">Paying to</p>
               <p className="text-sm font-semibold text-white truncate">{recipient?.displayName || recipient?.upiId || 'Recipient'}</p>
             </div>
             <p className="text-lg font-bold text-white shrink-0">₹{fmtAmt}</p>
@@ -113,7 +113,7 @@ function ScamGuardModal({ analysis, amount, recipient, onProceed, onCancel }) {
           {/* Risk flags */}
           {flags.length > 0 && (
             <div className="space-y-2">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Detected Risk Factors</p>
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Detected Risk Factors</p>
               {flags.map((f, i) => {
                 const s = SCAM_LEVEL_STYLE[f.level];
                 return (
@@ -143,7 +143,7 @@ function ScamGuardModal({ analysis, amount, recipient, onProceed, onCancel }) {
           {/* Action buttons */}
           <div className="flex gap-2 pt-1">
             <Button onClick={onCancel}
-              className="flex-1 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-semibold">
+              className="flex-1 bg-gray-800 hover:bg-white/[0.07] text-slate-200 text-sm font-semibold">
               Cancel Payment
             </Button>
             <Button onClick={onProceed}
@@ -153,7 +153,7 @@ function ScamGuardModal({ analysis, amount, recipient, onProceed, onCancel }) {
             </Button>
           </div>
           {isHigh && (
-            <p className="text-[10px] text-gray-600 text-center">Proceeding overrides the AegisAI scam warning.</p>
+            <p className="text-[10px] text-slate-600 text-center">Proceeding overrides the AegisAI scam warning.</p>
           )}
         </div>
       </motion.div>
@@ -441,13 +441,13 @@ export default function CustomRazorpayCheckout({
               ['Amount',     `₹${fmtAmt}`],
             ].map(([label, val]) => (
               <div key={label} className="flex justify-between">
-                <span className="text-gray-400">{label}</span>
+                <span className="text-slate-400">{label}</span>
                 <span className="text-white font-mono break-all text-right ml-2">{val}</span>
               </div>
             ))}
           </div>
           <div className="mt-3 p-2 bg-blue-900/40 border border-blue-700/30 rounded-lg flex items-center gap-2">
-            <Shield className="w-4 h-4 text-blue-400 shrink-0" />
+            <Shield className="w-4 h-4 text-cyan-400 shrink-0" />
             <p className="text-xs text-blue-200">AegisAI fraud shield — CLEARED</p>
           </div>
         </div>
@@ -457,7 +457,7 @@ export default function CustomRazorpayCheckout({
             <Download className="w-4 h-4 mr-2" /> Download Receipt
           </Button>
           <Button onClick={copyId} variant="outline"
-            className="border-gray-600 text-gray-300 hover:bg-gray-700 px-4">
+            className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07] px-4">
             {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
           </Button>
         </div>
@@ -474,14 +474,14 @@ export default function CustomRazorpayCheckout({
           <XCircle className="w-6 h-6 text-red-400 shrink-0" />
           <div>
             <p className="text-red-200 font-semibold">Payment Failed</p>
-            <p className="text-xs text-gray-400 mt-0.5">{errMsg}</p>
+            <p className="text-xs text-slate-400 mt-0.5">{errMsg}</p>
           </div>
         </div>
         <div className="flex gap-2">
           <Button onClick={() => { setStep('form'); setErrMsg(''); }}
-            className="flex-1 bg-gray-700 hover:bg-gray-600 text-sm">Try Again</Button>
+            className="flex-1 bg-white/[0.07] hover:bg-white/[0.09] text-sm">Try Again</Button>
           <Button onClick={onCancel} variant="outline"
-            className="flex-1 border-gray-600 text-gray-300 text-sm">Cancel</Button>
+            className="flex-1 border-white/[0.09] text-slate-300 text-sm">Cancel</Button>
         </div>
       </motion.div>
     );
@@ -491,19 +491,19 @@ export default function CustomRazorpayCheckout({
   const qrValue = `upi://pay?pa=${recipient?.upiId || ''}&pn=${encodeURIComponent(recipient?.displayName || '')}&am=${amount}&tn=${encodeURIComponent(note || 'AegisAI')}&cu=INR`;
 
   return (
-    <div className="flex rounded-2xl overflow-hidden border border-gray-700 bg-gray-900 shadow-2xl"
+    <div className="flex rounded-2xl overflow-hidden border border-white/[0.07] bg-gray-900 shadow-2xl"
       style={{ minHeight: 420 }}>
 
       {/* ── Left: Method list ── */}
-      <div className="w-44 flex-shrink-0 bg-gray-800/60 border-r border-gray-700 flex flex-col">
+      <div className="w-44 flex-shrink-0 bg-gray-800/60 border-r border-white/[0.07] flex flex-col">
         {/* Amount header */}
-        <div className="px-4 py-4 border-b border-gray-700">
-          <p className="text-xs text-gray-400">Pay</p>
+        <div className="px-4 py-4 border-b border-white/[0.07]">
+          <p className="text-xs text-slate-400">Pay</p>
           <p className="text-xl font-bold text-white flex items-center gap-1">
             <IndianRupee className="w-4 h-4" />{fmtAmt}
           </p>
           {recipient?.displayName && (
-            <p className="text-xs text-gray-400 mt-0.5 truncate">to {recipient.displayName}</p>
+            <p className="text-xs text-slate-400 mt-0.5 truncate">to {recipient.displayName}</p>
           )}
         </div>
 
@@ -514,7 +514,7 @@ export default function CustomRazorpayCheckout({
               className={`w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium transition-colors text-left
                 ${method === id
                   ? 'bg-blue-600/20 text-blue-300 border-r-2 border-blue-500'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
               <Icon className="w-4 h-4 shrink-0" />
               {label}
             </button>
@@ -522,10 +522,10 @@ export default function CustomRazorpayCheckout({
         </nav>
 
         {/* Secured badge */}
-        <div className="px-4 py-3 border-t border-gray-700">
+        <div className="px-4 py-3 border-t border-white/[0.07]">
           <div className="flex items-center gap-1.5">
-            <Shield className="w-3 h-3 text-blue-400" />
-            <p className="text-[9px] text-gray-500 font-semibold uppercase tracking-wide">
+            <Shield className="w-3 h-3 text-cyan-400" />
+            <p className="text-[9px] text-slate-500 font-semibold uppercase tracking-wide">
               Secured by Razorpay
             </p>
           </div>
@@ -535,11 +535,11 @@ export default function CustomRazorpayCheckout({
       {/* ── Right: Form ── */}
       <div className="flex-1 flex flex-col">
         {/* Form title */}
-        <div className="px-5 py-4 border-b border-gray-700 flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-white/[0.07] flex items-center justify-between">
           <p className="text-sm font-semibold text-white">
             {METHODS.find(m => m.id === method)?.label}
           </p>
-          <button onClick={onCancel} className="text-gray-500 hover:text-white transition-colors text-lg leading-none">✕</button>
+          <button onClick={onCancel} className="text-slate-500 hover:text-white transition-colors text-lg leading-none">✕</button>
         </div>
 
         <div className="flex-1 px-5 py-4 overflow-y-auto">
@@ -556,7 +556,7 @@ export default function CustomRazorpayCheckout({
                   ].map(t => (
                     <button key={t.id} onClick={() => setUpiTab(t.id)}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors
-                        ${upiTab === t.id ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'}`}>
+                        ${upiTab === t.id ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}>
                       {t.icon}{t.label}
                     </button>
                   ))}
@@ -564,11 +564,11 @@ export default function CustomRazorpayCheckout({
 
                 {upiTab === 'id' ? (
                   <div className="space-y-2">
-                    <label className="text-xs text-gray-400">Enter UPI ID</label>
+                    <label className="text-xs text-slate-400">Enter UPI ID</label>
                     <Input value={upiInput} onChange={e => setUpiInput(e.target.value)}
                       placeholder="name@ybl / name@paytm"
-                      className="bg-gray-800 border-gray-600 text-white font-mono" />
-                    <p className="text-xs text-gray-500">
+                      className="bg-gray-800 border-white/[0.09] text-white font-mono" />
+                    <p className="text-xs text-slate-500">
                       Test: use <span className="text-blue-300 font-mono">success@razorpay</span>
                     </p>
                   </div>
@@ -577,7 +577,7 @@ export default function CustomRazorpayCheckout({
                     <div className="bg-white p-3 rounded-xl">
                       <QRCodeSVG value={qrValue} size={160} bgColor="#fff" fgColor="#111827" level="M" />
                     </div>
-                    <p className="text-xs text-gray-400 text-center">
+                    <p className="text-xs text-slate-400 text-center">
                       Scan with any UPI app — PhonePe, Google Pay, Paytm, BHIM
                     </p>
                     <div className="flex gap-2 flex-wrap justify-center">
@@ -595,21 +595,21 @@ export default function CustomRazorpayCheckout({
               <motion.div key="card" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }} className="space-y-3">
                 <div className="space-y-1">
-                  <label className="text-xs text-gray-400">Card Number</label>
+                  <label className="text-xs text-slate-400">Card Number</label>
                   <Input value={card.number}
                     onChange={e => setCard(p => ({ ...p, number: e.target.value.replace(/[^\d\s]/g,'').slice(0,19) }))}
                     placeholder="1234 5678 9012 3456"
-                    className="bg-gray-800 border-gray-600 text-white font-mono" maxLength={19} />
+                    className="bg-gray-800 border-white/[0.09] text-white font-mono" maxLength={19} />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs text-gray-400">Cardholder Name</label>
+                  <label className="text-xs text-slate-400">Cardholder Name</label>
                   <Input value={card.name} onChange={e => setCard(p => ({ ...p, name: e.target.value }))}
                     placeholder="Name on card"
-                    className="bg-gray-800 border-gray-600 text-white" />
+                    className="bg-gray-800 border-white/[0.09] text-white" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <label className="text-xs text-gray-400">Expiry (MM/YY)</label>
+                    <label className="text-xs text-slate-400">Expiry (MM/YY)</label>
                     <Input value={card.expiry}
                       onChange={e => {
                         let v = e.target.value.replace(/\D/g,'');
@@ -617,14 +617,14 @@ export default function CustomRazorpayCheckout({
                         setCard(p => ({ ...p, expiry: v }));
                       }}
                       placeholder="12/27" maxLength={5}
-                      className="bg-gray-800 border-gray-600 text-white font-mono" />
+                      className="bg-gray-800 border-white/[0.09] text-white font-mono" />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs text-gray-400">CVV</label>
+                    <label className="text-xs text-slate-400">CVV</label>
                     <Input type="password" value={card.cvv} maxLength={4}
                       onChange={e => setCard(p => ({ ...p, cvv: e.target.value.replace(/\D/g,'') }))}
                       placeholder="•••"
-                      className="bg-gray-800 border-gray-600 text-white font-mono" />
+                      className="bg-gray-800 border-white/[0.09] text-white font-mono" />
                   </div>
                 </div>
               </motion.div>
@@ -635,14 +635,14 @@ export default function CustomRazorpayCheckout({
               <motion.div key="emi" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }} className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-xs text-gray-400">Select Bank</label>
+                  <label className="text-xs text-slate-400">Select Bank</label>
                   <div className="grid grid-cols-2 gap-2">
                     {BANKS.slice(0,6).map(b => (
                       <button key={b.code} onClick={() => setEmiBankCode(b.code)}
                         className={`flex items-center gap-2 p-2 rounded-lg border text-xs font-medium transition-colors
                           ${emiBankCode === b.code
                             ? 'border-blue-500 bg-blue-900/30 text-blue-200'
-                            : 'border-gray-700 text-gray-400 hover:border-gray-500'}`}>
+                            : 'border-white/[0.07] text-slate-400 hover:border-gray-500'}`}>
                         <Logo color={b.color} text={b.code.slice(0,2)} />
                         <span className="truncate">{b.name}</span>
                       </button>
@@ -650,20 +650,20 @@ export default function CustomRazorpayCheckout({
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs text-gray-400">Tenure (months)</label>
+                  <label className="text-xs text-slate-400">Tenure (months)</label>
                   <div className="flex flex-wrap gap-2">
                     {EMI_TENURES.map(t => (
                       <button key={t} onClick={() => setEmiTenure(t)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors
                           ${emiTenure === t
                             ? 'bg-blue-600 border-blue-500 text-white'
-                            : 'border-gray-700 text-gray-400 hover:border-gray-500'}`}>
+                            : 'border-white/[0.07] text-slate-400 hover:border-gray-500'}`}>
                         {t}m
                       </button>
                     ))}
                   </div>
                   {emiBankCode && (
-                    <p className="text-xs text-gray-400 bg-gray-800 rounded-lg p-2">
+                    <p className="text-xs text-slate-400 bg-gray-800 rounded-lg p-2">
                       ≈ ₹{Math.ceil(amount / emiTenure).toLocaleString('en-IN')}/month × {emiTenure} months
                     </p>
                   )}
@@ -675,14 +675,14 @@ export default function CustomRazorpayCheckout({
             {method === 'netbanking' && (
               <motion.div key="netbanking" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }} className="space-y-3">
-                <label className="text-xs text-gray-400">Select Your Bank</label>
+                <label className="text-xs text-slate-400">Select Your Bank</label>
                 <div className="grid grid-cols-2 gap-2">
                   {BANKS.map(b => (
                     <button key={b.code} onClick={() => setSelBank(b.code)}
                       className={`flex items-center gap-2 p-2.5 rounded-lg border text-xs font-medium transition-colors
                         ${selBank === b.code
                           ? 'border-blue-500 bg-blue-900/30 text-blue-200'
-                          : 'border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white'}`}>
+                          : 'border-white/[0.07] text-slate-400 hover:border-gray-500 hover:text-white'}`}>
                       <Logo color={b.color} text={b.code.slice(0,2)} />
                       <span className="truncate">{b.name}</span>
                     </button>
@@ -695,17 +695,17 @@ export default function CustomRazorpayCheckout({
             {method === 'wallet' && (
               <motion.div key="wallet" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }} className="space-y-3">
-                <label className="text-xs text-gray-400">Select Wallet</label>
+                <label className="text-xs text-slate-400">Select Wallet</label>
                 <div className="space-y-2">
                   {WALLETS.map(w => (
                     <button key={w.id} onClick={() => setSelWallet(w.id)}
                       className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-colors
                         ${selWallet === w.id
                           ? 'border-blue-500 bg-blue-900/20 text-white'
-                          : 'border-gray-700 text-gray-400 hover:border-gray-600 hover:text-white'}`}>
+                          : 'border-white/[0.07] text-slate-400 hover:border-white/[0.09] hover:text-white'}`}>
                       <Logo color={w.color} text={w.initial} />
                       <span className="font-medium text-sm">{w.name}</span>
-                      {selWallet === w.id && <CheckCircle className="w-4 h-4 text-blue-400 ml-auto" />}
+                      {selWallet === w.id && <CheckCircle className="w-4 h-4 text-cyan-400 ml-auto" />}
                     </button>
                   ))}
                 </div>
@@ -716,17 +716,17 @@ export default function CustomRazorpayCheckout({
             {method === 'paylater' && (
               <motion.div key="paylater" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }} className="space-y-3">
-                <label className="text-xs text-gray-400">Select Provider</label>
+                <label className="text-xs text-slate-400">Select Provider</label>
                 <div className="space-y-2">
                   {PAY_LATER.map(p => (
                     <button key={p.id} onClick={() => setSelPayLater(p.id)}
                       className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-colors
                         ${selPayLater === p.id
                           ? 'border-blue-500 bg-blue-900/20 text-white'
-                          : 'border-gray-700 text-gray-400 hover:border-gray-600 hover:text-white'}`}>
+                          : 'border-white/[0.07] text-slate-400 hover:border-white/[0.09] hover:text-white'}`}>
                       <Logo color={p.color} text={p.initial} />
                       <span className="font-medium text-sm">{p.name}</span>
-                      {selPayLater === p.id && <CheckCircle className="w-4 h-4 text-blue-400 ml-auto" />}
+                      {selPayLater === p.id && <CheckCircle className="w-4 h-4 text-cyan-400 ml-auto" />}
                     </button>
                   ))}
                 </div>

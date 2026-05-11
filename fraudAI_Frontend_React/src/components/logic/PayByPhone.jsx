@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
@@ -221,7 +221,7 @@ export default function PayByPhone() {
 
   return (
     <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
-      <aside className="hidden md:flex flex-col w-72 flex-shrink-0 bg-gray-900 border-r border-gray-800 overflow-y-auto">
+      <aside className="hidden md:flex flex-col w-72 flex-shrink-0 bg-gray-900 border-r border-white/[0.05] overflow-y-auto">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -231,7 +231,7 @@ export default function PayByPhone() {
           {/* Demo Banner */}
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
             className="mb-6 p-3 bg-blue-900/30 border border-blue-600 rounded-lg flex items-center gap-2">
-            <Info className="w-4 h-4 text-blue-400 shrink-0" />
+            <Info className="w-4 h-4 text-cyan-400 shrink-0" />
             <p className="text-sm text-blue-200">
               Demo mode — try <span className="font-mono text-blue-300">+919876543210</span>,{' '}
               <span className="font-mono text-blue-300">+919123456789</span>, or{' '}
@@ -270,15 +270,15 @@ export default function PayByPhone() {
 
             {/* ── Main Form ── */}
             <div className="lg:col-span-2">
-              <Card className="bg-gray-800/50 border-gray-700 shadow-xl">
-                <CardHeader className="pb-4 border-b border-gray-700">
+              <Card className="bg-slate-900/60 border-white/[0.06] shadow-xl">
+                <CardHeader className="pb-4 border-b border-white/[0.07]">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-blue-900/30 rounded-lg">
-                      <Phone className="w-5 h-5 text-blue-400" />
+                      <Phone className="w-5 h-5 text-cyan-400" />
                     </div>
                     <div>
                       <CardTitle className="text-white">Pay with Phone Number</CardTitle>
-                      <p className="text-xs text-gray-400 mt-0.5">Enter any AegisAI user's phone number to send money instantly</p>
+                      <p className="text-xs text-slate-400 mt-0.5">Enter any AegisAI user's phone number to send money instantly</p>
                     </div>
                   </div>
                 </CardHeader>
@@ -287,7 +287,7 @@ export default function PayByPhone() {
 
                   {/* Phone Input */}
                   <div>
-                    <label className="text-sm font-semibold text-gray-300 flex items-center gap-2 mb-2">
+                    <label className="text-sm font-semibold text-slate-300 flex items-center gap-2 mb-2">
                       <Phone className="w-4 h-4" /> Recipient Phone Number
                     </label>
                     <div className="flex gap-2">
@@ -297,11 +297,11 @@ export default function PayByPhone() {
                         value={phoneInput}
                         onChange={(e) => { setPhoneInput(e.target.value); setError(''); }}
                         disabled={paymentSuccess}
-                        className="bg-gray-700 border-gray-600 text-white placeholder-gray-500 disabled:opacity-50 font-mono"
+                        className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 disabled:opacity-50 font-mono"
                       />
                       {lookupLoading && (
                         <div className="flex items-center px-3">
-                          <Loader className="w-4 h-4 animate-spin text-blue-400" />
+                          <Loader className="w-4 h-4 animate-spin text-cyan-400" />
                         </div>
                       )}
                     </div>
@@ -316,13 +316,13 @@ export default function PayByPhone() {
                   <AnimatePresence>
                     {recipient && (
                       <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                        <Card className="bg-gradient-to-br from-gray-700/50 to-gray-700/30 border-gray-600">
+                        <Card className="bg-gradient-to-br from-gray-700/50 to-gray-700/30 border-white/[0.09]">
                           <CardContent className="p-4 space-y-3">
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
-                                <p className="text-xs text-gray-400 uppercase font-semibold tracking-wider">Recipient Found</p>
+                                <p className="text-xs text-slate-400 uppercase font-semibold tracking-wider">Recipient Found</p>
                                 <p className="text-xl font-bold text-white mt-1">{recipient.displayName}</p>
-                                <p className="text-sm text-gray-400 font-mono">{recipient.upiId}</p>
+                                <p className="text-sm text-slate-400 font-mono">{recipient.upiId}</p>
                               </div>
                               <div className={`px-3 py-1.5 rounded-full border text-xs font-semibold ${trustColor(recipient.trustBadge)}`}>
                                 {recipient.trustBadge === 'verified' && '✓ Verified'}
@@ -330,8 +330,8 @@ export default function PayByPhone() {
                                 {recipient.trustBadge === 'watch'    && '🚨 Watch'}
                               </div>
                             </div>
-                            <div className="pt-2 border-t border-gray-600 flex items-center justify-between">
-                              <span className="text-xs text-gray-400 font-semibold">Community Trust Score</span>
+                            <div className="pt-2 border-t border-white/[0.09] flex items-center justify-between">
+                              <span className="text-xs text-slate-400 font-semibold">Community Trust Score</span>
                               <div className="flex items-center gap-2">
                                 <TrendingUp className="w-4 h-4 text-green-400" />
                                 <span className="font-bold text-white">{recipient.trustScore}/100</span>
@@ -345,7 +345,7 @@ export default function PayByPhone() {
 
                   {/* Amount */}
                   <div>
-                    <label className="text-sm font-semibold text-gray-300 flex items-center gap-2 mb-2">
+                    <label className="text-sm font-semibold text-slate-300 flex items-center gap-2 mb-2">
                       <DollarSign className="w-4 h-4" /> Amount (₹)
                     </label>
                     <Input
@@ -354,13 +354,13 @@ export default function PayByPhone() {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       disabled={!recipient || paymentSuccess}
-                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-500 disabled:opacity-50 text-lg font-semibold"
+                      className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 disabled:opacity-50 text-lg font-semibold"
                     />
                   </div>
 
                   {/* Note */}
                   <div>
-                    <label className="text-sm font-semibold text-gray-300 flex items-center gap-2 mb-2">
+                    <label className="text-sm font-semibold text-slate-300 flex items-center gap-2 mb-2">
                       <MessageSquare className="w-4 h-4" /> Note (Optional)
                     </label>
                     <Input
@@ -369,13 +369,13 @@ export default function PayByPhone() {
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
                       disabled={!recipient || paymentSuccess}
-                      className="bg-gray-700 border-gray-600 text-white placeholder-gray-500 disabled:opacity-50"
+                      className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 disabled:opacity-50"
                     />
                   </div>
 
                   {/* Fraud loading indicator */}
                   {fraudCheckLoading && (
-                    <div className="flex items-center gap-2 text-sm text-blue-400">
+                    <div className="flex items-center gap-2 text-sm text-cyan-400">
                       <Loader className="w-4 h-4 animate-spin" />
                       AegisAI fraud shield scanning…
                     </div>
@@ -431,17 +431,17 @@ export default function PayByPhone() {
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        <p className="text-sm text-gray-300">{fraudVerdict.summary}</p>
+                        <p className="text-sm text-slate-300">{fraudVerdict.summary}</p>
 
                         <div className="space-y-2">
-                          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Risk Factors</p>
+                          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Risk Factors</p>
                           {fraudVerdict.factors?.slice(0, 4).map((f, i) => (
-                            <div key={i} className="bg-gray-700/30 rounded p-2 text-xs">
+                            <div key={i} className="bg-white/[0.02] rounded p-2 text-xs">
                               <div className="flex justify-between items-center mb-1">
-                                <span className="text-gray-300">{f.label}</span>
+                                <span className="text-slate-300">{f.label}</span>
                                 <span className={`font-bold ${riskColor(f.risk)}`}>{f.score}%</span>
                               </div>
-                              <div className="w-full bg-gray-700 rounded-full h-1.5">
+                              <div className="w-full bg-white/[0.07] rounded-full h-1.5">
                                 <div className={`h-1.5 rounded-full transition-all ${
                                   f.risk === 'high' ? 'bg-red-500' : f.risk === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
                                 }`} style={{ width: `${f.score}%` }} />
@@ -450,11 +450,11 @@ export default function PayByPhone() {
                           ))}
                         </div>
 
-                        <div className="text-xs text-gray-400 pt-2 border-t border-gray-600 flex justify-between">
+                        <div className="text-xs text-slate-400 pt-2 border-t border-white/[0.09] flex justify-between">
                           <span>Composite Risk</span>
                           <span className="font-semibold text-white">{fraudVerdict.compositeRisk}%</span>
                         </div>
-                        <div className="text-xs text-gray-400 flex justify-between">
+                        <div className="text-xs text-slate-400 flex justify-between">
                           <span>Confidence</span>
                           <span className="font-semibold text-white">{fraudVerdict.confidence}%</span>
                         </div>
@@ -465,30 +465,30 @@ export default function PayByPhone() {
               </AnimatePresence>
 
               {/* Recent Payments */}
-              <Card className="bg-gray-800/50 border-gray-700">
+              <Card className="bg-slate-900/60 border-white/[0.06]">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-2">
-                    <History className="w-4 h-4 text-blue-400" />
+                    <History className="w-4 h-4 text-cyan-400" />
                     <CardTitle className="text-base text-white">Recent Phone Payments</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
                   {historyLoading ? (
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <div className="flex items-center gap-2 text-sm text-slate-400">
                       <Loader className="w-3 h-3 animate-spin" /> Loading…
                     </div>
                   ) : paymentHistory.length === 0 ? (
-                    <p className="text-sm text-gray-400">No phone payments yet</p>
+                    <p className="text-sm text-slate-400">No phone payments yet</p>
                   ) : (
                     <div className="space-y-2">
                       {paymentHistory.slice(0, 6).map((tx, i) => (
-                        <div key={i} className="bg-gray-700/30 rounded-lg p-3 text-xs">
+                        <div key={i} className="bg-white/[0.02] rounded-lg p-3 text-xs">
                           <div className="flex justify-between items-start mb-1">
                             <span className="font-medium text-white truncate flex-1">{tx.recipientName}</span>
                             <span className="text-green-400 font-semibold ml-2">₹{tx.amount.toLocaleString('en-IN')}</span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-gray-400 font-mono">{tx.phoneNumber}</span>
+                            <span className="text-slate-400 font-mono">{tx.phoneNumber}</span>
                             <span className={`px-2 py-0.5 rounded text-xs ${
                               tx.fraudVerdict === 'BLOCK'   ? 'bg-red-900    text-red-200'    :
                               tx.fraudVerdict === 'CAUTION' ? 'bg-yellow-900 text-yellow-200' :
@@ -505,14 +505,14 @@ export default function PayByPhone() {
               </Card>
 
               {/* How It Works */}
-              <Card className="bg-gray-800/50 border-gray-700">
+              <Card className="bg-slate-900/60 border-white/[0.06]">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-300 flex items-center gap-2">
-                    <Info className="w-4 h-4 text-blue-400" /> How It Works
+                  <CardTitle className="text-sm text-slate-300 flex items-center gap-2">
+                    <Info className="w-4 h-4 text-cyan-400" /> How It Works
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ol className="space-y-2 text-xs text-gray-400 list-none">
+                  <ol className="space-y-2 text-xs text-slate-400 list-none">
                     {[
                       'Enter recipient\'s phone number',
                       'AegisAI looks up their UPI ID',

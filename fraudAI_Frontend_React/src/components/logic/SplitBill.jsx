@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import {
@@ -50,7 +50,7 @@ function GroupCard({ group }) {
   };
 
   return (
-    <Card className="bg-gray-800/60 border-gray-700">
+    <Card className="bg-gray-800/60 border-white/[0.07]">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
@@ -58,28 +58,28 @@ function GroupCard({ group }) {
               <SplitSquareHorizontal className="h-4 w-4 text-purple-400 flex-shrink-0" />
               <h3 className="font-semibold text-white truncate">{group.title}</h3>
             </div>
-            <p className="text-xs text-gray-400 mt-0.5">{timeAgo(group.createdAt)} · {group.splitType === "equal" ? "Equal split" : "Custom split"}</p>
+            <p className="text-xs text-slate-400 mt-0.5">{timeAgo(group.createdAt)} · {group.splitType === "equal" ? "Equal split" : "Custom split"}</p>
           </div>
           <div className="text-right flex-shrink-0">
             <p className="text-lg font-bold text-white">₹{group.totalAmount?.toLocaleString("en-IN")}</p>
-            <p className="text-xs text-gray-400">{group.splits?.length} members</p>
+            <p className="text-xs text-slate-400">{group.splits?.length} members</p>
           </div>
         </div>
 
         {/* Progress bar */}
         <div className="mt-3">
-          <div className="flex justify-between text-xs text-gray-400 mb-1">
+          <div className="flex justify-between text-xs text-slate-400 mb-1">
             <span>{paid}/{total} paid</span>
             <span className={pct === 100 ? "text-green-400" : "text-yellow-400"}>{pct}% collected</span>
           </div>
-          <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all"
               style={{ width: `${pct}%` }} />
           </div>
         </div>
 
         <button onClick={() => setExpanded(p => !p)}
-          className="mt-3 w-full flex items-center justify-center gap-1 text-xs text-gray-400 hover:text-white transition-colors">
+          className="mt-3 w-full flex items-center justify-center gap-1 text-xs text-slate-400 hover:text-white transition-colors">
           {expanded ? <><ChevronUp className="h-3 w-3" /> Hide members</> : <><ChevronDown className="h-3 w-3" /> View members</>}
         </button>
 
@@ -87,7 +87,7 @@ function GroupCard({ group }) {
           {expanded && (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-              <div className="mt-3 space-y-2 pt-3 border-t border-gray-700">
+              <div className="mt-3 space-y-2 pt-3 border-t border-white/[0.07]">
                 {group.splits?.map((split, i) => (
                   <div key={i} className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
@@ -96,7 +96,7 @@ function GroupCard({ group }) {
                       </div>
                       <div>
                         <p className="text-xs font-medium text-white">{split.name}</p>
-                        <p className="text-xs text-gray-500">{split.upiId}</p>
+                        <p className="text-xs text-slate-500">{split.upiId}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
@@ -107,7 +107,7 @@ function GroupCard({ group }) {
                         </span>
                       ) : (
                         <button onClick={() => markPaid(i)}
-                          className="text-xs text-blue-400 hover:text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded-full">
+                          className="text-xs text-cyan-400 hover:text-blue-300 bg-blue-500/10 px-2 py-0.5 rounded-full">
                           Mark paid
                         </button>
                       )}
@@ -209,8 +209,8 @@ export default function SplitBill() {
   const totalPct = members.reduce((s, m) => s + (parseFloat(m.sharePercent) || 0), 0);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -223,7 +223,7 @@ export default function SplitBill() {
               <h1 className="text-2xl font-bold flex items-center gap-2">
                 <SplitSquareHorizontal className="h-6 w-6 text-purple-400" /> Split Bill
               </h1>
-              <p className="text-sm text-gray-400 mt-1">Split group expenses with friends & family</p>
+              <p className="text-sm text-slate-400 mt-1">Split group expenses with friends & family</p>
             </div>
             <Button onClick={() => { setShowForm(p => !p); setCalculated(null); setFormError(""); }}
               className="bg-purple-600 hover:bg-purple-700 gap-1.5">
@@ -236,8 +236,8 @@ export default function SplitBill() {
             {showForm && (
               <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
                 className="mb-6">
-                <Card className="bg-gray-800 border-gray-700">
-                  <CardHeader className="pb-3 border-b border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
+                  <CardHeader className="pb-3 border-b border-white/[0.07]">
                     <h2 className="font-semibold text-white flex items-center gap-2">
                       <Users className="h-4 w-4 text-purple-400" /> Create New Split
                     </h2>
@@ -245,14 +245,14 @@ export default function SplitBill() {
                   <CardContent className="pt-4 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Title *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Title *</label>
                         <Input value={title} onChange={e => setTitle(e.target.value)}
-                          placeholder="e.g. Trip to Goa" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. Trip to Goa" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Total Amount (₹) *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Total Amount (₹) *</label>
                         <Input type="number" value={totalAmount} onChange={e => setTotalAmount(e.target.value)}
-                          placeholder="e.g. 12000" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. 12000" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                     </div>
 
@@ -260,7 +260,7 @@ export default function SplitBill() {
                       {["equal", "custom"].map(t => (
                         <button key={t} onClick={() => setSplitType(t)}
                           className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                            splitType === t ? "bg-purple-600 border-purple-500 text-white" : "border-gray-600 text-gray-400 hover:border-gray-500"
+                            splitType === t ? "bg-purple-600 border-purple-500 text-white" : "border-white/[0.09] text-slate-400 hover:border-gray-500"
                           }`}>
                           {t === "equal" ? "Equal Split" : "Custom %"}
                         </button>
@@ -269,16 +269,16 @@ export default function SplitBill() {
 
                     {/* Members */}
                     <div className="space-y-2">
-                      <label className="text-xs text-gray-400">Members *</label>
+                      <label className="text-xs text-slate-400">Members *</label>
                       {members.map((m, i) => (
                         <div key={i} className="flex gap-2 items-center">
                           <Input value={m.name} onChange={e => updateMember(i, "name", e.target.value)}
-                            placeholder="Name" className="bg-gray-700 border-gray-600 text-white h-8 text-xs flex-1" />
+                            placeholder="Name" className="bg-white/[0.06] border-white/[0.08] text-white h-8 text-xs flex-1" />
                           <Input value={m.upiId} onChange={e => updateMember(i, "upiId", e.target.value)}
-                            placeholder="UPI ID" className="bg-gray-700 border-gray-600 text-white h-8 text-xs flex-1" />
+                            placeholder="UPI ID" className="bg-white/[0.06] border-white/[0.08] text-white h-8 text-xs flex-1" />
                           {splitType === "custom" && (
                             <Input type="number" value={m.sharePercent} onChange={e => updateMember(i, "sharePercent", e.target.value)}
-                              placeholder="%" className="bg-gray-700 border-gray-600 text-white h-8 text-xs w-16" />
+                              placeholder="%" className="bg-white/[0.06] border-white/[0.08] text-white h-8 text-xs w-16" />
                           )}
                           {members.length > 2 && (
                             <button onClick={() => removeMember(i)} className="text-red-400 hover:text-red-300 p-1">
@@ -301,11 +301,11 @@ export default function SplitBill() {
 
                     {/* Calculated preview */}
                     {calculated && (
-                      <div className="bg-gray-700/50 rounded-xl p-3 space-y-2">
-                        <p className="text-xs font-semibold text-gray-300">Preview</p>
+                      <div className="bg-white/[0.04] rounded-xl p-3 space-y-2">
+                        <p className="text-xs font-semibold text-slate-300">Preview</p>
                         {calculated.splits.map((s, i) => (
                           <div key={i} className="flex justify-between text-xs">
-                            <span className="text-gray-400">{s.name} ({s.upiId})</span>
+                            <span className="text-slate-400">{s.name} ({s.upiId})</span>
                             <span className="text-white font-medium">₹{s.amount}</span>
                           </div>
                         ))}
@@ -334,11 +334,11 @@ export default function SplitBill() {
           {loading ? (
             <div className="space-y-3">{[1, 2].map(i => <div key={i} className="h-28 rounded-xl bg-gray-800 animate-pulse" />)}</div>
           ) : groups.length === 0 ? (
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-slate-900/60 border-white/[0.06]">
               <CardContent className="flex flex-col items-center py-16 gap-3">
-                <SplitSquareHorizontal className="h-12 w-12 text-gray-600" />
-                <p className="text-gray-400">No split groups yet</p>
-                <p className="text-xs text-gray-600">Click "New Split" to create your first group expense</p>
+                <SplitSquareHorizontal className="h-12 w-12 text-slate-600" />
+                <p className="text-slate-400">No split groups yet</p>
+                <p className="text-xs text-slate-600">Click "New Split" to create your first group expense</p>
               </CardContent>
             </Card>
           ) : (

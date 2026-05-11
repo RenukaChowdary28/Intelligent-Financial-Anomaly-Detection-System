@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
@@ -178,8 +178,8 @@ export default function BatchCheck() {
   const summary = results?.summary;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -189,8 +189,8 @@ export default function BatchCheck() {
 
           {/* Next-step navigation bar */}
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap gap-2 mb-5 p-3 bg-gray-800/80 border border-gray-700 rounded-xl">
-            <span className="text-xs text-gray-500 self-center mr-1 shrink-0">Next step:</span>
+            className="flex flex-wrap gap-2 mb-5 p-3 bg-gray-800/80 border border-white/[0.07] rounded-xl">
+            <span className="text-xs text-slate-500 self-center mr-1 shrink-0">Next step:</span>
             {[
               { label: "AI Hub",            path: "/ai-hub",            icon: Brain,      color: "bg-cyan-600 hover:bg-cyan-700" },
               { label: "Feature Insights",  path: "/feature-insights",  icon: Microscope, color: "bg-orange-600 hover:bg-orange-700" },
@@ -207,10 +207,10 @@ export default function BatchCheck() {
           <div className="flex justify-between items-start mb-6 flex-wrap gap-3">
             <div>
               <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                className="text-2xl font-bold text-blue-400">
+                className="text-2xl font-bold text-cyan-400">
                 AI Batch Transaction Check
               </motion.h1>
-              <p className="text-gray-400 text-sm mt-1">
+              <p className="text-slate-400 text-sm mt-1">
                 Check up to 50 transactions simultaneously with AI fraud scoring.
               </p>
             </div>
@@ -231,11 +231,11 @@ export default function BatchCheck() {
           </div>
 
           {/* Transaction Table */}
-          <Card className="bg-gray-800 border-gray-700 mb-4">
+          <Card className="bg-slate-900/80 border-white/[0.07] mb-4">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-gray-400 flex items-center justify-between">
-                <span>Transaction Rows <span className="text-gray-600">({rows.length} / 50)</span></span>
-                <span className="text-xs text-gray-600">Click a row to edit feature values</span>
+              <CardTitle className="text-sm text-slate-400 flex items-center justify-between">
+                <span>Transaction Rows <span className="text-slate-600">({rows.length} / 50)</span></span>
+                <span className="text-xs text-slate-600">Click a row to edit feature values</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -245,19 +245,19 @@ export default function BatchCheck() {
                 return (
                   <motion.div key={rowIdx} layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
                     <div
-                      className={`rounded-lg border transition-all ${isEditing ? "border-blue-500/50 bg-blue-500/5" : "border-gray-700 hover:border-gray-600 bg-gray-700/30"}`}
+                      className={`rounded-lg border transition-all ${isEditing ? "border-blue-500/50 bg-blue-500/5" : "border-white/[0.07] hover:border-white/[0.09] bg-white/[0.02]"}`}
                     >
                       {/* Row header */}
                       <div className="flex items-center gap-3 p-3 cursor-pointer"
                         onClick={() => setEditingRow(isEditing ? null : rowIdx)}>
-                        <span className="text-xs font-mono text-blue-400 w-16 flex-shrink-0">{row.id}</span>
+                        <span className="text-xs font-mono text-cyan-400 w-16 flex-shrink-0">{row.id}</span>
                         <div className="flex-1 min-w-0">
-                          <div className="w-full bg-gray-700 rounded-full h-1.5">
+                          <div className="w-full bg-white/[0.07] rounded-full h-1.5">
                             <div className="h-1.5 rounded-full bg-blue-500 transition-all"
                               style={{ width: `${(filledCount / RF_FEATURE_NAMES.length) * 100}%` }} />
                           </div>
                         </div>
-                        <span className="text-xs text-gray-500 flex-shrink-0">{filledCount}/{RF_FEATURE_NAMES.length}</span>
+                        <span className="text-xs text-slate-500 flex-shrink-0">{filledCount}/{RF_FEATURE_NAMES.length}</span>
                         <div className="flex gap-1.5 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
                           <button onClick={() => fillRow(rowIdx, "suspicious")}
                             className="text-xs text-red-400 hover:text-red-300 px-1.5 py-0.5 rounded border border-red-500/30 hover:bg-red-500/10">
@@ -268,7 +268,7 @@ export default function BatchCheck() {
                             Nor
                           </button>
                           <button onClick={() => removeRow(rowIdx)}
-                            className="text-xs text-gray-500 hover:text-red-400 px-1.5 py-0.5 rounded border border-gray-600 hover:border-red-500/30">
+                            className="text-xs text-slate-500 hover:text-red-400 px-1.5 py-0.5 rounded border border-white/[0.09] hover:border-red-500/30">
                             ✕
                           </button>
                         </div>
@@ -279,17 +279,17 @@ export default function BatchCheck() {
                         {isEditing && (
                           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                            <div className="px-3 pb-3 pt-1 grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 border-t border-gray-700/50">
+                            <div className="px-3 pb-3 pt-1 grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 border-t border-white/[0.07]/50">
                               {RF_FEATURE_NAMES.map((name, fi) => (
                                 <div key={fi}>
-                                  <label className="text-xs text-gray-500 block mb-0.5 truncate" title={name}>{name}</label>
+                                  <label className="text-xs text-slate-500 block mb-0.5 truncate" title={name}>{name}</label>
                                   <input
                                     type="number"
                                     step="any"
                                     placeholder="0"
                                     value={row.features[fi] ?? ""}
                                     onChange={(e) => updateFeature(rowIdx, fi, e.target.value)}
-                                    className="w-full bg-gray-700 border border-gray-600 rounded text-xs text-white px-2 py-1 focus:border-blue-500 focus:outline-none"
+                                    className="w-full bg-white/[0.07] border border-white/[0.09] rounded text-xs text-white px-2 py-1 focus:border-cyan-500/50 focus:outline-none"
                                   />
                                 </div>
                               ))}
@@ -303,7 +303,7 @@ export default function BatchCheck() {
               })}
 
               {rows.length === 0 && (
-                <p className="text-gray-500 text-sm text-center py-4">No rows added yet. Click "+ Add Row" to start.</p>
+                <p className="text-slate-500 text-sm text-center py-4">No rows added yet. Click "+ Add Row" to start.</p>
               )}
             </CardContent>
           </Card>
@@ -323,7 +323,7 @@ export default function BatchCheck() {
               }
             </Button>
             <Button onClick={() => { setRows([makeEmptyRow("TX0001"), makeEmptyRow("TX0002"), makeEmptyRow("TX0003")]); setResults(null); }}
-              variant="outline" className="border-gray-600 text-gray-400 hover:text-white">
+              variant="outline" className="border-white/[0.09] text-slate-400 hover:text-white">
               <RefreshCw className="h-4 w-4" />
             </Button>
           </div>
@@ -342,9 +342,9 @@ export default function BatchCheck() {
                     { label: "Legitimate",     value: summary?.legitimate, color: "green"  },
                     { label: "High Risk",      value: summary?.high_risk,  color: "orange" },
                   ].map((s) => (
-                    <Card key={s.label} className="bg-gray-800 border-gray-700">
+                    <Card key={s.label} className="bg-slate-900/80 border-white/[0.07]">
                       <CardContent className="pt-4 pb-3">
-                        <p className="text-xs text-gray-400">{s.label}</p>
+                        <p className="text-xs text-slate-400">{s.label}</p>
                         <p className={`text-2xl font-bold text-${s.color}-400`}>{s.value ?? 0}</p>
                       </CardContent>
                     </Card>
@@ -355,11 +355,11 @@ export default function BatchCheck() {
                 {results.batch_insight && (
                   <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}>
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex items-start gap-3">
-                      <Brain className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                      <Brain className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="text-xs font-semibold text-blue-400 mb-1">AI Batch Analysis</p>
-                        <p className="text-sm text-gray-300">{results.batch_insight}</p>
-                        <p className="text-xs text-gray-500 mt-1">Fraud rate: {results.fraud_rate_percent}% across this batch</p>
+                        <p className="text-xs font-semibold text-cyan-400 mb-1">AI Batch Analysis</p>
+                        <p className="text-sm text-slate-300">{results.batch_insight}</p>
+                        <p className="text-xs text-slate-500 mt-1">Fraud rate: {results.fraud_rate_percent}% across this batch</p>
                       </div>
                     </div>
                   </motion.div>
@@ -367,7 +367,7 @@ export default function BatchCheck() {
 
                 {/* Fraud Probability Chart */}
                 {chartData.length > 0 && (
-                  <Card className="bg-gray-800 border-gray-700">
+                  <Card className="bg-slate-900/80 border-white/[0.07]">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base text-yellow-400 flex items-center gap-2">
                         <BarChart2 className="h-4 w-4" /> Fraud Probability by Transaction
@@ -391,7 +391,7 @@ export default function BatchCheck() {
                           </Bar>
                         </BarChart>
                       </ResponsiveContainer>
-                      <p className="text-xs text-gray-600 mt-1 text-center">
+                      <p className="text-xs text-slate-600 mt-1 text-center">
                         Red = HIGH risk · Amber = MEDIUM risk · Green = LOW risk
                       </p>
                     </CardContent>
@@ -399,12 +399,12 @@ export default function BatchCheck() {
                 )}
 
                 {/* Results Table */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base text-blue-400">Transaction Results</CardTitle>
+                      <CardTitle className="text-base text-cyan-400">Transaction Results</CardTitle>
                       <Button onClick={exportCSV} size="sm" variant="outline"
-                        className="border-gray-600 text-gray-300 hover:text-white flex items-center gap-1">
+                        className="border-white/[0.09] text-slate-300 hover:text-white flex items-center gap-1">
                         <Download className="h-4 w-4" /> Export CSV
                       </Button>
                     </div>
@@ -413,12 +413,12 @@ export default function BatchCheck() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="border-b border-gray-700">
-                            <th className="text-left text-gray-400 py-2 pr-4">ID</th>
-                            <th className="text-left text-gray-400 py-2 pr-4">Verdict</th>
-                            <th className="text-left text-gray-400 py-2 pr-4">Fraud %</th>
-                            <th className="text-left text-gray-400 py-2 pr-4">Risk</th>
-                            <th className="text-left text-gray-400 py-2">Top Suspicious Features</th>
+                          <tr className="border-b border-white/[0.07]">
+                            <th className="text-left text-slate-400 py-2 pr-4">ID</th>
+                            <th className="text-left text-slate-400 py-2 pr-4">Verdict</th>
+                            <th className="text-left text-slate-400 py-2 pr-4">Fraud %</th>
+                            <th className="text-left text-slate-400 py-2 pr-4">Risk</th>
+                            <th className="text-left text-slate-400 py-2">Top Suspicious Features</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -427,8 +427,8 @@ export default function BatchCheck() {
                             return (
                               <motion.tr key={i}
                                 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
-                                className="border-b border-gray-700/50">
-                                <td className="py-2 pr-4 font-mono text-xs text-gray-300">{r.transaction_id}</td>
+                                className="border-b border-white/[0.07]/50">
+                                <td className="py-2 pr-4 font-mono text-xs text-slate-300">{r.transaction_id}</td>
                                 <td className="py-2 pr-4">
                                   <div className="flex items-center gap-1.5">
                                     {verdictIcon(r.verdict)}
@@ -437,7 +437,7 @@ export default function BatchCheck() {
                                 </td>
                                 <td className="py-2 pr-4">
                                   <div className="flex items-center gap-2">
-                                    <div className="w-16 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                    <div className="w-16 h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                                       <div className="h-full rounded-full"
                                         style={{ width: `${r.fraud_probability}%`, backgroundColor: RISK_COLORS[r.risk_level] }} />
                                     </div>
@@ -451,7 +451,7 @@ export default function BatchCheck() {
                                       ? r.top_suspicious_features.map((f, fi) => (
                                           <span key={fi} className="text-xs bg-red-500/15 text-red-300 px-1.5 py-0.5 rounded">{f}</span>
                                         ))
-                                      : <span className="text-xs text-gray-600">None</span>
+                                      : <span className="text-xs text-slate-600">None</span>
                                     }
                                   </div>
                                 </td>
@@ -464,8 +464,8 @@ export default function BatchCheck() {
                   </CardContent>
                 </Card>
 
-                <div className="flex flex-wrap items-center gap-2 p-3 bg-gray-800/80 border border-gray-700 rounded-xl">
-                  <span className="text-xs text-gray-500 self-center mr-1 shrink-0">Continue to:</span>
+                <div className="flex flex-wrap items-center gap-2 p-3 bg-gray-800/80 border border-white/[0.07] rounded-xl">
+                  <span className="text-xs text-slate-500 self-center mr-1 shrink-0">Continue to:</span>
                   {[
                     { label: "AI Hub",            path: "/ai-hub",            icon: Brain,      color: "bg-cyan-600 hover:bg-cyan-700" },
                     { label: "Feature Insights",  path: "/feature-insights",  icon: Microscope, color: "bg-orange-600 hover:bg-orange-700" },
@@ -479,7 +479,7 @@ export default function BatchCheck() {
                   ))}
                   <div className="ml-auto">
                     <Button variant="outline" size="sm" onClick={() => setResults(null)}
-                      className="border-gray-600 text-gray-400 hover:text-white text-xs flex items-center gap-1.5">
+                      className="border-white/[0.09] text-slate-400 hover:text-white text-xs flex items-center gap-1.5">
                       <RefreshCw className="h-3.5 w-3.5" /> Check New Batch
                     </Button>
                   </div>

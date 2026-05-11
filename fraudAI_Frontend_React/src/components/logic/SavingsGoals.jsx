@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import {
@@ -53,7 +53,7 @@ function GoalCard({ goal, onAddMoney, onDelete }) {
   const gradIdx = goal.title.charCodeAt(0) % GRADIENT_COLORS.length;
 
   return (
-    <Card className={`border border-gray-700 bg-gray-800/60 ${done ? "ring-1 ring-green-500/30" : ""}`}>
+    <Card className={`border border-white/[0.07] bg-gray-800/60 ${done ? "ring-1 ring-green-500/30" : ""}`}>
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">
@@ -66,7 +66,7 @@ function GoalCard({ goal, onAddMoney, onDelete }) {
                 {done && <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 px-1.5 py-0.5 rounded-full">Achieved!</span>}
               </div>
               {goal.targetDate && (
-                <div className="flex items-center gap-1 text-xs text-gray-400 mt-0.5">
+                <div className="flex items-center gap-1 text-xs text-slate-400 mt-0.5">
                   <Calendar className="h-3 w-3" />
                   {days === 0 ? "Today is the deadline!" : `${days} days left · ${new Date(goal.targetDate).toLocaleDateString("en-IN")}`}
                 </div>
@@ -74,7 +74,7 @@ function GoalCard({ goal, onAddMoney, onDelete }) {
             </div>
           </div>
           <button onClick={() => onDelete(goal.id)}
-            className="text-gray-500 hover:text-red-400 transition-colors p-1">
+            className="text-slate-500 hover:text-red-400 transition-colors p-1">
             <Trash2 className="h-3.5 w-3.5" />
           </button>
         </div>
@@ -82,14 +82,14 @@ function GoalCard({ goal, onAddMoney, onDelete }) {
         {/* Progress bar */}
         <div className="mb-3">
           <div className="flex justify-between text-sm mb-1.5">
-            <span className="text-gray-300">
+            <span className="text-slate-300">
               ₹{goal.savedSoFar?.toLocaleString("en-IN")} saved
             </span>
             <span className="font-semibold text-white">
               ₹{goal.targetAmount?.toLocaleString("en-IN")} goal
             </span>
           </div>
-          <div className="h-3 bg-gray-700 rounded-full overflow-hidden">
+          <div className="h-3 bg-white/[0.07] rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${pct}%` }}
@@ -97,7 +97,7 @@ function GoalCard({ goal, onAddMoney, onDelete }) {
               className={`h-full rounded-full bg-gradient-to-r ${GRADIENT_COLORS[gradIdx]}`}
             />
           </div>
-          <div className="flex justify-between text-xs text-gray-400 mt-1">
+          <div className="flex justify-between text-xs text-slate-400 mt-1">
             <span>{pct.toFixed(1)}% complete</span>
             {remaining > 0 && <span>₹{remaining.toLocaleString("en-IN")} remaining</span>}
           </div>
@@ -105,7 +105,7 @@ function GoalCard({ goal, onAddMoney, onDelete }) {
 
         {/* Monthly needed */}
         {monthlyNeeded && !done && (
-          <div className="flex items-center gap-1.5 text-xs bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg px-3 py-1.5 mb-3">
+          <div className="flex items-center gap-1.5 text-xs bg-blue-500/10 border border-blue-500/20 text-cyan-400 rounded-lg px-3 py-1.5 mb-3">
             <TrendingUp className="h-3 w-3" />
             Save ₹{parseInt(monthlyNeeded).toLocaleString("en-IN")}/month to reach your goal on time
           </div>
@@ -117,13 +117,13 @@ function GoalCard({ goal, onAddMoney, onDelete }) {
             {showAdd ? (
               <div className="flex gap-2">
                 <Input type="number" value={addAmt} onChange={e => setAddAmt(e.target.value)}
-                  placeholder="Amount to add (₹)" className="bg-gray-700 border-gray-600 text-white h-8 text-xs flex-1"
+                  placeholder="Amount to add (₹)" className="bg-white/[0.06] border-white/[0.08] text-white h-8 text-xs flex-1"
                   onKeyDown={e => e.key === "Enter" && handleAdd()} />
                 <Button onClick={handleAdd} disabled={adding} size="sm"
                   className="bg-green-600 hover:bg-green-700 h-8 px-3 text-xs">
                   {adding ? "…" : "Add"}
                 </Button>
-                <button onClick={() => setShowAdd(false)} className="text-gray-400 hover:text-white p-1">
+                <button onClick={() => setShowAdd(false)} className="text-slate-400 hover:text-white p-1">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -206,8 +206,8 @@ export default function SavingsGoals() {
   const achieved = goals.filter(g => g.savedSoFar >= g.targetAmount).length;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -220,7 +220,7 @@ export default function SavingsGoals() {
               <h1 className="text-2xl font-bold flex items-center gap-2">
                 <Target className="h-6 w-6 text-amber-400" /> Savings Goals
               </h1>
-              <p className="text-sm text-gray-400 mt-1">Track progress towards your financial dreams</p>
+              <p className="text-sm text-slate-400 mt-1">Track progress towards your financial dreams</p>
             </div>
             <Button onClick={() => { setShowForm(p => !p); setFormErr(""); }}
               className="bg-amber-600 hover:bg-amber-700 gap-1.5">
@@ -231,21 +231,21 @@ export default function SavingsGoals() {
           {/* Summary */}
           {goals.length > 0 && (
             <div className="grid grid-cols-3 gap-3 mb-6">
-              <Card className="bg-gray-800/60 border-gray-700">
+              <Card className="bg-gray-800/60 border-white/[0.07]">
                 <CardContent className="p-4">
-                  <p className="text-xs text-gray-400 mb-1">Total Saved</p>
+                  <p className="text-xs text-slate-400 mb-1">Total Saved</p>
                   <p className="text-lg font-bold text-amber-400">₹{totalSaved.toLocaleString("en-IN")}</p>
                 </CardContent>
               </Card>
-              <Card className="bg-gray-800/60 border-gray-700">
+              <Card className="bg-gray-800/60 border-white/[0.07]">
                 <CardContent className="p-4">
-                  <p className="text-xs text-gray-400 mb-1">Total Target</p>
+                  <p className="text-xs text-slate-400 mb-1">Total Target</p>
                   <p className="text-lg font-bold text-white">₹{totalTarget.toLocaleString("en-IN")}</p>
                 </CardContent>
               </Card>
-              <Card className="bg-gray-800/60 border-gray-700">
+              <Card className="bg-gray-800/60 border-white/[0.07]">
                 <CardContent className="p-4">
-                  <p className="text-xs text-gray-400 mb-1">Goals Achieved</p>
+                  <p className="text-xs text-slate-400 mb-1">Goals Achieved</p>
                   <p className="text-lg font-bold text-green-400">{achieved} / {goals.length}</p>
                 </CardContent>
               </Card>
@@ -256,8 +256,8 @@ export default function SavingsGoals() {
           <AnimatePresence>
             {showForm && (
               <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="mb-6">
-                <Card className="bg-gray-800 border-gray-700">
-                  <CardHeader className="pb-3 border-b border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
+                  <CardHeader className="pb-3 border-b border-white/[0.07]">
                     <h2 className="font-semibold text-white flex items-center gap-2">
                       <PiggyBank className="h-4 w-4 text-amber-400" /> Create Savings Goal
                     </h2>
@@ -265,11 +265,11 @@ export default function SavingsGoals() {
                   <CardContent className="pt-4 space-y-4">
                     {/* Emoji picker */}
                     <div>
-                      <label className="text-xs text-gray-400 block mb-2">Choose Icon</label>
+                      <label className="text-xs text-slate-400 block mb-2">Choose Icon</label>
                       <div className="flex gap-2 flex-wrap">
                         {EMOJI_MAP.map(e => (
                           <button key={e} onClick={() => update("emoji", e)}
-                            className={`w-9 h-9 text-lg rounded-lg transition-colors ${form.emoji === e ? "bg-amber-500/20 ring-1 ring-amber-500" : "hover:bg-gray-700"}`}>
+                            className={`w-9 h-9 text-lg rounded-lg transition-colors ${form.emoji === e ? "bg-amber-500/20 ring-1 ring-amber-500" : "hover:bg-white/[0.07]"}`}>
                             {e}
                           </button>
                         ))}
@@ -278,27 +278,27 @@ export default function SavingsGoals() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Goal Name *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Goal Name *</label>
                         <Input value={form.title} onChange={e => update("title", e.target.value)}
-                          placeholder="e.g. New Phone" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. New Phone" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Target Amount (₹) *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Target Amount (₹) *</label>
                         <Input type="number" value={form.targetAmount} onChange={e => update("targetAmount", e.target.value)}
-                          placeholder="e.g. 25000" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. 25000" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Already Saved (₹)</label>
+                        <label className="text-xs text-slate-400 block mb-1">Already Saved (₹)</label>
                         <Input type="number" value={form.savedSoFar} onChange={e => update("savedSoFar", e.target.value)}
-                          placeholder="0" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="0" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Target Date (optional)</label>
+                        <label className="text-xs text-slate-400 block mb-1">Target Date (optional)</label>
                         <Input type="date" value={form.targetDate} onChange={e => update("targetDate", e.target.value)}
-                          className="bg-gray-700 border-gray-600 text-white h-9" />
+                          className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                     </div>
 
@@ -318,11 +318,11 @@ export default function SavingsGoals() {
           {loading ? (
             <div className="space-y-3">{[1, 2].map(i => <div key={i} className="h-36 rounded-xl bg-gray-800 animate-pulse" />)}</div>
           ) : goals.length === 0 ? (
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-slate-900/60 border-white/[0.06]">
               <CardContent className="flex flex-col items-center py-16 gap-3">
-                <Target className="h-12 w-12 text-gray-600" />
-                <p className="text-gray-400">No savings goals yet</p>
-                <p className="text-xs text-gray-600">Set a goal for your next big purchase, travel, or dream</p>
+                <Target className="h-12 w-12 text-slate-600" />
+                <p className="text-slate-400">No savings goals yet</p>
+                <p className="text-xs text-slate-600">Set a goal for your next big purchase, travel, or dream</p>
               </CardContent>
             </Card>
           ) : (

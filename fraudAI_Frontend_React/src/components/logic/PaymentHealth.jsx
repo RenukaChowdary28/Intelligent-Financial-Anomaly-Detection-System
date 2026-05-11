@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { auth, db } from "./firebase";
 import {
   collection,
@@ -101,7 +101,7 @@ function CircularGauge({ score, size = 180 }) {
         >
           {score}
         </motion.span>
-        <span className="text-sm text-gray-400">/ 100</span>
+        <span className="text-sm text-slate-400">/ 100</span>
         <span
           className="text-xl font-bold mt-1"
           style={{ color }}
@@ -118,7 +118,7 @@ function TrendIcon({ trend }) {
     return <TrendingUp size={14} className="text-green-400" />;
   if (trend === "down")
     return <TrendingDown size={14} className="text-red-400" />;
-  return <Minus size={14} className="text-gray-400" />;
+  return <Minus size={14} className="text-slate-400" />;
 }
 
 export default function PaymentHealth() {
@@ -332,7 +332,7 @@ export default function PaymentHealth() {
     {
       key: "bills",
       label: "Bill Consistency",
-      icon: <CheckCircle size={18} className="text-blue-400" />,
+      icon: <CheckCircle size={18} className="text-cyan-400" />,
       score: scores.bills,
       explanation: "% of recurring payments not missed",
       trend: scores.bills >= 90 ? "up" : scores.bills <= 70 ? "down" : "same",
@@ -367,8 +367,8 @@ export default function PaymentHealth() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -386,7 +386,7 @@ export default function PaymentHealth() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">Payment Health Score</h1>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Your composite financial safety metric
                 </p>
               </div>
@@ -395,7 +395,7 @@ export default function PaymentHealth() {
               variant="outline"
               size="sm"
               onClick={() => user && fetchData(user)}
-              className="border-gray-700 text-gray-300 hover:bg-gray-800"
+              className="border-white/[0.07] text-slate-300 hover:bg-white/[0.04]"
             >
               <RefreshCw size={14} className="mr-1" /> Refresh
             </Button>
@@ -405,7 +405,7 @@ export default function PaymentHealth() {
             <div className="flex items-center justify-center h-64">
               <div className="flex flex-col items-center gap-3">
                 <div className="w-10 h-10 border-4 border-pink-500 border-t-transparent rounded-full animate-spin" />
-                <p className="text-gray-400">Computing health score...</p>
+                <p className="text-slate-400">Computing health score...</p>
               </div>
             </div>
           ) : (
@@ -417,22 +417,22 @@ export default function PaymentHealth() {
             >
               {/* Main Score Display */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-6">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-8 py-4">
                       <CircularGauge score={composite} size={190} />
                       <div className="flex flex-col items-center md:items-start gap-2">
-                        <p className="text-gray-400 text-sm">Your payment health is</p>
+                        <p className="text-slate-400 text-sm">Your payment health is</p>
                         <span
                           className={`text-3xl font-extrabold ${health.color}`}
                         >
                           {health.label}
                         </span>
-                        <Badge className="bg-gray-700 text-gray-300 border border-gray-600 mt-1">
+                        <Badge className="bg-white/[0.07] text-slate-300 border border-white/[0.09] mt-1">
                           Grade: {getGrade(composite)}
                         </Badge>
                         {lastUpdated && (
-                          <p className="text-gray-500 text-xs mt-2">
+                          <p className="text-slate-500 text-xs mt-2">
                             Last updated:{" "}
                             {lastUpdated.toLocaleTimeString([], {
                               hour: "2-digit",
@@ -448,7 +448,7 @@ export default function PaymentHealth() {
 
               {/* Score Breakdown */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Zap size={18} className="text-yellow-400" />
@@ -463,7 +463,7 @@ export default function PaymentHealth() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.07 }}
-                          className="p-3 bg-gray-700/50 rounded-lg"
+                          className="p-3 bg-white/[0.04] rounded-lg"
                         >
                           <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
@@ -482,10 +482,10 @@ export default function PaymentHealth() {
                               </span>
                             </div>
                           </div>
-                          <div className="h-2 bg-gray-600 rounded-full overflow-hidden">
+                          <div className="h-2 bg-white/[0.09] rounded-full overflow-hidden">
                             <div className="h-full bg-blue-500 rounded-full transition-all duration-500" style={{ width: `${s.score}%` }} />
                           </div>
-                          <p className="text-gray-500 text-xs mt-1.5">
+                          <p className="text-slate-500 text-xs mt-1.5">
                             {s.explanation}
                           </p>
                         </motion.div>
@@ -497,7 +497,7 @@ export default function PaymentHealth() {
 
               {/* Recommendations */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <CheckCircle size={18} className="text-green-400" />
@@ -512,11 +512,11 @@ export default function PaymentHealth() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: i * 0.08 }}
-                          className="flex items-start gap-3 p-3 bg-gray-700/50 border border-gray-600/50 rounded-lg"
+                          className="flex items-start gap-3 p-3 bg-white/[0.04] border border-white/[0.09]/50 rounded-lg"
                         >
-                          <span className="text-blue-400 mt-0.5">{r.icon}</span>
+                          <span className="text-cyan-400 mt-0.5">{r.icon}</span>
                           <div className="flex-1">
-                            <p className="text-gray-300 text-xs font-semibold uppercase tracking-wide mb-0.5">
+                            <p className="text-slate-300 text-xs font-semibold uppercase tracking-wide mb-0.5">
                               {r.label}
                             </p>
                             <p className="text-white text-sm">{r.action}</p>
@@ -533,7 +533,7 @@ export default function PaymentHealth() {
 
               {/* Score History */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <TrendingUp size={18} className="text-purple-400" />

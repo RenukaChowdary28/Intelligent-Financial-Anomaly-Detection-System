@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { doc, getDoc, updateDoc, collection, query, where, getDocs } from "firebase/firestore";
@@ -19,7 +19,7 @@ const CAT_COLORS = {
   Other: "bg-yellow-500",
 };
 const CAT_TEXT = {
-  Rent: "text-blue-400",
+  Rent: "text-cyan-400",
   Utilities: "text-purple-400",
   Groceries: "text-green-400",
   Entertainment: "text-pink-400",
@@ -117,18 +117,18 @@ export default function Budget() {
   );
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <Wallet className="h-6 w-6" /> Budget Tracker
             </h1>
-            <p className="text-gray-400 text-sm mb-6">
+            <p className="text-slate-400 text-sm mb-6">
               Set monthly spending limits per category and track your progress.
             </p>
           </motion.div>
@@ -158,17 +158,17 @@ export default function Budget() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left — set limits */}
-            <Card className="bg-gray-800 border-gray-700">
+            <Card className="bg-slate-900/80 border-white/[0.07]">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm text-gray-300">Monthly Limits</CardTitle>
+                <CardTitle className="text-sm text-slate-300">Monthly Limits</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {CATEGORIES.map((cat) => (
                   <div key={cat} className="flex items-center gap-3">
                     <div className={`w-2 h-2 rounded-full flex-shrink-0 ${CAT_COLORS[cat]}`} />
-                    <label className="text-sm text-gray-300 w-28 flex-shrink-0">{cat}</label>
+                    <label className="text-sm text-slate-300 w-28 flex-shrink-0">{cat}</label>
                     <div className="relative flex-1">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">₹</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">₹</span>
                       <Input
                         type="number"
                         min="0"
@@ -177,14 +177,14 @@ export default function Budget() {
                           setLimits((prev) => ({ ...prev, [cat]: e.target.value }))
                         }
                         placeholder="No limit"
-                        className="pl-7 bg-gray-700 border-gray-600 text-white text-sm h-8"
+                        className="pl-7 bg-white/[0.06] border-white/[0.08] text-white text-sm h-8"
                       />
                     </div>
                   </div>
                 ))}
 
                 <div className="pt-2 flex items-center justify-between">
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-slate-500">
                     Total budget: <span className="text-white font-mono">₹{totalBudget.toLocaleString()}</span>
                   </p>
                   <Button
@@ -206,18 +206,18 @@ export default function Budget() {
             {/* Right — spending vs limit */}
             <div className="space-y-4">
               {/* Overall summary */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardContent className="pt-4 pb-3">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs text-gray-400 flex items-center gap-1.5">
-                      <TrendingUp className="h-3.5 w-3.5 text-blue-400" /> This Month Total
+                    <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                      <TrendingUp className="h-3.5 w-3.5 text-cyan-400" /> This Month Total
                     </p>
-                    <p className="text-xs text-gray-400 font-mono">
+                    <p className="text-xs text-slate-400 font-mono">
                       ₹{totalSpent.toFixed(0)} / ₹{totalBudget > 0 ? totalBudget.toFixed(0) : "—"}
                     </p>
                   </div>
                   {totalBudget > 0 && (
-                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-2 bg-white/[0.07] rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all ${
                           totalSpent / totalBudget > 1
@@ -234,9 +234,9 @@ export default function Budget() {
               </Card>
 
               {/* Per-category bars */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-300">Spending by Category</CardTitle>
+                  <CardTitle className="text-sm text-slate-300">Spending by Category</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {CATEGORIES.map((cat) => {
@@ -248,16 +248,16 @@ export default function Budget() {
                       <div key={cat}>
                         <div className="flex items-center justify-between mb-1">
                           <span className={`text-xs font-medium ${CAT_TEXT[cat]}`}>{cat}</span>
-                          <span className="text-xs text-gray-400 font-mono">
+                          <span className="text-xs text-slate-400 font-mono">
                             ₹{s.toFixed(0)}
                             {limit > 0 && (
-                              <span className={over ? "text-red-400" : "text-gray-500"}>
+                              <span className={over ? "text-red-400" : "text-slate-500"}>
                                 {" "}/ ₹{limit.toFixed(0)}
                               </span>
                             )}
                           </span>
                         </div>
-                        <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                           {limit > 0 ? (
                             <div
                               className={`h-full rounded-full transition-all ${
@@ -270,7 +270,7 @@ export default function Budget() {
                           )}
                         </div>
                         {limit === 0 && s > 0 && (
-                          <p className="text-xs text-gray-600 mt-0.5">₹{s.toFixed(0)} spent · no limit set</p>
+                          <p className="text-xs text-slate-600 mt-0.5">₹{s.toFixed(0)} spent · no limit set</p>
                         )}
                       </div>
                     );

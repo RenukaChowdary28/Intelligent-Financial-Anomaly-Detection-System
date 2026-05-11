@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -51,8 +51,8 @@ export default function DatasetDrift() {
     .map((f) => ({ name: f.feature.replace(/_/g, " ").slice(0, 20), psi: parseFloat(f.psi.toFixed(4)), status: f.drift_level })) || [];
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -60,12 +60,12 @@ export default function DatasetDrift() {
         <div className="p-6 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-start justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
                 <Activity className="h-6 w-6" /> Dataset Drift
               </h1>
-              <p className="text-gray-400 text-sm">Population Stability Index (PSI) analysis across all features.</p>
+              <p className="text-slate-400 text-sm">Population Stability Index (PSI) analysis across all features.</p>
             </div>
-            <Button size="sm" onClick={fetchData} variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+            <Button size="sm" onClick={fetchData} variant="outline" className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07]">
               <RefreshCw className="h-4 w-4 mr-1" /> Refresh
             </Button>
           </motion.div>
@@ -73,7 +73,7 @@ export default function DatasetDrift() {
           {loading && (
             <div className="flex items-center justify-center py-20">
               <div className="h-8 w-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mr-3" />
-              <span className="text-gray-400">Computing drift metrics…</span>
+              <span className="text-slate-400">Computing drift metrics…</span>
             </div>
           )}
 
@@ -93,7 +93,7 @@ export default function DatasetDrift() {
                   <p className={`font-bold text-lg ${statusConfig.color}`}>
                     {data.overall_drift_status} — Overall PSI: {data.overall_psi?.toFixed(4)}
                   </p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-slate-400">
                     {data.drifted_features?.length} drifted / {data.features_checked} features checked
                   </p>
                 </div>
@@ -101,21 +101,21 @@ export default function DatasetDrift() {
 
               {/* Summary cards */}
               <div className="grid grid-cols-3 gap-4">
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-4 pb-3">
-                    <p className="text-xs text-gray-400">Features Checked</p>
-                    <p className="text-2xl font-bold text-blue-400">{data.features_checked}</p>
+                    <p className="text-xs text-slate-400">Features Checked</p>
+                    <p className="text-2xl font-bold text-cyan-400">{data.features_checked}</p>
                   </CardContent>
                 </Card>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-4 pb-3">
-                    <p className="text-xs text-gray-400">Drifted</p>
+                    <p className="text-xs text-slate-400">Drifted</p>
                     <p className="text-2xl font-bold text-red-400">{data.drifted_features?.length ?? 0}</p>
                   </CardContent>
                 </Card>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-4 pb-3">
-                    <p className="text-xs text-gray-400">Stable</p>
+                    <p className="text-xs text-slate-400">Stable</p>
                     <p className="text-2xl font-bold text-green-400">{data.stable_features?.length ?? 0}</p>
                   </CardContent>
                 </Card>
@@ -123,9 +123,9 @@ export default function DatasetDrift() {
 
               {/* PSI chart */}
               {chartData.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base text-blue-400 flex items-center gap-2">
+                    <CardTitle className="text-base text-cyan-400 flex items-center gap-2">
                       <TrendingUp className="h-4 w-4" /> PSI by Feature (top 15)
                     </CardTitle>
                   </CardHeader>
@@ -144,7 +144,7 @@ export default function DatasetDrift() {
                         </Bar>
                       </BarChart>
                     </ResponsiveContainer>
-                    <div className="flex gap-4 mt-2 justify-center text-xs text-gray-400">
+                    <div className="flex gap-4 mt-2 justify-center text-xs text-slate-400">
                       {Object.entries(DRIFT_COLOR).map(([k, c]) => (
                         <span key={k} className="flex items-center gap-1">
                           <span className="w-3 h-3 rounded-sm" style={{ background: c }} />
@@ -158,7 +158,7 @@ export default function DatasetDrift() {
 
               {/* Drifted features detail */}
               {data.drifted_features?.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-yellow-400">Drifted Features Detail</CardTitle>
                   </CardHeader>
@@ -166,13 +166,13 @@ export default function DatasetDrift() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="border-b border-gray-700">
-                            <th className="text-left text-gray-400 py-2 pr-4">Feature</th>
-                            <th className="text-right text-gray-400 py-2 px-3">Train Mean</th>
-                            <th className="text-right text-gray-400 py-2 px-3">Dataset Mean</th>
-                            <th className="text-right text-gray-400 py-2 px-3">Z-Score</th>
-                            <th className="text-right text-gray-400 py-2 px-3">PSI</th>
-                            <th className="text-right text-gray-400 py-2 px-3">Status</th>
+                          <tr className="border-b border-white/[0.07]">
+                            <th className="text-left text-slate-400 py-2 pr-4">Feature</th>
+                            <th className="text-right text-slate-400 py-2 px-3">Train Mean</th>
+                            <th className="text-right text-slate-400 py-2 px-3">Dataset Mean</th>
+                            <th className="text-right text-slate-400 py-2 px-3">Z-Score</th>
+                            <th className="text-right text-slate-400 py-2 px-3">PSI</th>
+                            <th className="text-right text-slate-400 py-2 px-3">Status</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -180,10 +180,10 @@ export default function DatasetDrift() {
                             ?.filter((f) => f.is_drifted)
                             .sort((a, b) => b.psi - a.psi)
                             .map((f) => (
-                              <tr key={f.feature} className="border-b border-gray-700/50">
-                                <td className="py-2 pr-4 text-gray-300 text-xs">{f.feature.replace(/_/g, " ")}</td>
-                                <td className="text-right py-2 px-3 font-mono text-xs text-gray-400">{f.training_mean?.toFixed(3)}</td>
-                                <td className="text-right py-2 px-3 font-mono text-xs text-gray-400">{f.dataset_mean?.toFixed(3)}</td>
+                              <tr key={f.feature} className="border-b border-white/[0.07]/50">
+                                <td className="py-2 pr-4 text-slate-300 text-xs">{f.feature.replace(/_/g, " ")}</td>
+                                <td className="text-right py-2 px-3 font-mono text-xs text-slate-400">{f.training_mean?.toFixed(3)}</td>
+                                <td className="text-right py-2 px-3 font-mono text-xs text-slate-400">{f.dataset_mean?.toFixed(3)}</td>
                                 <td className={`text-right py-2 px-3 font-mono text-xs ${Math.abs(f.mean_shift_z) > 2 ? "text-red-400" : "text-yellow-400"}`}>
                                   {f.mean_shift_z?.toFixed(2)}
                                 </td>
@@ -207,14 +207,14 @@ export default function DatasetDrift() {
 
               {/* Recommendations */}
               {data.recommendations?.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm text-green-400">Recommendations</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
                       {data.recommendations.map((r, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-gray-300">
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
                           <span className="text-green-400 mt-0.5 flex-shrink-0">→</span>{r}
                         </li>
                       ))}
@@ -227,10 +227,10 @@ export default function DatasetDrift() {
               {data.ai_summary && (
                 <Card className="bg-blue-500/5 border-blue-500/20">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-blue-400">AI Insight</CardTitle>
+                    <CardTitle className="text-sm text-cyan-400">AI Insight</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-gray-300 leading-relaxed">{data.ai_summary}</p>
+                    <p className="text-sm text-slate-300 leading-relaxed">{data.ai_summary}</p>
                   </CardContent>
                 </Card>
               )}

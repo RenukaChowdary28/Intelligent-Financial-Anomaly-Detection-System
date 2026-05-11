@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { auth, db } from "./firebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
@@ -99,12 +99,12 @@ function generateAnomalyInsights(baseline, current, anomalyScore) {
 const CustomTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-sm shadow-xl">
-      <p className="text-gray-300 font-semibold mb-1">{payload[0]?.payload?.dimension}</p>
+    <div className="bg-gray-800 border border-white/[0.07] rounded-xl px-4 py-3 text-sm shadow-xl">
+      <p className="text-slate-300 font-semibold mb-1">{payload[0]?.payload?.dimension}</p>
       {payload.map((p, i) => (
         <div key={i} className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full" style={{ background: p.color }} />
-          <span className="text-gray-400">{p.name}:</span>
+          <span className="text-slate-400">{p.name}:</span>
           <span className="text-white font-bold">{p.value}%</span>
         </div>
       ))}
@@ -131,12 +131,12 @@ function AnomalyRing({ score }) {
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-2xl font-black text-white">{score}</span>
-          <span className="text-[10px] text-gray-400">/ 100</span>
+          <span className="text-[10px] text-slate-400">/ 100</span>
         </div>
       </div>
       <div className="text-center">
         <p className="text-xs font-semibold" style={{ color }}>{label} Deviation</p>
-        <p className="text-[10px] text-gray-500">from your baseline DNA</p>
+        <p className="text-[10px] text-slate-500">from your baseline DNA</p>
       </div>
     </div>
   );
@@ -218,7 +218,7 @@ export default function SpendingDNA() {
 
   return (
     <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
-      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-gray-800 overflow-y-auto">
+      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-white/[0.05] overflow-y-auto">
         <SidebarContent />
       </div>
 
@@ -236,11 +236,11 @@ export default function SpendingDNA() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">Spending DNA Analyzer</h1>
-                <p className="text-sm text-gray-400">Your unique financial fingerprint — anomaly detection in 8 dimensions</p>
+                <p className="text-sm text-slate-400">Your unique financial fingerprint — anomaly detection in 8 dimensions</p>
               </div>
             </div>
             <Button onClick={() => user && fetchAndCompute(user)} variant="ghost"
-              className="text-gray-400 hover:text-white border border-gray-700">
+              className="text-slate-400 hover:text-white border border-white/[0.07]">
               <RefreshCw className="h-4 w-4 mr-2" />Refresh
             </Button>
           </motion.div>
@@ -253,7 +253,7 @@ export default function SpendingDNA() {
                   <Dna className="h-12 w-12 text-emerald-400" />
                 </div>
               </div>
-              <p className="text-gray-400 text-sm">Sequencing your spending DNA…</p>
+              <p className="text-slate-400 text-sm">Sequencing your spending DNA…</p>
             </div>
           ) : (
             <>
@@ -261,10 +261,10 @@ export default function SpendingDNA() {
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                 {/* Anomaly ring */}
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }}>
-                  <Card className="bg-gray-800/60 border border-gray-700 h-full">
+                  <Card className="bg-gray-800/60 border border-white/[0.07] h-full">
                     <CardContent className="p-5 flex flex-col items-center justify-center h-full gap-3">
                       <AnomalyRing score={anomalyScore} />
-                      <p className="text-xs text-gray-500 text-center">
+                      <p className="text-xs text-slate-500 text-center">
                         Based on {txCount.current} recent vs {txCount.baseline} baseline transactions
                       </p>
                     </CardContent>
@@ -278,26 +278,26 @@ export default function SpendingDNA() {
                   const diff = curr - base;
                   return (
                     <motion.div key={dim.key} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + idx * 0.05 }}>
-                      <Card className="bg-gray-800/60 border border-gray-700">
+                      <Card className="bg-gray-800/60 border border-white/[0.07]">
                         <CardContent className="p-5">
                           <div className="flex items-center justify-between mb-3">
-                            <span className="text-xs text-gray-400 font-medium">{dim.key}</span>
-                            <span className={`text-xs font-semibold ${diff > 0 ? "text-red-400" : diff < 0 ? "text-green-400" : "text-gray-400"}`}>
+                            <span className="text-xs text-slate-400 font-medium">{dim.key}</span>
+                            <span className={`text-xs font-semibold ${diff > 0 ? "text-red-400" : diff < 0 ? "text-green-400" : "text-slate-400"}`}>
                               {diff > 0 ? "+" : ""}{diff}%
                             </span>
                           </div>
                           <p className="text-2xl font-black text-white mb-3">{curr}%</p>
                           <div className="space-y-1.5">
-                            <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                            <div className="h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                               <div className="h-full rounded-full" style={{ width: `${base}%`, background: dim.color, opacity: 0.4 }} />
                             </div>
-                            <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                            <div className="h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                               <div className="h-full rounded-full" style={{ width: `${curr}%`, background: dim.color }} />
                             </div>
                           </div>
                           <div className="flex justify-between mt-1">
-                            <span className="text-[9px] text-gray-600">Baseline {base}%</span>
-                            <span className="text-[9px] text-gray-600">Current {curr}%</span>
+                            <span className="text-[9px] text-slate-600">Baseline {base}%</span>
+                            <span className="text-[9px] text-slate-600">Current {curr}%</span>
                           </div>
                         </CardContent>
                       </Card>
@@ -310,20 +310,20 @@ export default function SpendingDNA() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Radar chart */}
                 <motion.div className="lg:col-span-2" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                  <Card className="bg-gray-800/60 border border-gray-700">
+                  <Card className="bg-gray-800/60 border border-white/[0.07]">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base font-semibold flex items-center gap-2">
                         <Sparkles className="h-4 w-4 text-emerald-400" />
                         Spending DNA Radar
-                        <span className="ml-auto text-xs text-gray-500 font-normal">8-dimension fingerprint</span>
+                        <span className="ml-auto text-xs text-slate-500 font-normal">8-dimension fingerprint</span>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       {radarData.every((d) => d.Baseline === 0 && d.Current === 0) ? (
                         <div className="flex flex-col items-center justify-center h-64 gap-2">
-                          <Dna className="h-8 w-8 text-gray-600" />
-                          <p className="text-gray-500 text-sm">No transaction data to sequence</p>
-                          <p className="text-gray-600 text-xs">Make payments to build your DNA profile</p>
+                          <Dna className="h-8 w-8 text-slate-600" />
+                          <p className="text-slate-500 text-sm">No transaction data to sequence</p>
+                          <p className="text-slate-600 text-xs">Make payments to build your DNA profile</p>
                         </div>
                       ) : (
                         <ResponsiveContainer width="100%" height={320}>
@@ -349,7 +349,7 @@ export default function SpendingDNA() {
 
                 {/* Anomaly insights */}
                 <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                  <Card className="bg-gray-800/60 border border-gray-700 h-full">
+                  <Card className="bg-gray-800/60 border border-white/[0.07] h-full">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base font-semibold flex items-center gap-2">
                         <Brain className="h-4 w-4 text-violet-400" />
@@ -361,7 +361,7 @@ export default function SpendingDNA() {
                         <div className="flex flex-col items-center justify-center py-8 gap-2">
                           <ShieldAlert className="h-8 w-8 text-green-600" />
                           <p className="text-green-400 text-sm font-medium text-center">DNA Pattern Normal</p>
-                          <p className="text-gray-500 text-xs text-center">Your spending profile matches your baseline. No anomalies detected.</p>
+                          <p className="text-slate-500 text-xs text-center">Your spending profile matches your baseline. No anomalies detected.</p>
                         </div>
                       ) : (
                         insights.map((ins, i) => {
@@ -379,7 +379,7 @@ export default function SpendingDNA() {
                                       {ins.severity.toUpperCase()}
                                     </span>
                                   </div>
-                                  <p className="text-[11px] text-gray-300 leading-relaxed">
+                                  <p className="text-[11px] text-slate-300 leading-relaxed">
                                     {ins.message || (ins.diff > 0
                                       ? `↑ ${ins.diff}% higher than baseline — unusual spike detected`
                                       : `↓ ${Math.abs(ins.diff)}% lower than baseline — significant drop`)}
@@ -393,8 +393,8 @@ export default function SpendingDNA() {
 
                       {/* Info note */}
                       <div className="flex items-start gap-2 bg-gray-900/50 rounded-lg px-3 py-2 mt-2">
-                        <Info className="h-3.5 w-3.5 text-gray-500 flex-shrink-0 mt-0.5" />
-                        <p className="text-[10px] text-gray-500 leading-relaxed">
+                        <Info className="h-3.5 w-3.5 text-slate-500 flex-shrink-0 mt-0.5" />
+                        <p className="text-[10px] text-slate-500 leading-relaxed">
                           DNA baseline = days 8–30 ago. Current = last 7 days. Anomaly ≥50 may indicate account compromise.
                         </p>
                       </div>
@@ -405,7 +405,7 @@ export default function SpendingDNA() {
 
               {/* All 8 dimension bars */}
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                <Card className="bg-gray-800/60 border border-gray-700">
+                <Card className="bg-gray-800/60 border border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base font-semibold">Full DNA Breakdown — All 8 Dimensions</CardTitle>
                   </CardHeader>
@@ -418,26 +418,26 @@ export default function SpendingDNA() {
                         return (
                           <div key={dim.key} className="space-y-2">
                             <div className="flex items-center justify-between">
-                              <span className="text-xs font-medium text-gray-300">{dim.key}</span>
-                              <span className={`text-xs font-bold ${diff > 5 ? "text-red-400" : diff < -5 ? "text-green-400" : "text-gray-500"}`}>
+                              <span className="text-xs font-medium text-slate-300">{dim.key}</span>
+                              <span className={`text-xs font-bold ${diff > 5 ? "text-red-400" : diff < -5 ? "text-green-400" : "text-slate-500"}`}>
                                 {diff > 0 ? "+" : ""}{diff}%
                               </span>
                             </div>
                             <div className="space-y-1">
                               <div className="flex items-center gap-2">
-                                <div className="flex-1 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                <div className="flex-1 h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                                   <div className="h-full rounded-full opacity-50" style={{ width: `${base}%`, background: dim.color }} />
                                 </div>
-                                <span className="text-[10px] text-gray-500 w-7 text-right">{base}%</span>
+                                <span className="text-[10px] text-slate-500 w-7 text-right">{base}%</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <div className="flex-1 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                <div className="flex-1 h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                                   <div className="h-full rounded-full" style={{ width: `${curr}%`, background: dim.color }} />
                                 </div>
-                                <span className="text-[10px] text-gray-300 w-7 text-right font-semibold">{curr}%</span>
+                                <span className="text-[10px] text-slate-300 w-7 text-right font-semibold">{curr}%</span>
                               </div>
                             </div>
-                            <div className="flex gap-3 text-[9px] text-gray-600">
+                            <div className="flex gap-3 text-[9px] text-slate-600">
                               <span>▪ Baseline</span>
                               <span style={{ color: dim.color }}>▪ Current</span>
                             </div>

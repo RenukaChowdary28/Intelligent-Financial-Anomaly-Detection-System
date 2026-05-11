@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { auth, db } from "./firebase";
 import {
@@ -191,7 +191,7 @@ function generateInsights(transactions, categoryData, weeklyTrend) {
 // ─── Severity styling ─────────────────────────────────────────────────────────
 
 const SEVERITY = {
-  tip:     { badge: "bg-blue-500/20 text-blue-300 border-blue-500/40",   border: "border-blue-500/30",   bg: "bg-blue-500/5",   icon: "text-blue-400"   },
+  tip:     { badge: "bg-blue-500/20 text-blue-300 border-blue-500/40",   border: "border-blue-500/30",   bg: "bg-blue-500/5",   icon: "text-cyan-400"   },
   warning: { badge: "bg-yellow-500/20 text-yellow-300 border-yellow-500/40", border: "border-yellow-500/30", bg: "bg-yellow-500/5", icon: "text-yellow-400" },
   alert:   { badge: "bg-red-500/20 text-red-300 border-red-500/40",      border: "border-red-500/30",    bg: "bg-red-500/5",    icon: "text-red-400"    },
 };
@@ -201,8 +201,8 @@ const SEVERITY = {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm shadow-xl">
-      <p className="text-gray-400 mb-1">{label}</p>
+    <div className="bg-gray-800 border border-white/[0.07] rounded-lg px-3 py-2 text-sm shadow-xl">
+      <p className="text-slate-400 mb-1">{label}</p>
       <p className="text-white font-semibold">₹{payload[0].value?.toLocaleString("en-IN")}</p>
     </div>
   );
@@ -399,7 +399,7 @@ export default function SpendingCoach() {
   return (
     <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-gray-800 overflow-y-auto">
+      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-white/[0.05] overflow-y-auto">
         <SidebarContent />
       </div>
 
@@ -421,13 +421,13 @@ export default function SpendingCoach() {
                   <h1 className="text-2xl font-bold text-white">AI Spending Coach</h1>
                   <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/40">BETA</span>
                 </div>
-                <p className="text-sm text-gray-400 mt-0.5">
+                <p className="text-sm text-slate-400 mt-0.5">
                   Powered by AI analysis of your payment patterns
-                  {!loading && <span className="ml-2 text-xs text-gray-600">({txCount} transactions loaded)</span>}
+                  {!loading && <span className="ml-2 text-xs text-slate-600">({txCount} transactions loaded)</span>}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-xs text-gray-500">
+            <div className="flex items-center gap-2 text-xs text-slate-500">
               <Sparkles className="h-3.5 w-3.5 text-violet-400" />
               <span>Personalised insights updated in real-time</span>
             </div>
@@ -436,7 +436,7 @@ export default function SpendingCoach() {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-24 gap-4">
               <Loader2 className="h-10 w-10 text-violet-400 animate-spin" />
-              <p className="text-gray-400 text-sm">Analysing your spending patterns…</p>
+              <p className="text-slate-400 text-sm">Analysing your spending patterns…</p>
             </div>
           ) : (
             <>
@@ -445,22 +445,22 @@ export default function SpendingCoach() {
                 className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
                 {/* Total This Week */}
-                <Card className="bg-gray-800/60 border border-gray-700 hover:border-violet-500/40 transition-colors">
+                <Card className="bg-gray-800/60 border border-white/[0.07] hover:border-violet-500/40 transition-colors">
                   <CardContent className="p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs text-gray-400 font-medium">Total Spent This Week</span>
+                      <span className="text-xs text-slate-400 font-medium">Total Spent This Week</span>
                       <IndianRupee className="h-4 w-4 text-violet-400" />
                     </div>
                     <p className="text-2xl font-bold text-white">₹{totalThisWeek.toLocaleString("en-IN")}</p>
-                    <p className="text-xs text-gray-500 mt-1">Last 7 days</p>
+                    <p className="text-xs text-slate-500 mt-1">Last 7 days</p>
                   </CardContent>
                 </Card>
 
                 {/* vs Last Week */}
-                <Card className="bg-gray-800/60 border border-gray-700 hover:border-violet-500/40 transition-colors">
+                <Card className="bg-gray-800/60 border border-white/[0.07] hover:border-violet-500/40 transition-colors">
                   <CardContent className="p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs text-gray-400 font-medium">vs Last Week</span>
+                      <span className="text-xs text-slate-400 font-medium">vs Last Week</span>
                       {spendUp
                         ? <TrendingUp className="h-4 w-4 text-red-400" />
                         : <TrendingDown className="h-4 w-4 text-green-400" />}
@@ -468,35 +468,35 @@ export default function SpendingCoach() {
                     <p className={`text-2xl font-bold ${spendUp ? "text-red-400" : "text-green-400"}`}>
                       {pctChange !== null ? `${spendUp ? "+" : ""}${pctChange}%` : "—"}
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-slate-500 mt-1">
                       {totalLastWeek > 0 ? `Was ₹${totalLastWeek.toLocaleString("en-IN")}` : "No data last week"}
                     </p>
                   </CardContent>
                 </Card>
 
                 {/* Top Category */}
-                <Card className="bg-gray-800/60 border border-gray-700 hover:border-violet-500/40 transition-colors">
+                <Card className="bg-gray-800/60 border border-white/[0.07] hover:border-violet-500/40 transition-colors">
                   <CardContent className="p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs text-gray-400 font-medium">Top Category</span>
-                      <BarChart3 className="h-4 w-4 text-blue-400" />
+                      <span className="text-xs text-slate-400 font-medium">Top Category</span>
+                      <BarChart3 className="h-4 w-4 text-cyan-400" />
                     </div>
                     <p className="text-2xl font-bold text-white truncate">{topCategory}</p>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-slate-500 mt-1">
                       {categoryData[0] ? `₹${categoryData[0].value.toLocaleString("en-IN")}` : "No data"}
                     </p>
                   </CardContent>
                 </Card>
 
                 {/* Fraud Alerts */}
-                <Card className={`bg-gray-800/60 border transition-colors ${fraudCount > 0 ? "border-red-500/40 hover:border-red-500/60" : "border-gray-700 hover:border-violet-500/40"}`}>
+                <Card className={`bg-gray-800/60 border transition-colors ${fraudCount > 0 ? "border-red-500/40 hover:border-red-500/60" : "border-white/[0.07] hover:border-violet-500/40"}`}>
                   <CardContent className="p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs text-gray-400 font-medium">Fraud Alerts This Week</span>
+                      <span className="text-xs text-slate-400 font-medium">Fraud Alerts This Week</span>
                       <ShieldAlert className={`h-4 w-4 ${fraudCount > 0 ? "text-red-400" : "text-green-400"}`} />
                     </div>
                     <p className={`text-2xl font-bold ${fraudCount > 0 ? "text-red-400" : "text-green-400"}`}>{fraudCount}</p>
-                    <p className="text-xs text-gray-500 mt-1">{fraudCount === 0 ? "All clear" : "Needs review"}</p>
+                    <p className="text-xs text-slate-500 mt-1">{fraudCount === 0 ? "All clear" : "Needs review"}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -506,7 +506,7 @@ export default function SpendingCoach() {
                 className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {/* Pie chart */}
-                <Card className="bg-gray-800/60 border border-gray-700">
+                <Card className="bg-gray-800/60 border border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base font-semibold flex items-center gap-2">
                       <PieIcon className="h-4 w-4 text-violet-400" />
@@ -516,9 +516,9 @@ export default function SpendingCoach() {
                   <CardContent>
                     {categoryData.length === 0 ? (
                       <div className="flex flex-col items-center justify-center h-56 gap-2">
-                        <PieIcon className="h-8 w-8 text-gray-600" />
-                        <p className="text-gray-500 text-sm">No spending data found</p>
-                        <p className="text-gray-600 text-xs">Make a payment to see your breakdown</p>
+                        <PieIcon className="h-8 w-8 text-slate-600" />
+                        <p className="text-slate-500 text-sm">No spending data found</p>
+                        <p className="text-slate-600 text-xs">Make a payment to see your breakdown</p>
                       </div>
                     ) : (
                       <ResponsiveContainer width="100%" height={260}>
@@ -543,19 +543,19 @@ export default function SpendingCoach() {
                 </Card>
 
                 {/* 7-day area chart */}
-                <Card className="bg-gray-800/60 border border-gray-700">
+                <Card className="bg-gray-800/60 border border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base font-semibold flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-blue-400" />
+                      <TrendingUp className="h-4 w-4 text-cyan-400" />
                       7-Day Spending Trend
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     {weeklyTrend.length === 0 || weeklyTrend.every((d) => d.amount === 0) ? (
                       <div className="flex flex-col items-center justify-center h-56 gap-2">
-                        <TrendingUp className="h-8 w-8 text-gray-600" />
-                        <p className="text-gray-500 text-sm">No activity in the last 7 days</p>
-                        <p className="text-gray-600 text-xs">Your spending trend will appear here</p>
+                        <TrendingUp className="h-8 w-8 text-slate-600" />
+                        <p className="text-slate-500 text-sm">No activity in the last 7 days</p>
+                        <p className="text-slate-600 text-xs">Your spending trend will appear here</p>
                       </div>
                     ) : (
                       <ResponsiveContainer width="100%" height={260}>
@@ -585,7 +585,7 @@ export default function SpendingCoach() {
                 <div className="flex items-center gap-2 mb-4">
                   <Brain className="h-5 w-5 text-violet-400" />
                   <h2 className="text-lg font-semibold text-white">AI Coaching Insights</h2>
-                  <span className="text-xs text-gray-500 ml-1">{insights.length} insight{insights.length !== 1 ? "s" : ""} generated</span>
+                  <span className="text-xs text-slate-500 ml-1">{insights.length} insight{insights.length !== 1 ? "s" : ""} generated</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {insights.map((ins, i) => {
@@ -596,7 +596,7 @@ export default function SpendingCoach() {
                         <Card className={`border ${sty.border} ${sty.bg} bg-gray-800/50 h-full`}>
                           <CardContent className="p-4 flex flex-col gap-3">
                             <div className="flex items-start justify-between gap-2">
-                              <div className={`w-9 h-9 rounded-lg bg-gray-700/60 flex items-center justify-center flex-shrink-0`}>
+                              <div className={`w-9 h-9 rounded-lg bg-white/[0.07]/60 flex items-center justify-center flex-shrink-0`}>
                                 <Icon className={`h-4.5 w-4.5 ${sty.icon}`} />
                               </div>
                               <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border capitalize ${sty.badge}`}>
@@ -605,7 +605,7 @@ export default function SpendingCoach() {
                             </div>
                             <div>
                               <p className="font-semibold text-white text-sm mb-1">{ins.title}</p>
-                              <p className="text-gray-400 text-xs leading-relaxed">{ins.message}</p>
+                              <p className="text-slate-400 text-xs leading-relaxed">{ins.message}</p>
                             </div>
                           </CardContent>
                         </Card>
@@ -617,8 +617,8 @@ export default function SpendingCoach() {
 
               {/* ── Coach Chat ────────────────────────────────────────── */}
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                <Card className="bg-gray-800/60 border border-gray-700">
-                  <CardHeader className="pb-3 border-b border-gray-700">
+                <Card className="bg-gray-800/60 border border-white/[0.07]">
+                  <CardHeader className="pb-3 border-b border-white/[0.07]">
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-600 to-blue-600 flex items-center justify-center flex-shrink-0">
                         <Brain className="h-4 w-4 text-white" />
@@ -628,7 +628,7 @@ export default function SpendingCoach() {
                           Coach Chat
                           <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                         </CardTitle>
-                        <p className="text-xs text-gray-400">Ask anything about your spending</p>
+                        <p className="text-xs text-slate-400">Ask anything about your spending</p>
                       </div>
                     </div>
                   </CardHeader>
@@ -638,7 +638,7 @@ export default function SpendingCoach() {
                     <div className="flex flex-wrap gap-2">
                       {["How can I save more?", "Am I on track?", "Biggest risk this week?"].map((q) => (
                         <button key={q} onClick={() => sendMessage(q)} disabled={generating}
-                          className="text-xs px-3 py-1.5 rounded-full bg-gray-700/60 border border-gray-600 text-gray-300 hover:bg-violet-600/20 hover:border-violet-500/50 hover:text-violet-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                          className="text-xs px-3 py-1.5 rounded-full bg-white/[0.07]/60 border border-white/[0.09] text-slate-300 hover:bg-violet-600/20 hover:border-violet-500/50 hover:text-violet-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                           {q}
                         </button>
                       ))}
@@ -647,7 +647,7 @@ export default function SpendingCoach() {
                     {/* Chat window */}
                     <div className="h-72 overflow-y-auto flex flex-col gap-3 pr-1 scroll-smooth">
                       {chatMessages.length === 0 && !generating && (
-                        <div className="flex flex-col items-center justify-center h-full gap-2 text-gray-600">
+                        <div className="flex flex-col items-center justify-center h-full gap-2 text-slate-600">
                           <MessageSquare className="h-8 w-8" />
                           <p className="text-sm">Ask a quick question or pick one above</p>
                         </div>
@@ -666,7 +666,7 @@ export default function SpendingCoach() {
                             <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed
                               ${msg.role === "user"
                                 ? "bg-violet-600 text-white rounded-tr-sm"
-                                : "bg-gray-700/70 text-gray-200 rounded-tl-sm"}`}>
+                                : "bg-white/[0.07]/70 text-slate-200 rounded-tl-sm"}`}>
                               {msg.text}
                             </div>
                           </motion.div>
@@ -679,7 +679,7 @@ export default function SpendingCoach() {
                             <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-600 to-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
                               <Brain className="h-3.5 w-3.5 text-white" />
                             </div>
-                            <div className="bg-gray-700/70 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1.5">
+                            <div className="bg-white/[0.07]/70 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1.5">
                               <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0ms" }} />
                               <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "150ms" }} />
                               <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "300ms" }} />
@@ -698,7 +698,7 @@ export default function SpendingCoach() {
                         onChange={(e) => setChatInput(e.target.value)}
                         placeholder="Ask your coach anything…"
                         disabled={generating}
-                        className="flex-1 bg-gray-700/60 border border-gray-600 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500/70 focus:ring-1 focus:ring-violet-500/30 transition disabled:opacity-50"
+                        className="flex-1 bg-white/[0.07]/60 border border-white/[0.09] rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500/70 focus:ring-1 focus:ring-violet-500/30 transition disabled:opacity-50"
                       />
                       <button type="submit" disabled={generating || !chatInput.trim()}
                         className="w-10 h-10 rounded-xl bg-violet-600 hover:bg-violet-700 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center transition-colors flex-shrink-0">

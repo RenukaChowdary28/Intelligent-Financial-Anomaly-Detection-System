@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { auth, db } from "./firebase";
 import {
   collection,
@@ -85,7 +85,7 @@ function getRiskLabel(risk) {
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-gray-800 border border-gray-700 rounded-lg p-3 text-sm shadow-xl">
+      <div className="bg-gray-800 border border-white/[0.07] rounded-lg p-3 text-sm shadow-xl">
         <p className="font-semibold text-white mb-1">{label}</p>
         {payload.map((entry, i) => (
           <p key={i} style={{ color: entry.color }}>
@@ -307,8 +307,8 @@ export default function FraudTimeline() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -328,7 +328,7 @@ export default function FraudTimeline() {
                 <h1 className="text-2xl font-bold text-white">
                   Fraud Prediction Timeline
                 </h1>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   7-day forward-looking fraud risk forecast
                 </p>
               </div>
@@ -341,7 +341,7 @@ export default function FraudTimeline() {
                 variant="outline"
                 size="sm"
                 onClick={() => user && fetchData(user)}
-                className="border-gray-700 text-gray-300 hover:bg-gray-800"
+                className="border-white/[0.07] text-slate-300 hover:bg-white/[0.04]"
               >
                 <RefreshCw size={14} className="mr-1" /> Refresh
               </Button>
@@ -352,7 +352,7 @@ export default function FraudTimeline() {
             <div className="flex items-center justify-center h-64">
               <div className="flex flex-col items-center gap-3">
                 <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
-                <p className="text-gray-400">Computing AI forecast...</p>
+                <p className="text-slate-400">Computing AI forecast...</p>
               </div>
             </div>
           ) : (
@@ -364,7 +364,7 @@ export default function FraudTimeline() {
             >
               {/* 7-Day Forecast Chart */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <TrendingUp size={18} className="text-purple-400" />
@@ -375,15 +375,15 @@ export default function FraudTimeline() {
                     <div className="flex gap-4 mb-4 text-xs">
                       <span className="flex items-center gap-1">
                         <span className="w-3 h-3 rounded-full bg-green-500 inline-block" />
-                        <span className="text-gray-400">Low (0-40)</span>
+                        <span className="text-slate-400">Low (0-40)</span>
                       </span>
                       <span className="flex items-center gap-1">
                         <span className="w-3 h-3 rounded-full bg-yellow-500 inline-block" />
-                        <span className="text-gray-400">Medium (40-70)</span>
+                        <span className="text-slate-400">Medium (40-70)</span>
                       </span>
                       <span className="flex items-center gap-1">
                         <span className="w-3 h-3 rounded-full bg-red-500 inline-block" />
-                        <span className="text-gray-400">High (70+)</span>
+                        <span className="text-slate-400">High (70+)</span>
                       </span>
                     </div>
                     <ResponsiveContainer width="100%" height={260}>
@@ -456,7 +456,7 @@ export default function FraudTimeline() {
 
               {/* High Risk Windows */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <AlertTriangle size={18} className="text-red-400" />
@@ -508,7 +508,7 @@ export default function FraudTimeline() {
                                   {w.withRecurring.toFixed(0)}% risk
                                 </Badge>
                               </div>
-                              <p className="text-gray-400 text-xs mt-1">
+                              <p className="text-slate-400 text-xs mt-1">
                                 {w.reasons.join(" · ")}
                               </p>
                             </div>
@@ -522,15 +522,15 @@ export default function FraudTimeline() {
 
               {/* Historical Pattern Analysis */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
-                      <BarChart2 size={18} className="text-blue-400" />
+                      <BarChart2 size={18} className="text-cyan-400" />
                       Historical Pattern Analysis
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-400 text-xs mb-4">
+                    <p className="text-slate-400 text-xs mb-4">
                       Your actual fraud rate by day of week (last 30 days)
                     </p>
                     <ResponsiveContainer width="100%" height={200}>
@@ -572,7 +572,7 @@ export default function FraudTimeline() {
 
               {/* Risk Factors */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Info size={18} className="text-cyan-400" />
@@ -584,9 +584,9 @@ export default function FraudTimeline() {
                       {riskFactors.map((f, i) => (
                         <div
                           key={i}
-                          className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg"
+                          className="flex items-center justify-between p-3 bg-white/[0.04] rounded-lg"
                         >
-                          <div className="flex items-center gap-2 text-gray-300 text-sm">
+                          <div className="flex items-center gap-2 text-slate-300 text-sm">
                             <span className="text-cyan-400">{f.icon}</span>
                             {f.label}
                           </div>
@@ -595,7 +595,7 @@ export default function FraudTimeline() {
                               f.positive
                                 ? "bg-green-500/20 text-green-300 border-green-500/30"
                                 : f.impact === "0%"
-                                ? "bg-gray-500/20 text-gray-300 border-gray-500/30"
+                                ? "bg-white/[0.03]0/20 text-slate-300 border-gray-500/30"
                                 : "bg-red-500/20 text-red-300 border-red-500/30"
                             }`}
                           >
@@ -610,7 +610,7 @@ export default function FraudTimeline() {
 
               {/* Recommended Actions */}
               <motion.div variants={itemVariants}>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Clock size={18} className="text-green-400" />
@@ -629,7 +629,7 @@ export default function FraudTimeline() {
                         >
                           <CheckCircle
                             size={16}
-                            className="text-blue-400 mt-0.5 shrink-0"
+                            className="text-cyan-400 mt-0.5 shrink-0"
                           />
                           <p className="text-blue-200 text-sm">{rec}</p>
                         </motion.div>

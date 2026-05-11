@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+﻿import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Fingerprint, Hash, Grid3x3, X, CheckCircle2,
@@ -110,7 +110,7 @@ function PinPad({ onSuccess, onError, setupMode, onSetupDone }) {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <p className="text-sm text-gray-400">
+      <p className="text-sm text-slate-400">
         {setupMode
           ? step === 1 ? "Enter a new 4-digit PIN" : "Confirm your PIN"
           : "Enter your 4-digit PIN"}
@@ -130,7 +130,7 @@ function PinPad({ onSuccess, onError, setupMode, onSetupDone }) {
             className={`w-4 h-4 rounded-full border-2 transition-colors ${
               digits[i] !== undefined
                 ? "bg-violet-500 border-violet-500"
-                : "bg-transparent border-gray-600"
+                : "bg-transparent border-white/[0.09]"
             }`}
           />
         ))}
@@ -142,14 +142,14 @@ function PinPad({ onSuccess, onError, setupMode, onSetupDone }) {
           if (k === null) return <div key={i} />;
           if (k === "del") return (
             <button key={i} onClick={del}
-              className="h-14 rounded-2xl bg-gray-800/60 hover:bg-gray-700 border border-gray-700
+              className="h-14 rounded-2xl bg-gray-800/60 hover:bg-white/[0.07] border border-white/[0.07]
                          flex items-center justify-center transition-colors active:scale-95">
-              <Delete className="h-5 w-5 text-gray-400" />
+              <Delete className="h-5 w-5 text-slate-400" />
             </button>
           );
           return (
             <button key={k} onClick={() => press(k)}
-              className="h-14 rounded-2xl bg-gray-800/60 hover:bg-violet-600/20 border border-gray-700
+              className="h-14 rounded-2xl bg-gray-800/60 hover:bg-violet-600/20 border border-white/[0.07]
                          hover:border-violet-500/50 text-white text-lg font-semibold
                          transition-all active:scale-95">
               {k}
@@ -272,7 +272,7 @@ function PatternLock({ onSuccess, onError, setupMode, onSetupDone }) {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <p className="text-sm text-gray-400 text-center">
+      <p className="text-sm text-slate-400 text-center">
         {setupMode
           ? step === 1 ? "Draw a new unlock pattern" : "Draw it again to confirm"
           : "Draw your unlock pattern"}
@@ -322,7 +322,7 @@ function PatternLock({ onSuccess, onError, setupMode, onSetupDone }) {
       </motion.svg>
 
       <button onClick={() => { setSelected([]); setStep(1); setFirst(null); setCursor(null); }}
-        className="text-xs text-gray-500 hover:text-gray-300 transition-colors">
+        className="text-xs text-slate-500 hover:text-slate-300 transition-colors">
         Clear
       </button>
     </div>
@@ -377,7 +377,7 @@ function FingerprintAuth({ onSuccess, onError }) {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <p className="text-sm text-gray-400 text-center">
+      <p className="text-sm text-slate-400 text-center">
         {status === "scanning"   ? "Waiting for fingerprint…"
           : status === "done"   ? "Fingerprint verified!"
           : status === "fail"   ? "Fingerprint not recognised"
@@ -402,13 +402,13 @@ function FingerprintAuth({ onSuccess, onError }) {
                     : status === "fail" || status === "unavailable"
                                                ? "border-red-500 bg-red-500/20 shadow-red-500/40"
                     : status === "scanning"    ? "border-violet-500 bg-violet-500/20 shadow-violet-500/40 cursor-wait"
-                    : "border-gray-600 bg-gray-800/60 hover:border-violet-500 hover:bg-violet-500/10 hover:shadow-violet-500/30"}`}
+                    : "border-white/[0.09] bg-gray-800/60 hover:border-violet-500 hover:bg-violet-500/10 hover:shadow-violet-500/30"}`}
       >
         {status === "done"
           ? <CheckCircle2 className="h-12 w-12 text-emerald-400" />
           : status === "fail" || status === "unavailable"
           ? <XCircle className="h-12 w-12 text-red-400" />
-          : <Fingerprint className={`h-12 w-12 ${status === "scanning" ? "text-violet-400" : "text-gray-400"}`} />
+          : <Fingerprint className={`h-12 w-12 ${status === "scanning" ? "text-violet-400" : "text-slate-400"}`} />
         }
       </motion.button>
 
@@ -466,10 +466,10 @@ export default function PaymentAuthModal({ payment, onConfirm, onCancel }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 16 }}
           transition={{ type: "spring", stiffness: 320, damping: 28 }}
-          className="w-full max-w-sm bg-gray-950 border border-gray-800 rounded-3xl shadow-2xl overflow-hidden"
+          className="w-full max-w-sm bg-gray-950 border border-white/[0.05] rounded-3xl shadow-2xl overflow-hidden"
         >
           {/* Header */}
-          <div className="px-6 pt-5 pb-4 border-b border-gray-800/60 flex items-center justify-between">
+          <div className="px-6 pt-5 pb-4 border-b border-white/[0.06]/60 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-blue-600
                               flex items-center justify-center shadow-lg">
@@ -477,24 +477,24 @@ export default function PaymentAuthModal({ payment, onConfirm, onCancel }) {
               </div>
               <div>
                 <p className="text-sm font-bold text-white leading-none">Confirm Payment</p>
-                <p className="text-[11px] text-gray-500 mt-0.5">Verify your identity to proceed</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">Verify your identity to proceed</p>
               </div>
             </div>
             <button type="button" onClick={onCancel}
-              className="text-gray-500 hover:text-gray-300 p-1.5 rounded-lg hover:bg-gray-800 transition-colors">
+              className="text-slate-500 hover:text-slate-300 p-1.5 rounded-lg hover:bg-white/[0.04] transition-colors">
               <X className="h-4 w-4" />
             </button>
           </div>
 
           {/* Payment summary */}
-          <div className="mx-6 mt-4 bg-gray-900/60 border border-gray-800 rounded-2xl px-4 py-3 flex items-center gap-3">
+          <div className="mx-6 mt-4 bg-gray-900/60 border border-white/[0.05] rounded-2xl px-4 py-3 flex items-center gap-3">
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-gray-500">Sending to</p>
+              <p className="text-xs text-slate-500">Sending to</p>
               <p className="text-sm font-semibold text-white truncate">{payment.recipient}</p>
-              {payment.reason && <p className="text-xs text-gray-500 mt-0.5 truncate">For: {payment.reason}</p>}
+              {payment.reason && <p className="text-xs text-slate-500 mt-0.5 truncate">For: {payment.reason}</p>}
             </div>
             <div className="text-right flex-shrink-0">
-              <p className="text-xs text-gray-500">Amount</p>
+              <p className="text-xs text-slate-500">Amount</p>
               <p className="text-lg font-bold text-emerald-400">
                 ₹{Number(payment.amount).toLocaleString("en-IN")}
               </p>
@@ -502,7 +502,7 @@ export default function PaymentAuthModal({ payment, onConfirm, onCancel }) {
           </div>
 
           {/* Tab switcher */}
-          <div className="mx-6 mt-4 flex gap-1 bg-gray-900/60 rounded-xl p-1 border border-gray-800">
+          <div className="mx-6 mt-4 flex gap-1 bg-gray-900/60 rounded-xl p-1 border border-white/[0.05]">
             {TABS.map(t => {
               const Icon = t.icon;
               return (
@@ -510,7 +510,7 @@ export default function PaymentAuthModal({ payment, onConfirm, onCancel }) {
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold
                                transition-all ${tab === t.id
                     ? "bg-violet-600 text-white shadow"
-                    : "text-gray-500 hover:text-gray-300"}`}>
+                    : "text-slate-500 hover:text-slate-300"}`}>
                   <Icon className="h-3.5 w-3.5" />
                   {t.label}
                 </button>
@@ -571,13 +571,13 @@ export default function PaymentAuthModal({ payment, onConfirm, onCancel }) {
               )}
               {!error && setupPin && tab === "pin" && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  className="text-[11px] text-gray-500 text-center">
+                  className="text-[11px] text-slate-500 text-center">
                   First time? Set a 4-digit PIN to protect payments.
                 </motion.div>
               )}
               {!error && setupPattern && tab === "pattern" && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  className="text-[11px] text-gray-500 text-center">
+                  className="text-[11px] text-slate-500 text-center">
                   First time? Draw a pattern connecting at least 4 dots.
                 </motion.div>
               )}

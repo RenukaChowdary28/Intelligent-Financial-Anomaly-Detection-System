@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -174,18 +174,18 @@ export default function QRPay() {
     : "";
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-2xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <QrCode className="h-6 w-6" /> QR Pay
             </h1>
-            <p className="text-gray-400 text-sm mb-6">Generate your payment QR or scan to pay.</p>
+            <p className="text-slate-400 text-sm mb-6">Generate your payment QR or scan to pay.</p>
           </motion.div>
 
           {/* Tabs */}
@@ -198,7 +198,7 @@ export default function QRPay() {
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
-                  tab === t.id ? "bg-blue-600 text-white" : "text-gray-400 hover:text-white"
+                  tab === t.id ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.3)]" : "text-slate-400 hover:text-white"
                 }`}
               >
                 {t.label}
@@ -210,20 +210,20 @@ export default function QRPay() {
             {/* ── My QR (Receive) ─────────────────────────────────── */}
             {tab === "receive" && (
               <motion.div key="receive" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="space-y-4">
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-6 pb-6 flex flex-col items-center gap-5">
                     <div ref={qrRef} className="bg-white p-4 rounded-2xl shadow-lg">
                       {qrValue ? (
                         <QRCodeSVG value={qrValue} size={200} bgColor="#ffffff" fgColor="#111827" level="M" marginSize={0} />
                       ) : (
-                        <div className="w-[200px] h-[200px] flex items-center justify-center text-gray-400 text-sm">Loading…</div>
+                        <div className="w-[200px] h-[200px] flex items-center justify-center text-slate-400 text-sm">Loading…</div>
                       )}
                     </div>
                     <div className="text-center">
-                      <p className="text-xs text-gray-400 mb-1">Your UPI ID</p>
-                      <div className="flex items-center gap-2 bg-gray-700 rounded-lg px-4 py-2">
+                      <p className="text-xs text-slate-400 mb-1">Your UPI ID</p>
+                      <div className="flex items-center gap-2 bg-white/[0.07] rounded-lg px-4 py-2">
                         <span className="text-white font-mono text-sm">{upiId || "Loading…"}</span>
-                        <button onClick={handleCopy} className="text-gray-400 hover:text-blue-400 transition-colors">
+                        <button onClick={handleCopy} className="text-slate-400 hover:text-cyan-400 transition-colors">
                           {copied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                         </button>
                       </div>
@@ -231,12 +231,12 @@ export default function QRPay() {
                     </div>
                     <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-4 py-3 text-center max-w-xs">
                       <p className="text-xs text-yellow-400 font-medium mb-1">⚠ Simulation Only</p>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-xs text-slate-400">
                         This QR works <span className="text-white font-medium">within AegisAI only</span>. External apps like GPay or PhonePe will show an error because this is a simulated UPI ID not registered on the real banking network.
                       </p>
                     </div>
                     <div className="flex gap-3 w-full max-w-xs">
-                      <Button onClick={handleDownloadQR} variant="outline" className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700">
+                      <Button onClick={handleDownloadQR} variant="outline" className="flex-1 border-white/[0.09] text-slate-300 hover:bg-white/[0.07]">
                         <Download className="h-4 w-4 mr-1.5" /> Download
                       </Button>
                       <Button onClick={handleCopy} className="flex-1 bg-blue-600 hover:bg-blue-700">
@@ -251,10 +251,10 @@ export default function QRPay() {
             {/* ── Scan & Pay (Send) ────────────────────────────────── */}
             {tab === "send" && (
               <motion.div key="send" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="space-y-4">
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-sm text-gray-300 flex items-center gap-2">
-                      <Send className="h-4 w-4 text-blue-400" /> Pay via QR
+                    <CardTitle className="text-sm text-slate-300 flex items-center gap-2">
+                      <Send className="h-4 w-4 text-cyan-400" /> Pay via QR
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -264,7 +264,7 @@ export default function QRPay() {
                       <button
                         onClick={() => { stopScanner(); setInputMode("type"); setScanError(""); setScanSuccess(""); }}
                         className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border transition-colors ${
-                          inputMode === "type" ? "bg-blue-600 border-blue-500 text-white" : "border-gray-600 text-gray-400 hover:border-gray-400"
+                          inputMode === "type" ? "bg-blue-600 border-blue-500 text-white" : "border-white/[0.09] text-slate-400 hover:border-gray-400"
                         }`}
                       >
                         <Keyboard className="h-3.5 w-3.5" /> Type UPI ID
@@ -272,7 +272,7 @@ export default function QRPay() {
                       <button
                         onClick={handleCameraToggle}
                         className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border transition-colors ${
-                          scanning ? "bg-red-600 border-red-500 text-white" : inputMode === "camera" ? "bg-blue-600 border-blue-500 text-white" : "border-gray-600 text-gray-400 hover:border-gray-400"
+                          scanning ? "bg-red-600 border-red-500 text-white" : inputMode === "camera" ? "bg-blue-600 border-blue-500 text-white" : "border-white/[0.09] text-slate-400 hover:border-gray-400"
                         }`}
                       >
                         {scanning ? <><X className="h-3.5 w-3.5" /> Stop Camera</> : <><Camera className="h-3.5 w-3.5" /> Scan QR Code</>}
@@ -311,14 +311,14 @@ export default function QRPay() {
 
                     {/* UPI input */}
                     <div className="space-y-1">
-                      <label className="text-xs text-gray-400">Recipient UPI ID</label>
+                      <label className="text-xs text-slate-400">Recipient UPI ID</label>
                       <Input
                         value={pastedUpi}
                         onChange={(e) => { setPastedUpi(e.target.value); setScanSuccess(""); }}
                         placeholder="e.g. name1234@yesbank"
-                        className="bg-gray-700 border-gray-600 text-white"
+                        className="bg-white/[0.06] border-white/[0.08] text-white"
                       />
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-slate-500">
                         {scanning ? "UPI ID will auto-fill after scanning." : "Type manually or scan a QR code above."}
                       </p>
                     </div>
@@ -333,10 +333,10 @@ export default function QRPay() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardContent className="pt-4 pb-4">
-                    <p className="text-xs text-gray-400 mb-3">Or pay a saved beneficiary directly:</p>
-                    <Button onClick={() => navigate("/beneficiaries")} variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700 text-xs">
+                    <p className="text-xs text-slate-400 mb-3">Or pay a saved beneficiary directly:</p>
+                    <Button onClick={() => navigate("/beneficiaries")} variant="outline" size="sm" className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07] text-xs">
                       View Beneficiaries
                     </Button>
                   </CardContent>

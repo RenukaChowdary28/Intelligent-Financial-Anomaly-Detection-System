@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { collection, query, where, orderBy, limit, onSnapshot } from "firebase/firestore";
@@ -69,23 +69,23 @@ function FeedEvent({ event, index }) {
           <span className={`text-xs font-bold px-2 py-0.5 rounded-full bg-gray-900/60 ${cfg.color}`}>
             {cfg.label}
           </span>
-          <span className="text-xs text-gray-500 flex items-center gap-1">
+          <span className="text-xs text-slate-500 flex items-center gap-1">
             <Clock className="h-3 w-3" /> {timeStr(event.createdAt)}
           </span>
         </div>
-        <p className="text-xs text-gray-300 mt-0.5 truncate">
+        <p className="text-xs text-slate-300 mt-0.5 truncate">
           → {event.recipientUPI || "unknown@upi"}
-          {event.remarks && <span className="text-gray-500"> · {event.remarks}</span>}
+          {event.remarks && <span className="text-slate-500"> · {event.remarks}</span>}
         </p>
         {event.senderUPI && (
-          <p className="text-xs text-gray-600 mt-0.5">From: {event.senderUPI}</p>
+          <p className="text-xs text-slate-600 mt-0.5">From: {event.senderUPI}</p>
         )}
       </div>
 
       <div className="text-right flex-shrink-0">
         <p className={`text-sm font-bold ${cfg.color}`}>₹{event.amount?.toLocaleString("en-IN")}</p>
         {event.fraudProbability != null && (
-          <p className="text-xs text-gray-500">{Number(event.fraudProbability).toFixed(0)}% risk</p>
+          <p className="text-xs text-slate-500">{Number(event.fraudProbability).toFixed(0)}% risk</p>
         )}
       </div>
     </motion.div>
@@ -132,8 +132,8 @@ export default function LiveFraudFeed() {
   const highPct = events.length > 0 ? ((high / events.length) * 100).toFixed(1) : 0;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -149,7 +149,7 @@ export default function LiveFraudFeed() {
                 LIVE
               </span>
             </h1>
-            <p className="text-sm text-gray-400 mt-1">
+            <p className="text-sm text-slate-400 mt-1">
               Real-time stream of your actual payments — updates instantly when you send money
             </p>
           </div>
@@ -162,9 +162,9 @@ export default function LiveFraudFeed() {
               { label: "Medium Risk", value: medium,        color: "text-yellow-400" },
               { label: "Safe",        value: safe,          color: "text-green-400" },
             ].map(s => (
-              <Card key={s.label} className="bg-gray-800/60 border-gray-700">
+              <Card key={s.label} className="bg-gray-800/60 border-white/[0.07]">
                 <CardContent className="p-3">
-                  <p className="text-xs text-gray-400 mb-0.5">{s.label}</p>
+                  <p className="text-xs text-slate-400 mb-0.5">{s.label}</p>
                   <p className={`text-xl font-bold ${s.color}`}>{s.value}</p>
                 </CardContent>
               </Card>
@@ -174,13 +174,13 @@ export default function LiveFraudFeed() {
           {/* Risk bar */}
           {events.length > 0 && (
             <div className="mb-5">
-              <div className="flex justify-between text-xs text-gray-400 mb-1">
+              <div className="flex justify-between text-xs text-slate-400 mb-1">
                 <span>Fraud detection rate</span>
                 <span className={parseFloat(highPct) > 20 ? "text-red-400" : "text-green-400"}>
                   {highPct}% flagged HIGH RISK
                 </span>
               </div>
-              <div className="h-2 bg-gray-700 rounded-full overflow-hidden flex">
+              <div className="h-2 bg-white/[0.07] rounded-full overflow-hidden flex">
                 <div className="h-full bg-red-500 transition-all duration-500"
                   style={{ width: `${(high / events.length) * 100}%` }} />
                 <div className="h-full bg-yellow-500 transition-all duration-500"
@@ -188,7 +188,7 @@ export default function LiveFraudFeed() {
                 <div className="h-full bg-green-500 transition-all duration-500"
                   style={{ width: `${(safe / events.length) * 100}%` }} />
               </div>
-              <div className="flex gap-4 mt-1 text-xs text-gray-500">
+              <div className="flex gap-4 mt-1 text-xs text-slate-500">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500" />High</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-yellow-500" />Medium</span>
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500" />Safe</span>
@@ -203,7 +203,7 @@ export default function LiveFraudFeed() {
                 className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
                   filter === f
                     ? "bg-blue-600 border-blue-500 text-white"
-                    : "border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white"
+                    : "border-white/[0.07] text-slate-400 hover:border-gray-500 hover:text-white"
                 }`}>
                 {f === "ALL" ? `All (${events.length})` : f.replace("_", " ")}
               </button>
@@ -218,13 +218,13 @@ export default function LiveFraudFeed() {
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-slate-900/60 border-white/[0.06]">
               <CardContent className="flex flex-col items-center py-16 gap-3">
-                <Activity className="h-12 w-12 text-gray-600 animate-pulse" />
-                <p className="text-gray-400">
+                <Activity className="h-12 w-12 text-slate-600 animate-pulse" />
+                <p className="text-slate-400">
                   {filter === "ALL" ? "No payments yet" : `No ${filter.replace("_", " ")} transactions`}
                 </p>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-slate-600">
                   {filter === "ALL"
                     ? "Send a payment and it will appear here instantly"
                     : "Try changing the filter above"}

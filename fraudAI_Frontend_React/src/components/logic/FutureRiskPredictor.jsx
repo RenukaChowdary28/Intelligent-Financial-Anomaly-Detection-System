@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { auth, db } from "./firebase";
 import { collection, query, where, getDocs, limit, orderBy } from "firebase/firestore";
@@ -102,8 +102,8 @@ const ForecastTooltip = ({ active, payload, label }) => {
   const score = payload[0].value;
   const rc = riskColor(score);
   return (
-    <div className="bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 shadow-xl text-sm">
-      <p className="text-gray-300 font-semibold mb-1">{label}</p>
+    <div className="bg-gray-800 border border-white/[0.07] rounded-xl px-4 py-3 shadow-xl text-sm">
+      <p className="text-slate-300 font-semibold mb-1">{label}</p>
       <p className={`font-black text-lg ${rc.text}`}>{score}%</p>
       <p className={`text-xs font-semibold ${rc.text}`}>{rc.label}</p>
     </div>
@@ -167,7 +167,7 @@ export default function FutureRiskPredictor() {
 
   return (
     <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
-      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-gray-800 overflow-y-auto">
+      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-white/[0.05] overflow-y-auto">
         <SidebarContent />
       </div>
 
@@ -184,23 +184,23 @@ export default function FutureRiskPredictor() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-white">AI Future Risk Predictor</h1>
-              <p className="text-sm text-gray-400">7-day fraud risk forecast for any UPI — powered by velocity, pattern & community ML</p>
+              <p className="text-sm text-slate-400">7-day fraud risk forecast for any UPI — powered by velocity, pattern & community ML</p>
             </div>
           </motion.div>
 
           {/* Search bar */}
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <Card className="bg-gray-800/60 border border-gray-700">
+            <Card className="bg-gray-800/60 border border-white/[0.07]">
               <CardContent className="p-5">
                 <div className="flex gap-3">
                   <div className="flex-1 relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
                     <Input
                       value={upiInput}
                       onChange={(e) => setUpiInput(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && analyzeUPI()}
                       placeholder="Enter UPI ID (e.g. john@paytm)"
-                      className="pl-9 bg-gray-900 border-gray-700 text-white placeholder-gray-500 focus:border-orange-500"
+                      className="pl-9 bg-slate-950 border-white/[0.08] text-white placeholder-gray-500 focus:border-orange-500"
                     />
                   </div>
                   <Button onClick={() => analyzeUPI()} disabled={loading}
@@ -217,10 +217,10 @@ export default function FutureRiskPredictor() {
 
                 {/* Quick UPIs */}
                 <div className="flex flex-wrap gap-2 mt-3">
-                  <span className="text-xs text-gray-500">Quick check:</span>
+                  <span className="text-xs text-slate-500">Quick check:</span>
                   {QUICK_UPIS.map((upi) => (
                     <button key={upi} onClick={() => { setUpiInput(upi); analyzeUPI(upi); }}
-                      className="text-xs px-2.5 py-1 rounded-full bg-gray-700 hover:bg-orange-500/20 hover:text-orange-300 text-gray-400 border border-gray-600 hover:border-orange-500/40 transition-all">
+                      className="text-xs px-2.5 py-1 rounded-full bg-white/[0.07] hover:bg-orange-500/20 hover:text-orange-300 text-slate-400 border border-white/[0.09] hover:border-orange-500/40 transition-all">
                       {upi}
                     </button>
                   ))}
@@ -229,10 +229,10 @@ export default function FutureRiskPredictor() {
                 {/* Recent searches */}
                 {recentSearches.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
-                    <span className="text-xs text-gray-500">Recent:</span>
+                    <span className="text-xs text-slate-500">Recent:</span>
                     {recentSearches.map((upi) => (
                       <button key={upi} onClick={() => { setUpiInput(upi); analyzeUPI(upi); }}
-                        className="text-xs px-2.5 py-1 rounded-full bg-gray-900/60 hover:bg-gray-700 text-gray-400 border border-gray-700 transition-all flex items-center gap-1">
+                        className="text-xs px-2.5 py-1 rounded-full bg-gray-900/60 hover:bg-white/[0.07] text-slate-400 border border-white/[0.07] transition-all flex items-center gap-1">
                         <Clock className="h-2.5 w-2.5" />{upi}
                       </button>
                     ))}
@@ -249,7 +249,7 @@ export default function FutureRiskPredictor() {
                 <Brain className="h-10 w-10 text-orange-400" />
                 <Loader2 className="absolute -top-1 -right-1 h-4 w-4 text-orange-300 animate-spin" />
               </div>
-              <p className="text-gray-400 text-sm">Running AI risk forecast…</p>
+              <p className="text-slate-400 text-sm">Running AI risk forecast…</p>
             </div>
           )}
 
@@ -271,7 +271,7 @@ export default function FutureRiskPredictor() {
                             <Icon className={`h-7 w-7 ${rc.text}`} />
                           </div>
                           <div>
-                            <p className="text-sm text-gray-400">Base Risk Score for</p>
+                            <p className="text-sm text-slate-400">Base Risk Score for</p>
                             <p className="text-lg font-bold text-white font-mono">{result.upiId}</p>
                             <span className={`text-xs font-black px-2 py-0.5 rounded-full ${rc.bg} border ${rc.border} ${rc.text}`}>
                               {rc.label}
@@ -280,7 +280,7 @@ export default function FutureRiskPredictor() {
                         </div>
                         <div className="text-right">
                           <p className={`text-5xl font-black ${rc.text}`}>{result.baseRisk}%</p>
-                          <p className="text-xs text-gray-500">fraud probability</p>
+                          <p className="text-xs text-slate-500">fraud probability</p>
                         </div>
                       </div>
                     </div>
@@ -290,31 +290,31 @@ export default function FutureRiskPredictor() {
                 {/* Stats row */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {[
-                    { icon: Activity, label: "Transactions", value: result.txCount, sub: "with this UPI", color: "text-blue-400" },
+                    { icon: Activity, label: "Transactions", value: result.txCount, sub: "with this UPI", color: "text-cyan-400" },
                     { icon: ShieldAlert, label: "Fraud Flags", value: result.fraudCount, sub: "past verdicts", color: "text-red-400" },
                     { icon: Star, label: "Avg Amount", value: `₹${Math.round(result.avgAmount).toLocaleString("en-IN")}`, sub: "per transaction", color: "text-yellow-400" },
                     { icon: Users, label: "Community Reports", value: result.communityReports, sub: "fraud reports", color: "text-purple-400" },
                   ].map(({ icon: Icon, label, value, sub, color }) => (
-                    <Card key={label} className="bg-gray-800/60 border border-gray-700">
+                    <Card key={label} className="bg-gray-800/60 border border-white/[0.07]">
                       <CardContent className="p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <Icon className={`h-4 w-4 ${color}`} />
-                          <span className="text-xs text-gray-400">{label}</span>
+                          <span className="text-xs text-slate-400">{label}</span>
                         </div>
                         <p className="text-2xl font-black text-white">{value}</p>
-                        <p className="text-xs text-gray-500">{sub}</p>
+                        <p className="text-xs text-slate-500">{sub}</p>
                       </CardContent>
                     </Card>
                   ))}
                 </div>
 
                 {/* 7-day forecast chart */}
-                <Card className="bg-gray-800/60 border border-gray-700">
+                <Card className="bg-gray-800/60 border border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base font-semibold flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-orange-400" />
                       7-Day Fraud Risk Forecast
-                      <span className="ml-auto text-xs text-gray-500 font-normal">
+                      <span className="ml-auto text-xs text-slate-500 font-normal">
                         Peak: <span className="text-red-400 font-semibold">{result.peakDay.day} ({result.peakDay.risk}%)</span> ·
                         Safest: <span className="text-green-400 font-semibold">{result.safeDay.day} ({result.safeDay.risk}%)</span>
                       </span>
@@ -347,9 +347,9 @@ export default function FutureRiskPredictor() {
                         const rc = riskColor(d.risk);
                         return (
                           <div key={d.day} className={`flex flex-col items-center px-3 py-2 rounded-xl border ${rc.border} ${rc.bg} min-w-[60px]`}>
-                            <span className="text-[10px] text-gray-400">{d.day}</span>
+                            <span className="text-[10px] text-slate-400">{d.day}</span>
                             <span className={`text-sm font-black ${rc.text}`}>{d.risk}%</span>
-                            <span className="text-[9px] text-gray-500">{d.date}</span>
+                            <span className="text-[9px] text-slate-500">{d.date}</span>
                           </div>
                         );
                       })}
@@ -358,7 +358,7 @@ export default function FutureRiskPredictor() {
                 </Card>
 
                 {/* Risk factor breakdown */}
-                <Card className="bg-gray-800/60 border border-gray-700">
+                <Card className="bg-gray-800/60 border border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base font-semibold flex items-center gap-2">
                       <Brain className="h-4 w-4 text-violet-400" />
@@ -375,22 +375,22 @@ export default function FutureRiskPredictor() {
                       ].map(({ label, score, max, color, desc }) => (
                         <div key={label} className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-gray-400 font-medium">{label}</span>
+                            <span className="text-xs text-slate-400 font-medium">{label}</span>
                             <span className="text-xs font-bold text-white">{score}/{max}</span>
                           </div>
-                          <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                          <div className="h-2 bg-white/[0.07] rounded-full overflow-hidden">
                             <motion.div initial={{ width: 0 }} animate={{ width: `${(score / max) * 100}%` }}
                               transition={{ duration: 0.8, delay: 0.2 }}
                               className="h-full rounded-full" style={{ background: color }} />
                           </div>
-                          <p className="text-[10px] text-gray-500">{desc}</p>
+                          <p className="text-[10px] text-slate-500">{desc}</p>
                         </div>
                       ))}
                     </div>
 
                     <div className="flex items-start gap-2 bg-gray-900/50 rounded-lg px-3 py-2 mt-4">
-                      <Info className="h-3.5 w-3.5 text-gray-500 flex-shrink-0 mt-0.5" />
-                      <p className="text-[10px] text-gray-500 leading-relaxed">
+                      <Info className="h-3.5 w-3.5 text-slate-500 flex-shrink-0 mt-0.5" />
+                      <p className="text-[10px] text-slate-500 leading-relaxed">
                         Day-of-week multipliers applied: weekends (Sat/Sun) carry 1.3–1.5× fraud risk based on historical UPI fraud patterns. Friday 1.3× elevated risk.
                       </p>
                     </div>
@@ -412,7 +412,7 @@ export default function FutureRiskPredictor() {
                         <rec.icon className={`h-6 w-6 flex-shrink-0 mt-0.5 ${rc.text}`} />
                         <div>
                           <p className={`font-bold text-sm mb-1 ${rc.text}`}>{rec.title}</p>
-                          <p className="text-sm text-gray-300 leading-relaxed">{rec.body}</p>
+                          <p className="text-sm text-slate-300 leading-relaxed">{rec.body}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -430,8 +430,8 @@ export default function FutureRiskPredictor() {
                 <Brain className="h-10 w-10 text-orange-400" />
               </div>
               <div className="text-center">
-                <p className="text-gray-300 font-semibold text-lg">Enter a UPI ID to predict risk</p>
-                <p className="text-gray-500 text-sm mt-1">The AI will forecast fraud probability for the next 7 days</p>
+                <p className="text-slate-300 font-semibold text-lg">Enter a UPI ID to predict risk</p>
+                <p className="text-slate-500 text-sm mt-1">The AI will forecast fraud probability for the next 7 days</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2 max-w-lg">
                 {[
@@ -439,9 +439,9 @@ export default function FutureRiskPredictor() {
                   { icon: Users, text: "Community intel — crowd-sourced fraud reports" },
                   { icon: Calendar, text: "Day-of-week ML — weekend vs weekday risk models" },
                 ].map(({ icon: Icon, text }, i) => (
-                  <div key={i} className="flex items-start gap-2 bg-gray-800/40 rounded-xl p-3 border border-gray-700">
+                  <div key={i} className="flex items-start gap-2 bg-gray-800/40 rounded-xl p-3 border border-white/[0.07]">
                     <Icon className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-gray-400">{text}</p>
+                    <p className="text-xs text-slate-400">{text}</p>
                   </div>
                 ))}
               </div>

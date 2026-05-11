@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
@@ -52,23 +52,23 @@ function ScoreGauge({ score, label, size = 140 }) {
         )}
         <text x="70" y="74" textAnchor="middle" fill={color} fontSize="20" fontWeight="bold">{score}</text>
       </svg>
-      <p className="text-xs text-gray-400 -mt-1">{label}</p>
+      <p className="text-xs text-slate-400 -mt-1">{label}</p>
     </div>
   );
 }
 
 // ── Stat card ─────────────────────────────────────────────────────────────────
-function StatCard({ icon: Icon, label, value, sub, color = "text-blue-400" }) {
+function StatCard({ icon: Icon, label, value, sub, color = "text-cyan-400" }) {
   return (
-    <Card className="bg-gray-800 border-gray-700">
+    <Card className="bg-slate-900/80 border-white/[0.07]">
       <CardContent className="p-4 flex items-center gap-3">
-        <div className={`p-2 rounded-lg bg-gray-700 ${color}`}>
+        <div className={`p-2 rounded-lg bg-white/[0.07] ${color}`}>
           <Icon className="h-5 w-5" />
         </div>
         <div>
-          <p className="text-xs text-gray-400">{label}</p>
+          <p className="text-xs text-slate-400">{label}</p>
           <p className={`text-xl font-bold ${color}`}>{value}</p>
-          {sub && <p className="text-xs text-gray-500">{sub}</p>}
+          {sub && <p className="text-xs text-slate-500">{sub}</p>}
         </div>
       </CardContent>
     </Card>
@@ -76,7 +76,7 @@ function StatCard({ icon: Icon, label, value, sub, color = "text-blue-400" }) {
 }
 
 // ── Section header ────────────────────────────────────────────────────────────
-function SectionHeader({ icon: Icon, title, color = "text-blue-400" }) {
+function SectionHeader({ icon: Icon, title, color = "text-cyan-400" }) {
   return (
     <CardTitle className={`text-base ${color} flex items-center gap-2`}>
       <Icon className="h-4 w-4" /> {title}
@@ -181,8 +181,8 @@ export default function AIHub() {
     : null;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -193,14 +193,14 @@ export default function AIHub() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                className="text-2xl font-bold text-blue-400 flex items-center gap-2">
+                className="text-2xl font-bold text-cyan-400 flex items-center gap-2">
                 <Brain className="h-6 w-6" /> AI Intelligence Hub
               </motion.h1>
-              <p className="text-sm text-gray-500 mt-0.5">Real-time fraud intelligence, cluster analysis & counterfactual insights</p>
+              <p className="text-sm text-slate-500 mt-0.5">Real-time fraud intelligence, cluster analysis & counterfactual insights</p>
             </div>
             <Button onClick={loadAll} disabled={loading}
               variant="outline" size="sm"
-              className="border-gray-600 text-gray-300 hover:bg-gray-700 gap-2">
+              className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07] gap-2">
               <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
               Refresh
             </Button>
@@ -229,7 +229,7 @@ export default function AIHub() {
           {/* ── Overview metrics ── */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
             <StatCard icon={Brain} label="AI Intelligence Score" value={`${aiScore}/100`}
-              sub="System health metric" color="text-blue-400" />
+              sub="System health metric" color="text-cyan-400" />
             <StatCard icon={Activity} label="Dataset Rows"
               value={health?.dataset_rows > 0 ? health.dataset_rows.toLocaleString() : "—"}
               sub="Transactions loaded" color="text-purple-400" />
@@ -245,10 +245,10 @@ export default function AIHub() {
           {summary?.overall_ai_assessment && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
               className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 mb-6 flex items-start gap-3">
-              <Sparkles className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+              <Sparkles className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-semibold text-blue-400 mb-1">AI System Assessment</p>
-                <p className="text-sm text-gray-300">{summary.overall_ai_assessment}</p>
+                <p className="text-xs font-semibold text-cyan-400 mb-1">AI System Assessment</p>
+                <p className="text-sm text-slate-300">{summary.overall_ai_assessment}</p>
               </div>
             </motion.div>
           )}
@@ -256,11 +256,11 @@ export default function AIHub() {
           <div className="grid md:grid-cols-2 gap-6 mb-6">
 
             {/* ── Fraud Cluster Analysis ── */}
-            <Card className="bg-gray-800 border-gray-700">
+            <Card className="bg-slate-900/80 border-white/[0.07]">
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                   <SectionHeader icon={Network} title="Anomaly Cluster Map" color="text-purple-400" />
-                  <button onClick={() => setClustersOpen(p => !p)} className="text-gray-500 hover:text-gray-300">
+                  <button onClick={() => setClustersOpen(p => !p)} className="text-slate-500 hover:text-slate-300">
                     {clustersOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                   </button>
                 </div>
@@ -270,13 +270,13 @@ export default function AIHub() {
                   <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}>
                     <CardContent className="pt-0">
                       {!clusters ? (
-                        <p className="text-gray-500 text-sm">Run detection to enable cluster analysis.</p>
+                        <p className="text-slate-500 text-sm">Run detection to enable cluster analysis.</p>
                       ) : clusters.clusters?.length === 0 ? (
-                        <p className="text-gray-500 text-sm">{clusters.message || "No clusters yet."}</p>
+                        <p className="text-slate-500 text-sm">{clusters.message || "No clusters yet."}</p>
                       ) : (
                         <>
                           {clusters.ai_summary && (
-                            <p className="text-xs text-gray-400 mb-3 italic">{clusters.ai_summary}</p>
+                            <p className="text-xs text-slate-400 mb-3 italic">{clusters.ai_summary}</p>
                           )}
                           <ResponsiveContainer width="100%" height={180}>
                             <BarChart data={clusters.clusters} layout="vertical" margin={{ left: 8, right: 8 }}>
@@ -299,16 +299,16 @@ export default function AIHub() {
                           </ResponsiveContainer>
                           <div className="space-y-2 mt-2">
                             {clusters.clusters.slice(0, 3).map((c, i) => (
-                              <div key={i} className="text-xs bg-gray-900 rounded-lg p-2.5 border border-gray-700">
+                              <div key={i} className="text-xs bg-gray-900 rounded-lg p-2.5 border border-white/[0.07]">
                                 <div className="flex items-center justify-between mb-0.5">
-                                  <span className="text-gray-300 font-medium">Cluster {c.cluster_id + 1} — {c.size} transactions</span>
+                                  <span className="text-slate-300 font-medium">Cluster {c.cluster_id + 1} — {c.size} transactions</span>
                                   <span className={`px-1.5 py-0.5 rounded-full text-xs font-semibold`}
                                     style={{ color: RISK_COLOR[c.risk_level], background: `${RISK_COLOR[c.risk_level]}18` }}>
                                     {c.risk_level}
                                   </span>
                                 </div>
-                                <p className="text-gray-500 leading-tight">{c.pattern_description}</p>
-                                <p className="text-gray-600 mt-0.5">
+                                <p className="text-slate-500 leading-tight">{c.pattern_description}</p>
+                                <p className="text-slate-600 mt-0.5">
                                   Top: {c.top_features.slice(0, 2).map(f => `${f.feature} (σ${f.z_score})`).join(", ")}
                                   {c.fraud_rate_pct !== null && ` · ${c.fraud_rate_pct}% confirmed fraud`}
                                 </p>
@@ -324,17 +324,17 @@ export default function AIHub() {
             </Card>
 
             {/* ── Fraud Rate Trend ── */}
-            <Card className="bg-gray-800 border-gray-700">
+            <Card className="bg-slate-900/80 border-white/[0.07]">
               <CardHeader className="pb-2">
                 <SectionHeader icon={TrendingUp} title="Fraud Rate Trend" color="text-orange-400" />
               </CardHeader>
               <CardContent className="pt-0">
                 {!trends?.batch_trends?.length ? (
-                  <p className="text-gray-500 text-sm">Run detection to enable trend analysis.</p>
+                  <p className="text-slate-500 text-sm">Run detection to enable trend analysis.</p>
                 ) : (
                   <>
                     {trends.velocity_insight && (
-                      <p className="text-xs text-gray-400 italic mb-3">{trends.velocity_insight}</p>
+                      <p className="text-xs text-slate-400 italic mb-3">{trends.velocity_insight}</p>
                     )}
                     <ResponsiveContainer width="100%" height={200}>
                       <AreaChart data={trends.batch_trends} margin={{ left: 0, right: 8, top: 4, bottom: 0 }}>
@@ -367,12 +367,12 @@ export default function AIHub() {
 
           {/* ── Feature Deviation ── */}
           {trends?.feature_deviation?.length > 0 && (
-            <Card className="bg-gray-800 border-gray-700 mb-6">
+            <Card className="bg-slate-900/80 border-white/[0.07] mb-6">
               <CardHeader className="pb-2">
                 <SectionHeader icon={Zap} title="Top Fraud Feature Deviations" color="text-yellow-400" />
               </CardHeader>
               <CardContent className="pt-0">
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-slate-500 mb-3">
                   Z-score deviation of flagged transactions vs. full dataset mean — higher = more anomalous.
                 </p>
                 <div className="space-y-2">
@@ -383,16 +383,16 @@ export default function AIHub() {
                       <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.04 }}>
                         <div className="flex items-center justify-between text-xs mb-0.5">
-                          <span className="text-gray-300 truncate max-w-[55%]">{fd.feature}</span>
+                          <span className="text-slate-300 truncate max-w-[55%]">{fd.feature}</span>
                           <span className="font-mono" style={{ color }}>σ{fd.deviation_z}</span>
                         </div>
-                        <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                           <motion.div className="h-full rounded-full"
                             style={{ background: color, width: `${pct}%` }}
                             initial={{ width: 0 }} animate={{ width: `${pct}%` }}
                             transition={{ delay: i * 0.04 + 0.2, duration: 0.5 }} />
                         </div>
-                        <div className="flex justify-between text-xs text-gray-600 mt-0.5">
+                        <div className="flex justify-between text-xs text-slate-600 mt-0.5">
                           <span>Fraud avg: {fd.fraud_mean}</span>
                           <span>Dataset avg: {fd.overall_mean}</span>
                         </div>
@@ -406,7 +406,7 @@ export default function AIHub() {
 
           {/* ── AI Recommended Actions ── */}
           {summary?.recommended_actions?.length > 0 && (
-            <Card className="bg-gray-800 border-gray-700 mb-6">
+            <Card className="bg-slate-900/80 border-white/[0.07] mb-6">
               <CardHeader className="pb-2">
                 <SectionHeader icon={Target} title="AI Recommended Actions" color="text-green-400" />
               </CardHeader>
@@ -416,7 +416,7 @@ export default function AIHub() {
                     transition={{ delay: i * 0.08 }}
                     className="flex items-start gap-2 bg-green-500/5 border border-green-500/20 rounded-lg p-3">
                     <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-sm text-gray-300">{action}</p>
+                    <p className="text-sm text-slate-300">{action}</p>
                   </motion.div>
                 ))}
               </CardContent>
@@ -424,17 +424,17 @@ export default function AIHub() {
           )}
 
           {/* ── Counterfactual Explorer ── */}
-          <Card className="bg-gray-800 border-gray-700 mb-6">
+          <Card className="bg-slate-900/80 border-white/[0.07] mb-6">
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <SectionHeader icon={Lightbulb} title="Counterfactual Explorer — What If?" color="text-cyan-400" />
                 <button onClick={() => setCfExpanded(p => !p)}
-                  className="text-xs text-gray-500 hover:text-gray-300 flex items-center gap-1">
+                  className="text-xs text-slate-500 hover:text-slate-300 flex items-center gap-1">
                   {cfExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                   {cfExpanded ? "Collapse" : "Expand"}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Enter feature values for a flagged transaction — AI will suggest the minimal changes to make it legitimate.
               </p>
             </CardHeader>
@@ -443,8 +443,8 @@ export default function AIHub() {
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}>
                   <CardContent className="pt-0">
                     {/* Preset toolbar */}
-                    <div className="flex flex-wrap items-center gap-2 mb-4 p-3 bg-gray-900/60 rounded-xl border border-gray-700">
-                      <span className="text-xs text-gray-500 mr-1">Quick fill:</span>
+                    <div className="flex flex-wrap items-center gap-2 mb-4 p-3 bg-gray-900/60 rounded-xl border border-white/[0.07]">
+                      <span className="text-xs text-slate-500 mr-1">Quick fill:</span>
                       <button
                         onClick={() => { setCfFeatures(CF_SUSPICIOUS.map(String)); setCfResult(null); }}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-all">
@@ -457,13 +457,13 @@ export default function AIHub() {
                       </button>
                       <button
                         onClick={() => { setCfFeatures(Array(22).fill("")); setCfResult(null); }}
-                        className="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-500 text-xs hover:border-gray-600 hover:text-gray-400 transition-all">
+                        className="px-3 py-1.5 rounded-lg border border-white/[0.07] text-slate-500 text-xs hover:border-white/[0.09] hover:text-slate-400 transition-all">
                         Clear All
                       </button>
                     </div>
 
                     {/* Hint */}
-                    <p className="text-xs text-gray-600 mb-3 flex items-center gap-1.5">
+                    <p className="text-xs text-slate-600 mb-3 flex items-center gap-1.5">
                       <Info className="h-3.5 w-3.5 flex-shrink-0" />
                       Fields left blank default to 0. Use "Suspicious Transaction" to pre-fill a high-risk example, then click Analyse.
                     </p>
@@ -473,7 +473,7 @@ export default function AIHub() {
                         const isFilled = cfFeatures[i] !== "" && cfFeatures[i] !== undefined;
                         return (
                           <div key={i}>
-                            <label className="text-xs text-gray-500 block mb-0.5 truncate" title={name}>{name}</label>
+                            <label className="text-xs text-slate-500 block mb-0.5 truncate" title={name}>{name}</label>
                             <input type="number" step="any"
                               value={cfFeatures[i]}
                               onChange={(e) => {
@@ -482,8 +482,8 @@ export default function AIHub() {
                                 setCfFeatures(next);
                               }}
                               placeholder="—"
-                              className={`w-full bg-gray-900 border rounded-md px-2 py-1 text-xs text-gray-200 focus:outline-none transition-colors ${
-                                isFilled ? "border-cyan-500/50 focus:border-cyan-400" : "border-gray-700 focus:border-cyan-500"
+                              className={`w-full bg-gray-900 border rounded-md px-2 py-1 text-xs text-slate-200 focus:outline-none transition-colors ${
+                                isFilled ? "border-cyan-500/50 focus:border-cyan-400" : "border-white/[0.07] focus:border-cyan-500"
                               }`} />
                           </div>
                         );
@@ -521,13 +521,13 @@ export default function AIHub() {
                               <p className="text-sm font-semibold mb-0.5">
                                 {cfResult.achievable ? "Counterfactual achievable!" : "Deeply anomalous — changes insufficient"}
                               </p>
-                              <p className="text-xs text-gray-400">{cfResult.ai_summary}</p>
+                              <p className="text-xs text-slate-400">{cfResult.ai_summary}</p>
                               <div className="flex items-center gap-4 mt-2">
                                 <span className="text-xs">
                                   <span className="text-red-400 font-mono">{cfResult.original_fraud_probability}%</span>
-                                  <span className="text-gray-500"> → </span>
+                                  <span className="text-slate-500"> → </span>
                                   <span className="text-green-400 font-mono">{cfResult.counterfactual_fraud_probability}%</span>
-                                  <span className="text-gray-500"> fraud probability</span>
+                                  <span className="text-slate-500"> fraud probability</span>
                                 </span>
                                 <span className="text-xs text-cyan-400">
                                   −{cfResult.total_probability_reduction}% reduction
@@ -539,7 +539,7 @@ export default function AIHub() {
                           {/* Suggestions */}
                           {cfResult.suggestions?.length > 0 && (
                             <div>
-                              <p className="text-xs text-gray-400 mb-2 font-semibold uppercase tracking-wider">
+                              <p className="text-xs text-slate-400 mb-2 font-semibold uppercase tracking-wider">
                                 Suggested Changes
                               </p>
                               <div className="space-y-2">
@@ -548,11 +548,11 @@ export default function AIHub() {
                                     className={`flex items-center justify-between rounded-lg p-3 border text-xs ${IMPACT_COLOR[s.impact]}`}>
                                     <div>
                                       <p className="font-medium">{s.feature}</p>
-                                      <div className="flex items-center gap-2 mt-0.5 text-gray-400">
+                                      <div className="flex items-center gap-2 mt-0.5 text-slate-400">
                                         <span className="font-mono">{s.current_value}</span>
                                         {s.direction === "decrease"
                                           ? <ArrowDown className="h-3 w-3 text-green-400" />
-                                          : <ArrowUp className="h-3 w-3 text-blue-400" />}
+                                          : <ArrowUp className="h-3 w-3 text-cyan-400" />}
                                         <span className="font-mono">{s.suggested_value}</span>
                                       </div>
                                     </div>
@@ -560,7 +560,7 @@ export default function AIHub() {
                                       <span className={`px-1.5 py-0.5 rounded-full text-xs font-bold border ${IMPACT_COLOR[s.impact]}`}>
                                         {s.impact}
                                       </span>
-                                      <p className="text-gray-400 mt-0.5">−{s.fraud_prob_reduction}%</p>
+                                      <p className="text-slate-400 mt-0.5">−{s.fraud_prob_reduction}%</p>
                                     </div>
                                   </div>
                                 ))}
@@ -578,7 +578,7 @@ export default function AIHub() {
 
           {/* ── Risk Score Distribution from ai-summary ── */}
           {summary?.risk_distribution && (
-            <Card className="bg-gray-800 border-gray-700 mb-6">
+            <Card className="bg-slate-900/80 border-white/[0.07] mb-6">
               <CardHeader className="pb-2">
                 <SectionHeader icon={PieChart} title="Risk Distribution" color="text-red-400" />
               </CardHeader>
@@ -593,15 +593,15 @@ export default function AIHub() {
                     const total = Object.values(summary.risk_distribution).reduce((a, b) => a + b, 0) || 1;
                     const pct = Math.round((val / total) * 100);
                     return (
-                      <div key={t.key} className="bg-gray-900 rounded-xl p-4 text-center border border-gray-700">
+                      <div key={t.key} className="bg-gray-900 rounded-xl p-4 text-center border border-white/[0.07]">
                         <p className="text-2xl font-bold" style={{ color: t.color }}>{val.toLocaleString()}</p>
-                        <p className="text-xs text-gray-400">{t.label}</p>
-                        <div className="mt-2 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <p className="text-xs text-slate-400">{t.label}</p>
+                        <div className="mt-2 h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                           <motion.div className="h-full rounded-full"
                             style={{ background: t.color, width: `${pct}%` }}
                             initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.6 }} />
                         </div>
-                        <p className="text-xs text-gray-600 mt-1">{pct}%</p>
+                        <p className="text-xs text-slate-600 mt-1">{pct}%</p>
                       </div>
                     );
                   })}
@@ -611,14 +611,14 @@ export default function AIHub() {
           )}
 
           {/* ── Quick Navigation ── */}
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-slate-900/80 border-white/[0.07]">
             <CardHeader className="pb-2">
-              <SectionHeader icon={ArrowRight} title="Continue Investigation" color="text-gray-400" />
+              <SectionHeader icon={ArrowRight} title="Continue Investigation" color="text-slate-400" />
             </CardHeader>
             <CardContent className="pt-0">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {[
-                  { label: "Run Detection", path: "/run-detection", color: "border-blue-500/30 text-blue-400" },
+                  { label: "Run Detection", path: "/run-detection", color: "border-blue-500/30 text-cyan-400" },
                   { label: "View Results", path: "/detection-results", color: "border-purple-500/30 text-purple-400" },
                   { label: "Model Comparison", path: "/model-comparison", color: "border-green-500/30 text-green-400" },
                   { label: "Check Transaction", path: "/check-transaction", color: "border-yellow-500/30 text-yellow-400" },

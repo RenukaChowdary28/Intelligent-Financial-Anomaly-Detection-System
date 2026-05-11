@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
@@ -47,7 +47,7 @@ function passwordStrength(pw) {
     { label: "", color: "" },
     { label: "Weak", color: "bg-red-500", text: "text-red-400" },
     { label: "Fair", color: "bg-yellow-500", text: "text-yellow-400" },
-    { label: "Good", color: "bg-blue-500", text: "text-blue-400" },
+    { label: "Good", color: "bg-blue-500", text: "text-cyan-400" },
     { label: "Strong", color: "bg-green-500", text: "text-green-400" },
   ]
   return { score: s, ...levels[s] }
@@ -59,7 +59,7 @@ function Toggle({ checked, onChange }) {
     <button
       onClick={onChange}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none flex-shrink-0 ${
-        checked ? "bg-blue-600" : "bg-gray-600"
+        checked ? "bg-blue-600" : "bg-white/[0.09]"
       }`}
     >
       <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200 ${
@@ -263,17 +263,17 @@ const SettingsPage = () => {
   }
 
   // ── Section label ───────────────────────────────────────────────────────────
-  const SectionIcon = ({ icon: Icon, label, color = "text-blue-400" }) => (
+  const SectionIcon = ({ icon: Icon, label, color = "text-cyan-400" }) => (
     <div className="flex items-center gap-2">
       <Icon className={`h-5 w-5 ${color}`} />
-      <span className="text-base font-semibold text-gray-100">{label}</span>
+      <span className="text-base font-semibold text-white">{label}</span>
     </div>
   )
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-gray-100">
+    <div className="flex min-h-screen text-white">
       {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
 
@@ -290,16 +290,16 @@ const SettingsPage = () => {
           {/* ── Page title ─────────────────────────────────────────────── */}
           <div>
             <div className="flex items-center gap-3">
-              <Settings className="h-7 w-7 text-blue-400" />
-              <h1 className="text-2xl font-bold text-gray-100">Settings</h1>
+              <Settings className="h-7 w-7 text-cyan-400" />
+              <h1 className="text-2xl font-bold text-white">Settings</h1>
             </div>
-            <p className="text-sm text-gray-400 mt-1 ml-10">
+            <p className="text-sm text-slate-400 mt-1 ml-10">
               Manage your account, preferences and security
             </p>
           </div>
 
           {/* ── Profile card ───────────────────────────────────────────── */}
-          <Card className="bg-gray-800 border-gray-700 overflow-hidden">
+          <Card className="bg-slate-900/80 border-white/[0.07] overflow-hidden">
             {/* Colored banner */}
             <div className={`h-16 bg-gradient-to-r ${avatarGradient(displayName)} opacity-30`} />
             <CardContent className="px-6 pb-6 -mt-8">
@@ -312,11 +312,11 @@ const SettingsPage = () => {
                   }
                 </div>
                 <div className="flex-1 min-w-0 pb-1">
-                  <p className="text-lg font-bold text-gray-100 truncate">{displayName}</p>
-                  <p className="text-sm text-gray-400 truncate">{email}</p>
+                  <p className="text-lg font-bold text-white truncate">{displayName}</p>
+                  <p className="text-sm text-slate-400 truncate">{email}</p>
                 </div>
                 {memberSince && (
-                  <div className="flex items-center gap-1.5 text-xs text-gray-500 pb-1 flex-shrink-0">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500 pb-1 flex-shrink-0">
                     <Calendar className="h-3.5 w-3.5" />
                     Member since {memberSince}
                   </div>
@@ -327,30 +327,30 @@ const SettingsPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* Display Name */}
                 <div className="space-y-1">
-                  <Label className="text-xs font-medium text-gray-400 flex items-center gap-1.5">
+                  <Label className="text-xs font-medium text-slate-400 flex items-center gap-1.5">
                     <User className="h-3.5 w-3.5" /> Display Name
                   </Label>
                   <Input value={displayName} disabled
-                    className="bg-gray-700 border-gray-600 text-gray-300 disabled:opacity-70 h-9" />
+                    className="bg-white/[0.06] border-white/[0.08] text-slate-300 disabled:opacity-70 h-9" />
                 </div>
                 {/* Email */}
                 <div className="space-y-1">
-                  <Label className="text-xs font-medium text-gray-400 flex items-center gap-1.5">
+                  <Label className="text-xs font-medium text-slate-400 flex items-center gap-1.5">
                     <Mail className="h-3.5 w-3.5" /> Email Address
                   </Label>
                   <Input value={email} disabled
-                    className="bg-gray-700 border-gray-600 text-gray-300 disabled:opacity-70 h-9" />
+                    className="bg-white/[0.06] border-white/[0.08] text-slate-300 disabled:opacity-70 h-9" />
                 </div>
                 {/* UPI ID + copy */}
                 <div className="space-y-1">
-                  <Label className="text-xs font-medium text-gray-400 flex items-center gap-1.5">
+                  <Label className="text-xs font-medium text-slate-400 flex items-center gap-1.5">
                     <CreditCard className="h-3.5 w-3.5" /> UPI ID
                   </Label>
                   <div className="relative">
                     <Input value={upiId} disabled
-                      className="bg-gray-700 border-gray-600 text-gray-300 disabled:opacity-70 h-9 pr-9 font-mono" />
+                      className="bg-white/[0.06] border-white/[0.08] text-slate-300 disabled:opacity-70 h-9 pr-9 font-mono" />
                     <button onClick={handleCopyUPI}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-400 transition-colors"
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-400 transition-colors"
                       title="Copy UPI ID">
                       {copiedUPI
                         ? <Check className="h-3.5 w-3.5 text-green-400" />
@@ -362,10 +362,10 @@ const SettingsPage = () => {
 
               {/* Phone Number */}
               <div className="mt-4 space-y-1.5">
-                <Label className="text-xs font-medium text-gray-400 flex items-center gap-1.5">
+                <Label className="text-xs font-medium text-slate-400 flex items-center gap-1.5">
                   <Phone className="h-3.5 w-3.5" /> Linked Phone Number
                 </Label>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-slate-500">
                   Link your mobile number so others can pay you by phone number.
                 </p>
                 <div className="flex gap-2">
@@ -373,7 +373,7 @@ const SettingsPage = () => {
                     value={phoneNumber}
                     onChange={e => { setPhoneNumber(e.target.value); setPhoneStatus("") }}
                     placeholder="+917075084334"
-                    className="bg-gray-700 border-gray-600 text-white placeholder-gray-500 h-9 font-mono flex-1"
+                    className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-9 font-mono flex-1"
                   />
                   <Button
                     onClick={handleSavePhone}
@@ -386,7 +386,7 @@ const SettingsPage = () => {
                 {phoneStatus && <StatusMsg msg={phoneStatus} />}
               </div>
 
-              <div className="flex items-center gap-2 mt-4 text-xs text-gray-500 bg-gray-700/40 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 mt-4 text-xs text-slate-500 bg-white/[0.03] rounded-lg px-3 py-2">
                 <Info className="h-3.5 w-3.5 flex-shrink-0" />
                 Profile details are managed through your Google account and cannot be edited here.
               </div>
@@ -394,7 +394,7 @@ const SettingsPage = () => {
           </Card>
 
           {/* ── AI Detection Preferences ───────────────────────────────── */}
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-slate-900/80 border-white/[0.07]">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <SectionIcon icon={BrainCircuit} label="AI Detection Preferences" color="text-purple-400" />
@@ -408,10 +408,10 @@ const SettingsPage = () => {
             <CardContent className="space-y-5">
               {/* Fraud Sensitivity */}
               <div>
-                <p className="text-sm font-medium text-gray-200 mb-1 flex items-center gap-1.5">
+                <p className="text-sm font-medium text-slate-200 mb-1 flex items-center gap-1.5">
                   <Sliders className="h-4 w-4 text-purple-400" /> Fraud Detection Sensitivity
                 </p>
-                <p className="text-xs text-gray-500 mb-3">
+                <p className="text-xs text-slate-500 mb-3">
                   Higher sensitivity catches more fraud but may flag legitimate transactions.
                 </p>
                 <div className="grid grid-cols-3 gap-2">
@@ -425,7 +425,7 @@ const SettingsPage = () => {
                       className={`rounded-xl border-2 p-3 text-center transition-all duration-150 ${
                         aiPrefs.sensitivity === opt.val
                           ? opt.color
-                          : "border-gray-600 bg-gray-700/40 text-gray-400 hover:border-gray-500"
+                          : "border-white/[0.09] bg-white/[0.03] text-slate-400 hover:border-gray-500"
                       }`}>
                       <p className="text-sm font-semibold">{opt.label}</p>
                       <p className="text-xs opacity-75 mt-0.5">{opt.desc}</p>
@@ -435,7 +435,7 @@ const SettingsPage = () => {
               </div>
 
               {/* Toggles */}
-              <div className="space-y-0 divide-y divide-gray-700">
+              <div className="space-y-0 divide-y divide-white/[0.07]">
                 {[
                   {
                     key: "autoCheckOnSend",
@@ -448,8 +448,8 @@ const SettingsPage = () => {
                     <div className="flex items-start gap-3">
                       <Icon className={`h-4 w-4 ${color} mt-0.5 flex-shrink-0`} />
                       <div>
-                        <p className="text-sm font-medium text-gray-100">{label}</p>
-                        <p className="text-xs text-gray-400">{desc}</p>
+                        <p className="text-sm font-medium text-white">{label}</p>
+                        <p className="text-xs text-slate-400">{desc}</p>
                       </div>
                     </div>
                     <Toggle checked={aiPrefs[key]}
@@ -460,7 +460,7 @@ const SettingsPage = () => {
 
               {/* Default Model */}
               <div>
-                <p className="text-sm font-medium text-gray-200 mb-2">Default Detection Model</p>
+                <p className="text-sm font-medium text-slate-200 mb-2">Default Detection Model</p>
                 <div className="flex gap-2 flex-wrap">
                   {[
                     { val: "isolation_forest", label: "Isolation Forest" },
@@ -472,7 +472,7 @@ const SettingsPage = () => {
                       className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${
                         aiPrefs.defaultModel === opt.val
                           ? "border-blue-500/60 bg-blue-500/10 text-blue-300 font-medium"
-                          : "border-gray-600 text-gray-400 hover:border-gray-500"
+                          : "border-white/[0.09] text-slate-400 hover:border-gray-500"
                       }`}>
                       {opt.label}
                     </button>
@@ -492,7 +492,7 @@ const SettingsPage = () => {
           </Card>
 
           {/* ── Notification Preferences ───────────────────────────────── */}
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-slate-900/80 border-white/[0.07]">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <SectionIcon icon={Bell} label="Notification Preferences" />
@@ -509,7 +509,7 @@ const SettingsPage = () => {
                   key: "transactionAlerts",
                   label: "Transaction Alerts",
                   desc: "Get notified for every transaction on your account",
-                  icon: CreditCard, color: "text-blue-400",
+                  icon: CreditCard, color: "text-cyan-400",
                 },
                 {
                   key: "fraudAlerts",
@@ -531,12 +531,12 @@ const SettingsPage = () => {
                 },
               ].map(({ key, label, desc, icon: Icon, color }) => (
                 <div key={key}
-                  className="flex items-center justify-between py-3 border-b border-gray-700 last:border-0">
+                  className="flex items-center justify-between py-3 border-b border-white/[0.07] last:border-0">
                   <div className="flex items-start gap-3">
                     <Icon className={`h-4 w-4 ${color} mt-0.5 flex-shrink-0`} />
                     <div>
-                      <p className="text-sm font-medium text-gray-100">{label}</p>
-                      <p className="text-xs text-gray-400">{desc}</p>
+                      <p className="text-sm font-medium text-white">{label}</p>
+                      <p className="text-xs text-slate-400">{desc}</p>
                     </div>
                   </div>
                   <Toggle checked={notifications[key]} onChange={() => toggleNotification(key)} />
@@ -557,7 +557,7 @@ const SettingsPage = () => {
           </Card>
 
           {/* ── Security / Change Password ─────────────────────────────── */}
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-slate-900/80 border-white/[0.07]">
             <CardHeader className="pb-3">
               <SectionIcon icon={Shield} label="Security" color="text-green-400" />
             </CardHeader>
@@ -565,11 +565,11 @@ const SettingsPage = () => {
               {isGoogleUser ? (
                 <div className="bg-blue-900/30 border border-blue-700/40 rounded-xl p-4 flex items-start gap-3">
                   <div className="p-2 rounded-full bg-blue-500/20 flex-shrink-0">
-                    <ShieldCheck className="h-5 w-5 text-blue-400" />
+                    <ShieldCheck className="h-5 w-5 text-cyan-400" />
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-blue-300">Secured with Google</p>
-                    <p className="text-xs text-blue-400 mt-1 leading-relaxed">
+                    <p className="text-xs text-cyan-400 mt-1 leading-relaxed">
                       You signed in with Google. Your password is managed by Google.
                       Visit <span className="underline cursor-pointer">myaccount.google.com</span> to
                       update your credentials.
@@ -588,15 +588,15 @@ const SettingsPage = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Current */}
                     <div className="space-y-1">
-                      <Label className="text-xs font-medium text-gray-400">Current Password</Label>
+                      <Label className="text-xs font-medium text-slate-400">Current Password</Label>
                       <div className="relative">
                         <Input type={showCurrentPw ? "text" : "password"}
                           value={currentPassword}
                           onChange={e => setCurrentPassword(e.target.value)}
                           placeholder="Current password"
-                          className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 pr-10 h-9" />
+                          className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 pr-10 h-9" />
                         <button type="button" onClick={() => setShowCurrentPw(p => !p)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200">
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200">
                           {showCurrentPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
                       </div>
@@ -604,15 +604,15 @@ const SettingsPage = () => {
 
                     {/* New */}
                     <div className="space-y-1">
-                      <Label className="text-xs font-medium text-gray-400">New Password</Label>
+                      <Label className="text-xs font-medium text-slate-400">New Password</Label>
                       <div className="relative">
                         <Input type={showNewPw ? "text" : "password"}
                           value={newPassword}
                           onChange={e => setNewPassword(e.target.value)}
                           placeholder="New password"
-                          className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 pr-10 h-9" />
+                          className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 pr-10 h-9" />
                         <button type="button" onClick={() => setShowNewPw(p => !p)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200">
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200">
                           {showNewPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
                       </div>
@@ -623,7 +623,7 @@ const SettingsPage = () => {
                             {[1, 2, 3, 4].map(n => (
                               <div key={n}
                                 className={`h-1.5 flex-1 rounded-full transition-colors ${
-                                  strength.score >= n ? strength.color : "bg-gray-600"
+                                  strength.score >= n ? strength.color : "bg-white/[0.09]"
                                 }`} />
                             ))}
                           </div>
@@ -636,13 +636,13 @@ const SettingsPage = () => {
 
                     {/* Confirm */}
                     <div className="space-y-1">
-                      <Label className="text-xs font-medium text-gray-400">Confirm New Password</Label>
+                      <Label className="text-xs font-medium text-slate-400">Confirm New Password</Label>
                       <div className="relative">
                         <Input type="password"
                           value={confirmPassword}
                           onChange={e => setConfirmPassword(e.target.value)}
                           placeholder="Confirm new password"
-                          className={`bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-9 pr-9 ${
+                          className={`bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-9 pr-9 ${
                             confirmPassword && confirmPassword !== newPassword
                               ? "border-red-500/60"
                               : confirmPassword && confirmPassword === newPassword
@@ -749,52 +749,52 @@ function PinSection({ firebaseUser }) {
   }
 
   return (
-    <Card className="bg-gray-800/60 border-gray-700">
-      <CardHeader className="pb-3 border-b border-gray-700">
+    <Card className="bg-gray-800/60 border-white/[0.07]">
+      <CardHeader className="pb-3 border-b border-white/[0.07]">
         <div className="flex items-center gap-2">
-          <Shield className="h-5 w-5 text-blue-400" />
-          <h2 className="text-base font-semibold text-gray-100">Transaction PIN</h2>
+          <Shield className="h-5 w-5 text-cyan-400" />
+          <h2 className="text-base font-semibold text-white">Transaction PIN</h2>
           {hasPin && <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full">Active</span>}
         </div>
-        <p className="text-xs text-gray-400 mt-1">
+        <p className="text-xs text-slate-400 mt-1">
           Required for payments of ₹5,000 and above. Leave blank to disable.
         </p>
       </CardHeader>
       <CardContent className="pt-4 space-y-3">
         {hasPin && (
           <div>
-            <label className="text-xs font-medium text-gray-400 block mb-1">Current PIN</label>
+            <label className="text-xs font-medium text-slate-400 block mb-1">Current PIN</label>
             <input
               type="password"
               maxLength={4}
               value={currentPin}
               onChange={e => setCurrentPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
               placeholder="Enter current 4-digit PIN"
-              className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm tracking-widest"
+              className="w-full bg-white/[0.07] border border-white/[0.09] text-white rounded-lg px-3 py-2 text-sm tracking-widest"
             />
           </div>
         )}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs font-medium text-gray-400 block mb-1">New PIN</label>
+            <label className="text-xs font-medium text-slate-400 block mb-1">New PIN</label>
             <input
               type="password"
               maxLength={4}
               value={pin}
               onChange={e => setPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
               placeholder="4 digits"
-              className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm tracking-widest"
+              className="w-full bg-white/[0.07] border border-white/[0.09] text-white rounded-lg px-3 py-2 text-sm tracking-widest"
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-gray-400 block mb-1">Confirm PIN</label>
+            <label className="text-xs font-medium text-slate-400 block mb-1">Confirm PIN</label>
             <input
               type="password"
               maxLength={4}
               value={confirmPin}
               onChange={e => setConfirmPin(e.target.value.replace(/\D/g, "").slice(0, 4))}
               placeholder="4 digits"
-              className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm tracking-widest"
+              className="w-full bg-white/[0.07] border border-white/[0.09] text-white rounded-lg px-3 py-2 text-sm tracking-widest"
             />
           </div>
         </div>
@@ -846,14 +846,14 @@ function BiometricSection({ firebaseUser }) {
   }
 
   return (
-    <Card className="bg-gray-800/60 border-gray-700">
-      <CardHeader className="pb-3 border-b border-gray-700">
+    <Card className="bg-gray-800/60 border-white/[0.07]">
+      <CardHeader className="pb-3 border-b border-white/[0.07]">
         <div className="flex items-center gap-2">
-          <Fingerprint className="h-5 w-5 text-blue-400" />
-          <h2 className="text-base font-semibold text-gray-100">Biometric Authentication</h2>
+          <Fingerprint className="h-5 w-5 text-cyan-400" />
+          <h2 className="text-base font-semibold text-white">Biometric Authentication</h2>
           {enabled && <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full">Enabled</span>}
         </div>
-        <p className="text-xs text-gray-400 mt-1">
+        <p className="text-xs text-slate-400 mt-1">
           Use fingerprint or Face ID to confirm payments instead of typing your PIN.
         </p>
       </CardHeader>
@@ -864,7 +864,7 @@ function BiometricSection({ firebaseUser }) {
           </p>
         ) : (
           <>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-slate-300">
               {enabled
                 ? "Biometric is enabled. Tap 'Use Fingerprint / Face ID' when making a payment."
                 : "Enable biometric to confirm payments using fingerprint or Face ID instead of PIN."}
@@ -943,45 +943,45 @@ function TransactionLimitsSection({ firebaseUser }) {
   const isOk = s => s.toLowerCase().includes("success")
 
   return (
-    <Card className="bg-gray-800/60 border-gray-700">
-      <CardHeader className="pb-3 border-b border-gray-700">
+    <Card className="bg-gray-800/60 border-white/[0.07]">
+      <CardHeader className="pb-3 border-b border-white/[0.07]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Sliders className="h-5 w-5 text-orange-400" />
-            <h2 className="text-base font-semibold text-gray-100">Transaction Limits</h2>
+            <h2 className="text-base font-semibold text-white">Transaction Limits</h2>
             {enabled && <span className="text-xs bg-orange-500/20 text-orange-400 border border-orange-500/30 px-2 py-0.5 rounded-full">Active</span>}
           </div>
           <Toggle checked={enabled} onChange={() => setEnabled(p => !p)} />
         </div>
-        <p className="text-xs text-gray-400 mt-1">
+        <p className="text-xs text-slate-400 mt-1">
           Set daily or per-transaction caps to protect against overspending or fraud.
         </p>
       </CardHeader>
       <CardContent className="pt-4 space-y-4">
         <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 transition-opacity ${!enabled ? "opacity-40 pointer-events-none" : ""}`}>
           <div className="space-y-1">
-            <Label className="text-xs font-medium text-gray-400">Daily Limit (₹)</Label>
+            <Label className="text-xs font-medium text-slate-400">Daily Limit (₹)</Label>
             <Input
               type="number" min="0" placeholder="e.g. 10000"
               value={dailyLimit}
               onChange={e => setDailyLimit(e.target.value)}
-              className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-9"
+              className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-9"
             />
-            <p className="text-xs text-gray-500">Max total amount you can send in one day</p>
+            <p className="text-xs text-slate-500">Max total amount you can send in one day</p>
           </div>
           <div className="space-y-1">
-            <Label className="text-xs font-medium text-gray-400">Per-Transaction Limit (₹)</Label>
+            <Label className="text-xs font-medium text-slate-400">Per-Transaction Limit (₹)</Label>
             <Input
               type="number" min="0" placeholder="e.g. 5000"
               value={perTxLimit}
               onChange={e => setPerTxLimit(e.target.value)}
-              className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-9"
+              className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-9"
             />
-            <p className="text-xs text-gray-500">Max amount per single payment</p>
+            <p className="text-xs text-slate-500">Max amount per single payment</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 bg-gray-700/30 rounded-lg px-3 py-2 text-xs text-gray-400">
+        <div className="flex items-center gap-2 bg-white/[0.02] rounded-lg px-3 py-2 text-xs text-slate-400">
           <AlertTriangle className="h-3.5 w-3.5 text-yellow-400 flex-shrink-0" />
           Transactions exceeding these limits will be blocked until you override with your PIN.
         </div>

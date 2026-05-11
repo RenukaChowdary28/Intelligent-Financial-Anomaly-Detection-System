@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   CheckCircle, XCircle, Loader, Shield,
@@ -315,11 +315,11 @@ export default function RazorpayCheckout({
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
         className="w-full p-5 bg-blue-900/20 border border-blue-600/40 rounded-xl flex flex-col items-center gap-3">
-        <Loader className="w-8 h-8 text-blue-400 animate-spin" />
+        <Loader className="w-8 h-8 text-cyan-400 animate-spin" />
         <p className="text-blue-200 font-semibold">
           {step === 'creating' ? 'Creating secure payment order…' : 'Razorpay checkout opened'}
         </p>
-        <p className="text-xs text-gray-400 text-center">
+        <p className="text-xs text-slate-400 text-center">
           {step === 'open'
             ? 'Complete payment in the Razorpay window. Use UPI: success@razorpay for test.'
             : 'Contacting Razorpay servers…'}
@@ -335,7 +335,7 @@ export default function RazorpayCheckout({
         className="w-full p-5 bg-yellow-900/20 border border-yellow-600/40 rounded-xl flex flex-col items-center gap-3">
         <Shield className="w-8 h-8 text-yellow-400 animate-pulse" />
         <p className="text-yellow-200 font-semibold">AegisAI verifying payment…</p>
-        <p className="text-xs text-gray-400">Checking HMAC signature with Razorpay</p>
+        <p className="text-xs text-slate-400">Checking HMAC signature with Razorpay</p>
       </motion.div>
     );
   }
@@ -349,16 +349,16 @@ export default function RazorpayCheckout({
           <XCircle className="w-6 h-6 text-red-400 shrink-0" />
           <div>
             <p className="text-red-200 font-semibold">Payment Failed</p>
-            <p className="text-xs text-gray-400 mt-0.5">{error}</p>
+            <p className="text-xs text-slate-400 mt-0.5">{error}</p>
           </div>
         </div>
         <div className="flex gap-2">
           <Button onClick={() => { setStep('idle'); setError(''); }}
-            className="flex-1 bg-gray-700 hover:bg-gray-600 text-sm">
+            className="flex-1 bg-white/[0.07] hover:bg-white/[0.09] text-sm">
             Try Again
           </Button>
           <Button onClick={onCancel} variant="outline"
-            className="flex-1 border-gray-600 text-gray-300 text-sm">
+            className="flex-1 border-white/[0.09] text-slate-300 text-sm">
             Cancel
           </Button>
         </div>
@@ -396,7 +396,7 @@ export default function RazorpayCheckout({
                   ['Status',     paymentData.aegisStatus || 'CLEARED'],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between items-start gap-2">
-                    <span className="text-gray-400 shrink-0">{label}</span>
+                    <span className="text-slate-400 shrink-0">{label}</span>
                     <span className="text-white font-mono text-right break-all">{value}</span>
                   </div>
                 ))}
@@ -405,7 +405,7 @@ export default function RazorpayCheckout({
 
             {/* AegisAI badge */}
             <div className="mt-3 flex items-center gap-2 p-2 bg-blue-900/40 rounded-lg border border-blue-700/40">
-              <Shield className="w-4 h-4 text-blue-400 shrink-0" />
+              <Shield className="w-4 h-4 text-cyan-400 shrink-0" />
               <p className="text-xs text-blue-200">
                 Verified by AegisAI Neural Fraud Defense — HMAC signature confirmed
               </p>
@@ -419,7 +419,7 @@ export default function RazorpayCheckout({
               <Download className="w-4 h-4 mr-2" /> Download Receipt
             </Button>
             <Button onClick={copyPaymentId} variant="outline"
-              className="border-gray-600 text-gray-300 hover:bg-gray-700 text-sm px-4">
+              className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07] text-sm px-4">
               {copied ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
             </Button>
           </div>

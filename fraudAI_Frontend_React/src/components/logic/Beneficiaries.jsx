@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -132,9 +132,9 @@ const Beneficiaries = () => {
   )
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-gray-100">
+    <div className="flex min-h-screen text-white">
       {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
 
@@ -152,15 +152,15 @@ const Beneficiaries = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-3">
-                <Users className="h-7 w-7 text-blue-400" />
-                <h1 className="text-2xl font-bold text-gray-100">Beneficiaries</h1>
+                <Users className="h-7 w-7 text-cyan-400" />
+                <h1 className="text-2xl font-bold text-white">Beneficiaries</h1>
                 {beneficiaries.length > 0 && (
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300">
                     {beneficiaries.length}
                   </span>
                 )}
               </div>
-              <p className="text-sm text-gray-400 mt-1 ml-10">
+              <p className="text-sm text-slate-400 mt-1 ml-10">
                 Manage saved recipients for quick payments
               </p>
             </div>
@@ -182,9 +182,9 @@ const Beneficiaries = () => {
                 { label: "With Nickname", value: beneficiaries.filter(b => b.nickname).length, color: "emerald" },
               ].map(s => (
                 <div key={s.label}
-                  className="bg-gray-800 border border-gray-700 rounded-xl p-3 text-center">
+                  className="bg-gray-800 border border-white/[0.07] rounded-xl p-3 text-center">
                   <p className={`text-xl font-bold text-${s.color}-400`}>{s.value}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -202,8 +202,8 @@ const Beneficiaries = () => {
                 <Card className="bg-gray-800 border-blue-500/50 shadow-lg shadow-blue-500/5">
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-2">
-                      <UserPlus className="h-4 w-4 text-blue-400" />
-                      <CardTitle className="text-base font-semibold text-gray-100">
+                      <UserPlus className="h-4 w-4 text-cyan-400" />
+                      <CardTitle className="text-base font-semibold text-white">
                         New Beneficiary
                       </CardTitle>
                     </div>
@@ -212,37 +212,37 @@ const Beneficiaries = () => {
                     <form onSubmit={handleAddBeneficiary} className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-y-1">
-                          <label className="text-xs font-medium text-gray-400">
+                          <label className="text-xs font-medium text-slate-400">
                             Full Name <span className="text-red-400">*</span>
                           </label>
                           <Input
                             placeholder="e.g. Rahul Sharma"
                             value={form.name}
                             onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-                            className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-9"
+                            className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-9"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-medium text-gray-400">
+                          <label className="text-xs font-medium text-slate-400">
                             UPI ID <span className="text-red-400">*</span>
                           </label>
                           <Input
                             placeholder="e.g. rahul@yesbank"
                             value={form.upiId}
                             onChange={e => setForm(p => ({ ...p, upiId: e.target.value }))}
-                            className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-9"
+                            className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-9"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-medium text-gray-400">
+                          <label className="text-xs font-medium text-slate-400">
                             Nickname{" "}
-                            <span className="text-gray-600 font-normal">(optional)</span>
+                            <span className="text-slate-600 font-normal">(optional)</span>
                           </label>
                           <Input
                             placeholder="e.g. College Friend"
                             value={form.nickname}
                             onChange={e => setForm(p => ({ ...p, nickname: e.target.value }))}
-                            className="bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-9"
+                            className="bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-9"
                           />
                         </div>
                       </div>
@@ -268,7 +268,7 @@ const Beneficiaries = () => {
                         </Button>
                         <Button type="button" variant="outline"
                           onClick={() => { setShowAddForm(false); setFormError("") }}
-                          className="border-gray-600 text-gray-300 hover:bg-gray-700 h-9">
+                          className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07] h-9">
                           Cancel
                         </Button>
                       </div>
@@ -280,22 +280,22 @@ const Beneficiaries = () => {
           </AnimatePresence>
 
           {/* ── Search + List ────────────────────────────────────────────── */}
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-slate-900/80 border-white/[0.07]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-base font-semibold text-gray-100">
+              <CardTitle className="text-base font-semibold text-white">
                 Saved Beneficiaries
               </CardTitle>
               <div className="relative">
-                <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
+                <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
                 <Input
                   placeholder="Search beneficiaries..."
-                  className="pl-8 pr-8 bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-500 h-8 text-sm w-52"
+                  className="pl-8 pr-8 bg-white/[0.06] border-white/[0.08] text-white placeholder-gray-500 h-8 text-sm w-52"
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
                 />
                 {searchTerm && (
                   <button onClick={() => setSearchTerm("")}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200">
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200">
                     <X className="h-3.5 w-3.5" />
                   </button>
                 )}
@@ -306,14 +306,14 @@ const Beneficiaries = () => {
               {filtered.length === 0 ? (
                 /* ── Empty state ── */
                 <div className="flex flex-col items-center justify-center py-16 space-y-4">
-                  <div className="p-5 rounded-full bg-gray-700/50">
-                    <Users className="h-10 w-10 text-gray-600" />
+                  <div className="p-5 rounded-full bg-white/[0.04]">
+                    <Users className="h-10 w-10 text-slate-600" />
                   </div>
                   <div className="text-center">
-                    <p className="font-medium text-gray-400">
+                    <p className="font-medium text-slate-400">
                       {searchTerm ? "No results found" : "No beneficiaries yet"}
                     </p>
-                    <p className="text-sm text-gray-600 mt-1">
+                    <p className="text-sm text-slate-600 mt-1">
                       {searchTerm
                         ? `No beneficiaries match "${searchTerm}"`
                         : "Add your first beneficiary to send money quickly"}
@@ -337,7 +337,7 @@ const Beneficiaries = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.05 }}
                     >
-                      <Card className="bg-gray-700/60 border-gray-600 hover:border-blue-500/40 hover:bg-gray-700 transition-all duration-200 group">
+                      <Card className="bg-white/[0.07]/60 border-white/[0.09] hover:border-blue-500/40 hover:bg-white/[0.07] transition-all duration-200 group">
                         <CardContent className="p-4">
                           <div className="flex items-start gap-3">
                             {/* Colored avatar with initials */}
@@ -349,11 +349,11 @@ const Beneficiaries = () => {
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between gap-1">
                                 <div className="min-w-0">
-                                  <p className="font-semibold text-gray-100 text-sm truncate leading-tight">
+                                  <p className="font-semibold text-white text-sm truncate leading-tight">
                                     {b.name}
                                   </p>
                                   {b.nickname && (
-                                    <span className="inline-block text-xs text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded-full mt-0.5">
+                                    <span className="inline-block text-xs text-cyan-400 bg-blue-500/10 px-1.5 py-0.5 rounded-full mt-0.5">
                                       {b.nickname}
                                     </span>
                                   )}
@@ -366,16 +366,16 @@ const Beneficiaries = () => {
                                       className="text-red-400 hover:text-red-300 font-semibold">
                                       Delete
                                     </button>
-                                    <span className="text-gray-600">·</span>
+                                    <span className="text-slate-600">·</span>
                                     <button onClick={() => setConfirmDelete(null)}
-                                      className="text-gray-400 hover:text-gray-200">
+                                      className="text-slate-400 hover:text-slate-200">
                                       Cancel
                                     </button>
                                   </div>
                                 ) : (
                                   <button
                                     onClick={() => setConfirmDelete(b.id)}
-                                    className="text-gray-500 hover:text-red-400 transition-colors flex-shrink-0 opacity-0 group-hover:opacity-100 mt-0.5"
+                                    className="text-slate-500 hover:text-red-400 transition-colors flex-shrink-0 opacity-0 group-hover:opacity-100 mt-0.5"
                                     title="Remove beneficiary">
                                     <Trash2 className="h-4 w-4" />
                                   </button>
@@ -384,10 +384,10 @@ const Beneficiaries = () => {
 
                               {/* UPI ID + copy */}
                               <div className="flex items-center gap-1.5 mt-1.5">
-                                <p className="text-xs text-gray-400 font-mono truncate">{b.upiId}</p>
+                                <p className="text-xs text-slate-400 font-mono truncate">{b.upiId}</p>
                                 <button
                                   onClick={() => handleCopy(b.upiId)}
-                                  className="flex-shrink-0 text-gray-500 hover:text-blue-400 transition-colors"
+                                  className="flex-shrink-0 text-slate-500 hover:text-cyan-400 transition-colors"
                                   title="Copy UPI ID">
                                   {copiedId === b.upiId
                                     ? <Check className="h-3 w-3 text-green-400" />
@@ -403,7 +403,7 @@ const Beneficiaries = () => {
                             onClick={() => navigate("/send-money", {
                               state: { recipientUPI: b.upiId, recipientName: b.name }
                             })}
-                            className="mt-3 w-full flex items-center justify-center gap-1.5 text-xs font-medium text-blue-400 border border-blue-500/30 rounded-lg py-1.5 hover:bg-blue-500/10 hover:border-blue-400/60 transition-all duration-150"
+                            className="mt-3 w-full flex items-center justify-center gap-1.5 text-xs font-medium text-cyan-400 border border-blue-500/30 rounded-lg py-1.5 hover:bg-blue-500/10 hover:border-blue-400/60 transition-all duration-150"
                           >
                             <Send className="h-3.5 w-3.5" />
                             Send Money

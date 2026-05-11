@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
+﻿import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, where, limit, doc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase';
@@ -6,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield, AlertTriangle, CheckCircle, Zap, Search, DollarSign,
   Clock, User, Eye, ChevronRight, X, TrendingUp, Lock,
-  Fingerprint, ShieldAlert, RefreshCw, Info, ArrowRight,
+  Fingerprint, ShieldAlert, RefreshCw, Info, ArrowRight, ArrowLeft,
 } from 'lucide-react';
 
 /* ── helpers ─────────────────────────────────────────────── */
@@ -185,6 +186,7 @@ function RiskRing({ score, color }) {
    MAIN COMPONENT
 ═══════════════════════════════════════════════════════════ */
 export default function PrePaymentShield() {
+  const navigate = useNavigate();
   const [txs, setTxs]                 = useState([]);
   const [selfUpiId, setSelfUpiId]     = useState('');
   const [allKnownUPIs, setAllKnownUPIs] = useState([]);
@@ -258,7 +260,7 @@ export default function PrePaymentShield() {
   const reset = () => { setResult(null); setTargetUpi(''); setAmount(''); inputRef.current?.focus(); };
 
   if (loading) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <motion.div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-emerald-500/30 border-t-emerald-500"
           animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }} />
@@ -274,6 +276,9 @@ export default function PrePaymentShield() {
 
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3">
+        <button onClick={() => navigate(-1)} className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all flex-shrink-0">
+          <ArrowLeft className="h-4 w-4" />
+        </button>
         <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
           <Lock className="h-5 w-5 text-emerald-400" />
         </div>

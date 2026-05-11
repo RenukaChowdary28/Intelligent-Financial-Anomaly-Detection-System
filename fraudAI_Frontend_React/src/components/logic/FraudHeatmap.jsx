@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+﻿import { useState, useEffect, useMemo } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "./firebase";
@@ -54,16 +54,16 @@ export default function FraudHeatmap() {
   const peakHour = hourlyData.reduce((best, h) => h.fraudRate > best.fraudRate ? h : best, { fraudRate: 0, label: "—" });
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1">Fraud Heatmap</h1>
-            <p className="text-gray-400 text-sm mb-6">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1">Fraud Heatmap</h1>
+            <p className="text-slate-400 text-sm mb-6">
               Visualize which spending categories and hours of day carry the highest fraud risk.
             </p>
           </motion.div>
@@ -71,7 +71,7 @@ export default function FraudHeatmap() {
           {loading && (
             <div className="flex items-center justify-center py-20">
               <div className="h-8 w-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mr-3" />
-              <span className="text-gray-400">Loading your transaction data…</span>
+              <span className="text-slate-400">Loading your transaction data…</span>
             </div>
           )}
 
@@ -85,9 +85,9 @@ export default function FraudHeatmap() {
                   { label: "Fraud Flagged", value: fraudTotal, icon: ShieldX, color: fraudTotal > 0 ? "red" : "green" },
                   { label: "Peak Risk Hour", value: peakHour.label, icon: Clock, color: "yellow" },
                 ].map((s) => (
-                  <Card key={s.label} className="bg-gray-800 border-gray-700">
+                  <Card key={s.label} className="bg-slate-900/80 border-white/[0.07]">
                     <CardHeader className="flex flex-row items-center justify-between pb-1">
-                      <CardTitle className="text-xs text-gray-400">{s.label}</CardTitle>
+                      <CardTitle className="text-xs text-slate-400">{s.label}</CardTitle>
                       <s.icon className={`h-4 w-4 text-${s.color}-400`} />
                     </CardHeader>
                     <CardContent>
@@ -101,15 +101,15 @@ export default function FraudHeatmap() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 {/* Heatmap grid */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-gray-300 flex items-center gap-2">
-                      <Activity className="h-4 w-4 text-blue-400" /> Category × Risk Matrix
+                    <CardTitle className="text-sm text-slate-300 flex items-center gap-2">
+                      <Activity className="h-4 w-4 text-cyan-400" /> Category × Risk Matrix
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     {transactions.length === 0 ? (
-                      <p className="text-gray-500 text-sm py-6 text-center">No transactions yet.</p>
+                      <p className="text-slate-500 text-sm py-6 text-center">No transactions yet.</p>
                     ) : (
                       <>
                         {/* Header row */}
@@ -124,7 +124,7 @@ export default function FraudHeatmap() {
                         {/* Data rows */}
                         {categories.map((cat) => (
                           <div key={cat} className="grid grid-cols-4 gap-1 mb-1">
-                            <div className="text-xs text-gray-400 flex items-center font-medium truncate">{cat}</div>
+                            <div className="text-xs text-slate-400 flex items-center font-medium truncate">{cat}</div>
                             {riskLevels.map((r) => {
                               const count = matrix[cat][r];
                               return (
@@ -137,7 +137,7 @@ export default function FraudHeatmap() {
                             })}
                           </div>
                         ))}
-                        <p className="text-xs text-gray-600 mt-2">
+                        <p className="text-xs text-slate-600 mt-2">
                           Darker blue = more transactions in that category/risk combination
                         </p>
                       </>
@@ -146,15 +146,15 @@ export default function FraudHeatmap() {
                 </Card>
 
                 {/* Riskiest categories ranked */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-gray-300 flex items-center gap-2">
+                    <CardTitle className="text-sm text-slate-300 flex items-center gap-2">
                       <ShieldX className="h-4 w-4 text-red-400" /> Riskiest Categories
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     {riskiestCats.length === 0 ? (
-                      <p className="text-gray-500 text-sm py-6 text-center">No transaction data available.</p>
+                      <p className="text-slate-500 text-sm py-6 text-center">No transaction data available.</p>
                     ) : (
                       <div className="space-y-3">
                         {riskiestCats.map((cat, i) => {
@@ -164,13 +164,13 @@ export default function FraudHeatmap() {
                             <div key={cat.category}>
                               <div className="flex items-center justify-between text-xs mb-1">
                                 <div className="flex items-center gap-2">
-                                  <span className="text-gray-500 w-4">{i + 1}.</span>
-                                  <span className="text-gray-300 font-medium">{cat.category}</span>
-                                  <span className="text-gray-500">{cat.total} tx</span>
+                                  <span className="text-slate-500 w-4">{i + 1}.</span>
+                                  <span className="text-slate-300 font-medium">{cat.category}</span>
+                                  <span className="text-slate-500">{cat.total} tx</span>
                                 </div>
                                 <span className={`font-bold ${textColor}`}>{cat.fraudRate}% fraud</span>
                               </div>
-                              <div className="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                              <div className="w-full h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                                 <div className={`h-full rounded-full ${barColor}`} style={{ width: `${cat.fraudRate}%` }} />
                               </div>
                             </div>
@@ -183,10 +183,10 @@ export default function FraudHeatmap() {
               </div>
 
               {/* 24-hour fraud rate chart */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-sm text-gray-300 flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-blue-400" /> Fraud Rate by Hour of Day
+                  <CardTitle className="text-sm text-slate-300 flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-cyan-400" /> Fraud Rate by Hour of Day
                     {peakWindow.avgRate > 0 && (
                       <span className="ml-auto text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full">
                         Peak: {String(peakWindow.startHour).padStart(2, "0")}:00–{String(peakWindow.endHour ?? 0).padStart(2, "0")}:59
@@ -196,7 +196,7 @@ export default function FraudHeatmap() {
                 </CardHeader>
                 <CardContent>
                   {transactions.length === 0 ? (
-                    <p className="text-gray-500 text-sm py-6 text-center">No transactions yet.</p>
+                    <p className="text-slate-500 text-sm py-6 text-center">No transactions yet.</p>
                   ) : (
                     <>
                       <ResponsiveContainer width="100%" height={220}>
@@ -218,7 +218,7 @@ export default function FraudHeatmap() {
                           </Bar>
                         </BarChart>
                       </ResponsiveContainer>
-                      <p className="text-xs text-gray-600 mt-1 text-center">
+                      <p className="text-xs text-slate-600 mt-1 text-center">
                         Green = low fraud rate · Amber = moderate · Red = high fraud rate
                       </p>
                     </>

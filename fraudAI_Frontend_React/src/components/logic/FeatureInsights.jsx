@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
@@ -26,7 +26,7 @@ const IMP_COLOR = (imp) =>
 const VERDICT_STYLE = {
   FRAUD:      "text-red-400 bg-red-400/10 border-red-500/30",
   LEGITIMATE: "text-green-400 bg-green-400/10 border-green-500/30",
-  UNKNOWN:    "text-gray-400 bg-gray-400/10 border-gray-500/30",
+  UNKNOWN:    "text-slate-400 bg-gray-400/10 border-gray-500/30",
 };
 
 const RF_FEATURE_NAMES = [
@@ -42,7 +42,7 @@ const RF_FEATURE_NAMES = [
   "Geo-Location Flags_unusual",
 ];
 
-function SectionHeader({ icon: Icon, title, color = "text-blue-400", badge }) {
+function SectionHeader({ icon: Icon, title, color = "text-cyan-400", badge }) {
   return (
     <CardTitle className={`text-base ${color} flex items-center gap-2`}>
       <Icon className="h-4 w-4" /> {title}
@@ -136,8 +136,8 @@ export default function FeatureInsights() {
   })) || [];
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -149,15 +149,15 @@ export default function FeatureInsights() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                className="text-2xl font-bold text-blue-400 flex items-center gap-2">
+                className="text-2xl font-bold text-cyan-400 flex items-center gap-2">
                 <Brain className="h-6 w-6" /> Feature Insights
               </motion.h1>
-              <p className="text-sm text-gray-500 mt-0.5">
+              <p className="text-sm text-slate-500 mt-0.5">
                 RF model interpretability · Smart threshold advisor · Transaction similarity search
               </p>
             </div>
             <Button onClick={loadData} disabled={loading} variant="outline" size="sm"
-              className="border-gray-600 text-gray-300 hover:bg-gray-700 gap-2">
+              className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07] gap-2">
               <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
               Refresh
             </Button>
@@ -187,10 +187,10 @@ export default function FeatureInsights() {
           {importance?.insight && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
               className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 mb-6 flex items-start gap-3">
-              <Sparkles className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+              <Sparkles className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-semibold text-blue-400 mb-1">AI Model Insight</p>
-                <p className="text-sm text-gray-300">{importance.insight}</p>
+                <p className="text-xs font-semibold text-cyan-400 mb-1">AI Model Insight</p>
+                <p className="text-sm text-slate-300">{importance.insight}</p>
               </div>
             </motion.div>
           )}
@@ -198,18 +198,18 @@ export default function FeatureInsights() {
           <div className="grid md:grid-cols-2 gap-6 mb-6">
 
             {/* ── Feature Importance Chart ── */}
-            <Card className="bg-gray-800 border-gray-700">
+            <Card className="bg-slate-900/80 border-white/[0.07]">
               <CardHeader className="pb-2">
                 <SectionHeader icon={BarChart3} title="RF Feature Importance"
-                  color="text-blue-400" badge={importance ? `${importance.total_features} features` : ""} />
+                  color="text-cyan-400" badge={importance ? `${importance.total_features} features` : ""} />
               </CardHeader>
               <CardContent className="pt-0">
                 {loading ? (
                   <div className="flex items-center justify-center h-40">
-                    <RefreshCw className="h-5 w-5 animate-spin text-blue-400" />
+                    <RefreshCw className="h-5 w-5 animate-spin text-cyan-400" />
                   </div>
                 ) : !importance ? (
-                  <p className="text-gray-500 text-sm">Feature data unavailable.</p>
+                  <p className="text-slate-500 text-sm">Feature data unavailable.</p>
                 ) : (
                   <>
                     <ResponsiveContainer width="100%" height={240}>
@@ -229,7 +229,7 @@ export default function FeatureInsights() {
                         </Bar>
                       </BarChart>
                     </ResponsiveContainer>
-                    <p className="text-xs text-gray-600 mt-1 text-center">
+                    <p className="text-xs text-slate-600 mt-1 text-center">
                       Color: red = high influence, green = low influence
                     </p>
                   </>
@@ -238,13 +238,13 @@ export default function FeatureInsights() {
             </Card>
 
             {/* ── Top Features Table ── */}
-            <Card className="bg-gray-800 border-gray-700">
+            <Card className="bg-slate-900/80 border-white/[0.07]">
               <CardHeader className="pb-2">
                 <SectionHeader icon={Award} title="Top Fraud Predictors" color="text-yellow-400" />
               </CardHeader>
               <CardContent className="pt-0">
                 {!importance ? (
-                  <p className="text-gray-500 text-sm">No data.</p>
+                  <p className="text-slate-500 text-sm">No data.</p>
                 ) : (
                   <>
                     <div className="space-y-2">
@@ -256,28 +256,28 @@ export default function FeatureInsights() {
                             animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
                             <div className="flex items-center justify-between text-xs mb-0.5">
                               <div className="flex items-center gap-1.5">
-                                <span className="text-gray-500 w-4 text-right">{f.rank}.</span>
-                                <span className="text-gray-300 truncate max-w-[160px]" title={f.feature}>
+                                <span className="text-slate-500 w-4 text-right">{f.rank}.</span>
+                                <span className="text-slate-300 truncate max-w-[160px]" title={f.feature}>
                                   {f.feature}
                                 </span>
                               </div>
                               <div className="flex items-center gap-2 shrink-0">
                                 {f.correlation_with_fraud !== undefined && (
-                                  <span className={`text-xs font-mono ${f.correlation_with_fraud > 0 ? "text-red-400" : "text-blue-400"}`}>
+                                  <span className={`text-xs font-mono ${f.correlation_with_fraud > 0 ? "text-red-400" : "text-cyan-400"}`}>
                                     ρ{f.correlation_with_fraud > 0 ? "+" : ""}{f.correlation_with_fraud}
                                   </span>
                                 )}
                                 <span className="font-mono" style={{ color }}>{f.importance_pct}%</span>
                               </div>
                             </div>
-                            <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                            <div className="h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                               <motion.div className="h-full rounded-full"
                                 style={{ background: color, width: `${barW}%` }}
                                 initial={{ width: 0 }} animate={{ width: `${barW}%` }}
                                 transition={{ delay: i * 0.04 + 0.1, duration: 0.4 }} />
                             </div>
                             {f.fraud_mean !== undefined && f.legit_mean !== undefined && (
-                              <div className="flex justify-between text-xs text-gray-600 mt-0.5">
+                              <div className="flex justify-between text-xs text-slate-600 mt-0.5">
                                 <span>Fraud avg: <span className="text-red-400">{f.fraud_mean}</span></span>
                                 <span>Legit avg: <span className="text-green-400">{f.legit_mean}</span></span>
                               </div>
@@ -287,7 +287,7 @@ export default function FeatureInsights() {
                       })}
                     </div>
                     <button onClick={() => setShowAll(p => !p)}
-                      className="mt-3 text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                      className="mt-3 text-xs text-cyan-400 hover:text-blue-300 flex items-center gap-1">
                       {showAll ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                       {showAll ? "Show less" : `Show all ${importance.total_features} features`}
                     </button>
@@ -298,11 +298,11 @@ export default function FeatureInsights() {
           </div>
 
           {/* ── Smart Threshold Advisor ── */}
-          <Card className="bg-gray-800 border-gray-700 mb-6">
+          <Card className="bg-slate-900/80 border-white/[0.07] mb-6">
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <SectionHeader icon={Target} title="Smart Threshold Advisor" color="text-green-400" />
-                <button onClick={() => setThreshExpanded(p => !p)} className="text-gray-500 hover:text-gray-300">
+                <button onClick={() => setThreshExpanded(p => !p)} className="text-slate-500 hover:text-slate-300">
                   {threshExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                 </button>
               </div>
@@ -312,19 +312,19 @@ export default function FeatureInsights() {
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}>
                   <CardContent className="pt-0">
                     {!threshold ? (
-                      <p className="text-gray-500 text-sm">Upload a dataset to enable threshold analysis.</p>
+                      <p className="text-slate-500 text-sm">Upload a dataset to enable threshold analysis.</p>
                     ) : (
                       <>
                         {/* Insight */}
                         <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 mb-4 flex items-start gap-2">
                           <Lightbulb className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <p className="text-sm text-gray-300">{threshold.insight}</p>
+                          <p className="text-sm text-slate-300">{threshold.insight}</p>
                         </div>
 
                         {/* Score histogram */}
                         {threshold.score_histogram?.length > 0 && (
                           <div className="mb-4">
-                            <p className="text-xs text-gray-500 mb-2">Anomaly Score Distribution</p>
+                            <p className="text-xs text-slate-500 mb-2">Anomaly Score Distribution</p>
                             <ResponsiveContainer width="100%" height={100}>
                               <BarChart data={threshold.score_histogram} margin={{ left: 0, right: 0, top: 0, bottom: 0 }}>
                                 <Bar dataKey="count" radius={[2, 2, 0, 0]}>
@@ -338,7 +338,7 @@ export default function FeatureInsights() {
                                 />
                               </BarChart>
                             </ResponsiveContainer>
-                            <div className="flex justify-between text-xs text-gray-600 mt-1">
+                            <div className="flex justify-between text-xs text-slate-600 mt-1">
                               <span>← Low anomaly score (normal)</span>
                               <span>High anomaly score (fraud) →</span>
                             </div>
@@ -351,7 +351,7 @@ export default function FeatureInsights() {
                             <motion.div key={i} initial={{ opacity: 0, y: 8 }}
                               animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
                               className={`rounded-xl p-3 border cursor-pointer transition-all hover:border-blue-500/50 ${
-                                i === 1 ? "border-blue-500/40 bg-blue-500/10" : "border-gray-700 bg-gray-900"
+                                i === 1 ? "border-blue-500/40 bg-blue-500/10" : "border-white/[0.07] bg-gray-900"
                               }`}
                               onClick={() => navigate("/run-detection")}>
                               {i === 1 && (
@@ -360,10 +360,10 @@ export default function FeatureInsights() {
                                 </span>
                               )}
                               <p className="text-sm font-semibold text-white">{rec.label}</p>
-                              <p className="text-xl font-bold text-blue-400 my-1">{rec.contamination}</p>
-                              <p className="text-xs text-gray-500 mb-1">~{rec.expected_fraud.toLocaleString()} flagged</p>
-                              <p className="text-xs text-gray-400 leading-tight">{rec.description}</p>
-                              <div className="mt-2 flex items-center gap-1 text-xs text-blue-400">
+                              <p className="text-xl font-bold text-cyan-400 my-1">{rec.contamination}</p>
+                              <p className="text-xs text-slate-500 mb-1">~{rec.expected_fraud.toLocaleString()} flagged</p>
+                              <p className="text-xs text-slate-400 leading-tight">{rec.description}</p>
+                              <div className="mt-2 flex items-center gap-1 text-xs text-cyan-400">
                                 <ArrowRight className="h-3 w-3" /> Apply in Run Detection
                               </div>
                             </motion.div>
@@ -372,11 +372,11 @@ export default function FeatureInsights() {
 
                         {/* Stats row */}
                         {threshold.score_percentiles && (
-                          <div className="flex gap-4 mt-4 text-xs text-gray-500">
+                          <div className="flex gap-4 mt-4 text-xs text-slate-500">
                             <span>p90 score: <span className="text-yellow-400 font-mono">{threshold.score_percentiles.p90}</span></span>
                             <span>p95 score: <span className="text-orange-400 font-mono">{threshold.score_percentiles.p95}</span></span>
                             <span>p99 score: <span className="text-red-400 font-mono">{threshold.score_percentiles.p99}</span></span>
-                            <span>Method: <span className="text-gray-300">{threshold.method}</span></span>
+                            <span>Method: <span className="text-slate-300">{threshold.method}</span></span>
                           </div>
                         )}
                       </>
@@ -388,17 +388,17 @@ export default function FeatureInsights() {
           </Card>
 
           {/* ── Similarity Search ── */}
-          <Card className="bg-gray-800 border-gray-700 mb-6">
+          <Card className="bg-slate-900/80 border-white/[0.07] mb-6">
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <SectionHeader icon={Search} title="Transaction Similarity Search" color="text-purple-400" />
                 <button onClick={() => setSimExpanded(p => !p)}
-                  className="text-xs text-gray-500 hover:text-gray-300 flex items-center gap-1">
+                  className="text-xs text-slate-500 hover:text-slate-300 flex items-center gap-1">
                   {simExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                   {simExpanded ? "Collapse" : "Expand"}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Enter a transaction's feature values — AI will find the most similar transactions in your dataset.
               </p>
             </CardHeader>
@@ -407,8 +407,8 @@ export default function FeatureInsights() {
                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }}>
                   <CardContent className="pt-0">
                     {/* Top toolbar: presets + K selector */}
-                    <div className="flex flex-wrap items-center gap-2 mb-4 p-3 bg-gray-900/60 rounded-xl border border-gray-700">
-                      <span className="text-xs text-gray-500 mr-1">Quick fill:</span>
+                    <div className="flex flex-wrap items-center gap-2 mb-4 p-3 bg-gray-900/60 rounded-xl border border-white/[0.07]">
+                      <span className="text-xs text-slate-500 mr-1">Quick fill:</span>
                       <button
                         onClick={() => { setSimFeatures(SUSPICIOUS_VALUES.map(String)); setSimResult(null); }}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-medium hover:bg-red-500/20 transition-all">
@@ -421,16 +421,16 @@ export default function FeatureInsights() {
                       </button>
                       <button
                         onClick={() => { setSimFeatures(Array(22).fill("")); setSimResult(null); }}
-                        className="px-3 py-1.5 rounded-lg border border-gray-700 text-gray-500 text-xs hover:border-gray-600 hover:text-gray-400 transition-all">
+                        className="px-3 py-1.5 rounded-lg border border-white/[0.07] text-slate-500 text-xs hover:border-white/[0.09] hover:text-slate-400 transition-all">
                         Clear All
                       </button>
                       <div className="flex items-center gap-2 ml-auto">
-                        <span className="text-xs text-gray-500">Find top</span>
+                        <span className="text-xs text-slate-500">Find top</span>
                         {[3, 5, 10].map((v) => (
                           <button key={v} onClick={() => setSimK(v)}
                             className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-all ${
                               simK === v ? "bg-purple-500/20 border-purple-500/40 text-purple-300"
-                                         : "border-gray-700 text-gray-500 hover:border-gray-600"
+                                         : "border-white/[0.07] text-slate-500 hover:border-white/[0.09]"
                             }`}>
                             {v}
                           </button>
@@ -439,8 +439,8 @@ export default function FeatureInsights() {
                     </div>
 
                     {/* Hint */}
-                    <p className="text-xs text-gray-600 mb-3 flex items-center gap-1.5">
-                      <Info className="h-3.5 w-3.5 text-gray-600" />
+                    <p className="text-xs text-slate-600 mb-3 flex items-center gap-1.5">
+                      <Info className="h-3.5 w-3.5 text-slate-600" />
                       Fields left blank default to 0. Use "Suspicious Sample" or "Normal Sample" to pre-fill typical values.
                     </p>
 
@@ -450,7 +450,7 @@ export default function FeatureInsights() {
                         const isFilled = simFeatures[i] !== "" && simFeatures[i] !== undefined;
                         return (
                           <div key={i}>
-                            <label className="text-xs text-gray-500 block mb-0.5 truncate" title={name}>{name}</label>
+                            <label className="text-xs text-slate-500 block mb-0.5 truncate" title={name}>{name}</label>
                             <input type="number" step="any"
                               value={simFeatures[i]}
                               onChange={(e) => {
@@ -459,8 +459,8 @@ export default function FeatureInsights() {
                                 setSimFeatures(next);
                               }}
                               placeholder="—"
-                              className={`w-full bg-gray-900 border rounded-md px-2 py-1 text-xs text-gray-200 focus:outline-none transition-colors ${
-                                isFilled ? "border-purple-500/50 focus:border-purple-400" : "border-gray-700 focus:border-purple-500"
+                              className={`w-full bg-gray-900 border rounded-md px-2 py-1 text-xs text-slate-200 focus:outline-none transition-colors ${
+                                isFilled ? "border-purple-500/50 focus:border-purple-400" : "border-white/[0.07] focus:border-purple-500"
                               }`} />
                           </div>
                         );
@@ -499,11 +499,11 @@ export default function FeatureInsights() {
                             {simResult.similar_transactions?.map((tx, i) => (
                               <motion.div key={i} initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
-                                className="bg-gray-900 rounded-xl border border-gray-700 p-3">
+                                className="bg-gray-900 rounded-xl border border-white/[0.07] p-3">
                                 <div className="flex items-center justify-between mb-2">
                                   <div className="flex items-center gap-2">
-                                    <span className="text-xs text-gray-500">#{i + 1} · Row {tx.dataset_index}</span>
-                                    <div className="h-1.5 w-16 bg-gray-700 rounded-full overflow-hidden">
+                                    <span className="text-xs text-slate-500">#{i + 1} · Row {tx.dataset_index}</span>
+                                    <div className="h-1.5 w-16 bg-white/[0.07] rounded-full overflow-hidden">
                                       <div className="h-full bg-purple-500 rounded-full"
                                         style={{ width: `${tx.similarity_pct}%` }} />
                                     </div>
@@ -511,7 +511,7 @@ export default function FeatureInsights() {
                                   </div>
                                   <div className="flex items-center gap-2">
                                     {tx.fraud_probability !== null && tx.fraud_probability !== undefined && (
-                                      <span className="text-xs text-gray-400 font-mono">{tx.fraud_probability}%</span>
+                                      <span className="text-xs text-slate-400 font-mono">{tx.fraud_probability}%</span>
                                     )}
                                     <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${VERDICT_STYLE[tx.verdict]}`}>
                                       {tx.verdict}
@@ -520,8 +520,8 @@ export default function FeatureInsights() {
                                 </div>
                                 <div className="flex flex-wrap gap-x-4 gap-y-0.5">
                                   {Object.entries(tx.feature_values).map(([k, v]) => (
-                                    <span key={k} className="text-xs text-gray-500">
-                                      <span className="text-gray-400">{k.length > 16 ? k.slice(0, 14) + "…" : k}:</span> {v}
+                                    <span key={k} className="text-xs text-slate-500">
+                                      <span className="text-slate-400">{k.length > 16 ? k.slice(0, 14) + "…" : k}:</span> {v}
                                     </span>
                                   ))}
                                 </div>
@@ -538,14 +538,14 @@ export default function FeatureInsights() {
           </Card>
 
           {/* ── Quick navigation ── */}
-          <Card className="bg-gray-800 border-gray-700">
+          <Card className="bg-slate-900/80 border-white/[0.07]">
             <CardHeader className="pb-2">
-              <SectionHeader icon={ArrowRight} title="Continue" color="text-gray-400" />
+              <SectionHeader icon={ArrowRight} title="Continue" color="text-slate-400" />
             </CardHeader>
             <CardContent className="pt-0">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {[
-                  { label: "Run Detection",     path: "/run-detection",     color: "border-blue-500/30 text-blue-400" },
+                  { label: "Run Detection",     path: "/run-detection",     color: "border-blue-500/30 text-cyan-400" },
                   { label: "Detection Results", path: "/detection-results", color: "border-purple-500/30 text-purple-400" },
                   { label: "Check Transaction", path: "/check-transaction", color: "border-yellow-500/30 text-yellow-400" },
                   { label: "AI Hub",            path: "/ai-hub",            color: "border-cyan-500/30 text-cyan-400" },

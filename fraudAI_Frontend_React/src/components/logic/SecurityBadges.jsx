@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { auth, db } from "./firebase";
 import {
   collection,
@@ -449,8 +449,8 @@ export default function SecurityBadges() {
   const totalXP = BADGE_DEFS.reduce((s, b) => s + b.xp, 0);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -470,7 +470,7 @@ export default function SecurityBadges() {
                 <h1 className="text-2xl font-bold text-white">
                   Security Achievements
                 </h1>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Earn badges by practicing safe payment habits
                 </p>
               </div>
@@ -479,7 +479,7 @@ export default function SecurityBadges() {
               variant="outline"
               size="sm"
               onClick={() => user && fetchData(user)}
-              className="border-gray-700 text-gray-300 hover:bg-gray-800"
+              className="border-white/[0.07] text-slate-300 hover:bg-white/[0.04]"
             >
               <RefreshCw size={14} className="mr-1" /> Refresh
             </Button>
@@ -489,7 +489,7 @@ export default function SecurityBadges() {
             <div className="flex items-center justify-center h-64">
               <div className="flex flex-col items-center gap-3">
                 <div className="w-10 h-10 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin" />
-                <p className="text-gray-400">Loading your achievements...</p>
+                <p className="text-slate-400">Loading your achievements...</p>
               </div>
             </div>
           ) : (
@@ -514,7 +514,7 @@ export default function SecurityBadges() {
                           <p className="text-orange-300 font-bold text-lg">
                             {streak}-day safe payment streak!
                           </p>
-                          <p className="text-gray-400 text-sm">
+                          <p className="text-slate-400 text-sm">
                             Next milestone: {nextMilestone} days
                           </p>
                           <div className="mt-2 w-48 h-2 bg-orange-900/50 rounded-full overflow-hidden">
@@ -530,17 +530,17 @@ export default function SecurityBadges() {
                           <span className="text-2xl font-extrabold text-yellow-300">
                             {xp}
                           </span>
-                          <span className="text-gray-400 text-sm">/ {totalXP} XP</span>
+                          <span className="text-slate-400 text-sm">/ {totalXP} XP</span>
                         </div>
                         <Badge className="bg-yellow-500/20 text-yellow-300 border border-yellow-500/40 text-sm px-3 py-1">
                           {level.name}
                         </Badge>
                         {nextLevel !== level && (
-                          <p className="text-gray-500 text-xs">
+                          <p className="text-slate-500 text-xs">
                             {xpToNext} XP to {nextLevel.name}
                           </p>
                         )}
-                        <div className="w-40 mt-1 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                        <div className="w-40 mt-1 h-1.5 bg-white/[0.07] rounded-full overflow-hidden">
                           <div className="h-full bg-yellow-400 rounded-full transition-all duration-500" style={{ width: `${levelProgress}%` }} />
                         </div>
                       </div>
@@ -558,7 +558,7 @@ export default function SecurityBadges() {
                 <h2 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                   <Award size={18} className="text-purple-400" />
                   Badges
-                  <span className="text-gray-500 text-sm font-normal ml-1">
+                  <span className="text-slate-500 text-sm font-normal ml-1">
                     ({unlockedIds.size}/{BADGE_DEFS.length} unlocked)
                   </span>
                 </h2>
@@ -576,12 +576,12 @@ export default function SecurityBadges() {
                         className={`relative rounded-xl border p-4 flex flex-col items-center text-center transition-all ${
                           isUnlocked
                             ? "bg-gray-800 border-yellow-500/40 shadow-lg shadow-yellow-500/10 ring-1 ring-yellow-500/20"
-                            : "bg-gray-800/50 border-gray-700/50 opacity-60"
+                            : "bg-slate-900/60 border-white/[0.06]/50 opacity-60"
                         }`}
                       >
                         {!isUnlocked && (
                           <div className="absolute inset-0 flex items-center justify-center bg-gray-900/60 rounded-xl z-10">
-                            <Lock size={20} className="text-gray-500" />
+                            <Lock size={20} className="text-slate-500" />
                           </div>
                         )}
                         <span
@@ -593,12 +593,12 @@ export default function SecurityBadges() {
                         </span>
                         <p
                           className={`font-semibold text-sm ${
-                            isUnlocked ? "text-white" : "text-gray-500"
+                            isUnlocked ? "text-white" : "text-slate-500"
                           }`}
                         >
                           {badge.name}
                         </p>
-                        <p className="text-gray-500 text-xs mt-1 leading-snug">
+                        <p className="text-slate-500 text-xs mt-1 leading-snug">
                           {badge.description}
                         </p>
                         <div className="flex items-center gap-1 mt-2">
@@ -624,10 +624,10 @@ export default function SecurityBadges() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
-                      <Users size={18} className="text-blue-400" />
+                      <Users size={18} className="text-cyan-400" />
                       Top AegisAI Users This Month
                     </CardTitle>
                   </CardHeader>
@@ -639,7 +639,7 @@ export default function SecurityBadges() {
                           className={`flex items-center gap-3 p-3 rounded-lg ${
                             i === 0
                               ? "bg-yellow-500/10 border border-yellow-500/30"
-                              : "bg-gray-700/50"
+                              : "bg-white/[0.04]"
                           }`}
                         >
                           <span
@@ -647,8 +647,8 @@ export default function SecurityBadges() {
                               i === 0
                                 ? "text-yellow-400"
                                 : i === 1
-                                ? "text-gray-300"
-                                : "text-gray-500"
+                                ? "text-slate-300"
+                                : "text-slate-500"
                             }`}
                           >
                             #{i + 1}
@@ -657,7 +657,7 @@ export default function SecurityBadges() {
                             <p className="text-white text-sm font-medium">
                               {u.name}
                             </p>
-                            <p className="text-gray-500 text-xs">{u.level}</p>
+                            <p className="text-slate-500 text-xs">{u.level}</p>
                           </div>
                           <div className="flex items-center gap-1">
                             <Star size={12} className="text-yellow-400" />
@@ -678,7 +678,7 @@ export default function SecurityBadges() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25 }}
               >
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <Activity size={18} className="text-green-400" />
@@ -687,7 +687,7 @@ export default function SecurityBadges() {
                   </CardHeader>
                   <CardContent>
                     {recentActivity.length === 0 ? (
-                      <p className="text-gray-500 text-sm">
+                      <p className="text-slate-500 text-sm">
                         No recent badge activity. Keep using AegisAI to earn
                         your first badge!
                       </p>
@@ -696,13 +696,13 @@ export default function SecurityBadges() {
                         {recentActivity.map((a, i) => (
                           <div
                             key={i}
-                            className="flex items-start gap-2 p-2.5 bg-gray-700/50 rounded-lg"
+                            className="flex items-start gap-2 p-2.5 bg-white/[0.04] rounded-lg"
                           >
                             <Zap
                               size={14}
                               className="text-purple-400 mt-0.5 shrink-0"
                             />
-                            <p className="text-gray-300 text-sm">{a}</p>
+                            <p className="text-slate-300 text-sm">{a}</p>
                           </div>
                         ))}
                       </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -104,26 +104,26 @@ export default function RuleEngine() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <Shield className="h-6 w-6" /> Rule Engine
             </h1>
-            <p className="text-gray-400 text-sm mb-6">Define custom fraud detection rules and evaluate them against feature values.</p>
+            <p className="text-slate-400 text-sm mb-6">Define custom fraud detection rules and evaluate them against feature values.</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left: rules builder */}
             <div className="lg:col-span-2 space-y-4">
               {/* Feature values toggle */}
-              <Card className="bg-gray-800 border-gray-700">
-                <button className="w-full flex items-center justify-between p-4 text-sm text-gray-300 hover:text-white"
+              <Card className="bg-slate-900/80 border-white/[0.07]">
+                <button className="w-full flex items-center justify-between p-4 text-sm text-slate-300 hover:text-white"
                   onClick={() => setShowFeatures(f => !f)}>
                   <span className="font-medium">Transaction Feature Values</span>
                   {showFeatures ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -135,10 +135,10 @@ export default function RuleEngine() {
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                           {RF_FEATURES.map((f) => (
                             <div key={f}>
-                              <label className="text-xs text-gray-500 block mb-0.5 truncate">{f}</label>
+                              <label className="text-xs text-slate-500 block mb-0.5 truncate">{f}</label>
                               <Input type="number" value={features[f]} step="any"
                                 onChange={(e) => setFeatures((fv) => ({ ...fv, [f]: parseFloat(e.target.value) || 0 }))}
-                                className="bg-gray-700 border-gray-600 text-white text-xs h-7 px-2" />
+                                className="bg-white/[0.06] border-white/[0.08] text-white text-xs h-7 px-2" />
                             </div>
                           ))}
                         </div>
@@ -150,16 +150,16 @@ export default function RuleEngine() {
 
               {/* Rules */}
               {rules.map((rule) => (
-                <Card key={rule.id} className="bg-gray-800 border-gray-700">
+                <Card key={rule.id} className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <div className="flex items-center gap-2">
                       <Input value={rule.name}
                         onChange={(e) => updateRule(rule.id, "name", e.target.value)}
-                        className="bg-gray-700 border-gray-600 text-white text-sm font-medium flex-1 h-7 px-2" />
+                        className="bg-white/[0.06] border-white/[0.08] text-white text-sm font-medium flex-1 h-7 px-2" />
                       <div className="flex gap-1">
                         {["AND", "OR"].map((c) => (
                           <button key={c} onClick={() => updateRule(rule.id, "condition", c)}
-                            className={`text-xs px-2 py-1 rounded border transition-colors ${rule.condition === c ? "bg-blue-600 border-blue-500 text-white" : "border-gray-600 text-gray-400"}`}>
+                            className={`text-xs px-2 py-1 rounded border transition-colors ${rule.condition === c ? "bg-blue-600 border-blue-500 text-white" : "border-white/[0.09] text-slate-400"}`}>
                             {c}
                           </button>
                         ))}
@@ -173,36 +173,36 @@ export default function RuleEngine() {
                     {rule.checks.map((ch, ci) => (
                       <div key={ci} className="flex items-center gap-1.5">
                         <select value={ch.feature} onChange={(e) => updateCheck(rule.id, ci, "feature", e.target.value)}
-                          className="flex-1 bg-gray-700 border border-gray-600 text-white text-xs rounded px-1.5 py-1">
+                          className="flex-1 bg-white/[0.07] border border-white/[0.09] text-white text-xs rounded px-1.5 py-1">
                           {RF_FEATURES.map((f) => <option key={f} value={f}>{f}</option>)}
                         </select>
                         <select value={ch.op} onChange={(e) => updateCheck(rule.id, ci, "op", e.target.value)}
-                          className="w-12 bg-gray-700 border border-gray-600 text-white text-xs rounded px-1 py-1 text-center">
+                          className="w-12 bg-white/[0.07] border border-white/[0.09] text-white text-xs rounded px-1 py-1 text-center">
                           {OPS.map((o) => <option key={o} value={o}>{OP_LABELS[o]}</option>)}
                         </select>
                         <Input type="number" value={ch.value}
                           onChange={(e) => updateCheck(rule.id, ci, "value", e.target.value)}
-                          className="w-20 bg-gray-700 border-gray-600 text-white text-xs h-7 px-2" />
+                          className="w-20 bg-white/[0.06] border-white/[0.08] text-white text-xs h-7 px-2" />
                         <button onClick={() => removeCheck(rule.id, ci)} disabled={rule.checks.length <= 1}
-                          className="text-gray-500 hover:text-red-400 disabled:opacity-30">
+                          className="text-slate-500 hover:text-red-400 disabled:opacity-30">
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
                       </div>
                     ))}
                     <div className="flex items-center gap-2 pt-1">
-                      <button onClick={() => addCheck(rule.id)} className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300">
+                      <button onClick={() => addCheck(rule.id)} className="flex items-center gap-1 text-xs text-cyan-400 hover:text-blue-300">
                         <Plus className="h-3.5 w-3.5" /> Add check
                       </button>
                       <div className="ml-auto flex gap-1.5">
                         {["LOW", "MEDIUM", "HIGH"].map((s) => (
                           <button key={s} onClick={() => updateRule(rule.id, "severity", s)}
-                            className={`text-xs px-2 py-0.5 rounded border transition-colors ${rule.severity === s ? (s === "HIGH" ? "bg-red-600 border-red-500 text-white" : s === "MEDIUM" ? "bg-yellow-600 border-yellow-500 text-white" : "bg-green-600 border-green-500 text-white") : "border-gray-600 text-gray-400"}`}>
+                            className={`text-xs px-2 py-0.5 rounded border transition-colors ${rule.severity === s ? (s === "HIGH" ? "bg-red-600 border-red-500 text-white" : s === "MEDIUM" ? "bg-yellow-600 border-yellow-500 text-white" : "bg-green-600 border-green-500 text-white") : "border-white/[0.09] text-slate-400"}`}>
                             {s}
                           </button>
                         ))}
                         {["BLOCK", "REVIEW", "APPROVE"].map((a) => (
                           <button key={a} onClick={() => updateRule(rule.id, "action", a)}
-                            className={`text-xs px-2 py-0.5 rounded border transition-colors ${rule.action === a ? (a === "BLOCK" ? "bg-red-600 border-red-500 text-white" : a === "REVIEW" ? "bg-yellow-600 border-yellow-500 text-white" : "bg-green-600 border-green-500 text-white") : "border-gray-600 text-gray-400"}`}>
+                            className={`text-xs px-2 py-0.5 rounded border transition-colors ${rule.action === a ? (a === "BLOCK" ? "bg-red-600 border-red-500 text-white" : a === "REVIEW" ? "bg-yellow-600 border-yellow-500 text-white" : "bg-green-600 border-green-500 text-white") : "border-white/[0.09] text-slate-400"}`}>
                             {a}
                           </button>
                         ))}
@@ -213,7 +213,7 @@ export default function RuleEngine() {
               ))}
 
               <div className="flex gap-3">
-                <Button onClick={addRule} variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                <Button onClick={addRule} variant="outline" size="sm" className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07]">
                   <Plus className="h-4 w-4 mr-1" /> Add Rule
                 </Button>
                 <Button onClick={run} disabled={loading} className="bg-blue-600 hover:bg-blue-700 flex-1">
@@ -231,10 +231,10 @@ export default function RuleEngine() {
             {/* Right: results */}
             <div className="space-y-4">
               {!result && (
-                <Card className="bg-gray-800/50 border-gray-700 border-dashed">
+                <Card className="bg-slate-900/60 border-white/[0.06] border-dashed">
                   <CardContent className="pt-10 pb-10 text-center">
-                    <Shield className="h-8 w-8 text-gray-600 mx-auto mb-2" />
-                    <p className="text-gray-500 text-sm">Build rules and click Run to see results.</p>
+                    <Shield className="h-8 w-8 text-slate-600 mx-auto mb-2" />
+                    <p className="text-slate-500 text-sm">Build rules and click Run to see results.</p>
                   </CardContent>
                 </Card>
               )}
@@ -247,30 +247,30 @@ export default function RuleEngine() {
                     "border-green-500/30 bg-green-500/10"
                   }`}>
                     <CardContent className="pt-4">
-                      <p className="text-xs text-gray-400 mb-1">Final Decision</p>
+                      <p className="text-xs text-slate-400 mb-1">Final Decision</p>
                       <p className={`text-2xl font-bold ${ACTION_STYLE[result.final_action]?.split(" ")[1]}`}>
                         {result.final_action}
                       </p>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-xs text-slate-400 mt-1">
                         {result.triggered_count}/{result.rules_evaluated} rules triggered · {result.final_severity} severity
                       </p>
-                      <p className="text-xs text-gray-500 mt-1">Source: {result.decision_source}</p>
+                      <p className="text-xs text-slate-500 mt-1">Source: {result.decision_source}</p>
                     </CardContent>
                   </Card>
 
                   {result.triggered_rules?.length > 0 && (
-                    <Card className="bg-gray-800 border-gray-700">
+                    <Card className="bg-slate-900/80 border-white/[0.07]">
                       <CardHeader className="pb-2">
                         <CardTitle className="text-sm text-yellow-400">Triggered Rules</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-2">
                         {result.triggered_rules.map((r, i) => (
-                          <div key={i} className="text-xs bg-gray-700/50 rounded-lg p-3">
+                          <div key={i} className="text-xs bg-white/[0.04] rounded-lg p-3">
                             <div className="flex items-center justify-between mb-1">
                               <span className="font-medium text-white">{r.rule}</span>
                               <span className={`px-2 py-0.5 rounded-full text-xs ${ACTION_STYLE[r.action]}`}>{r.action}</span>
                             </div>
-                            <p className="text-gray-400">{r.checks_passed}/{r.checks_total} checks passed ({r.condition})</p>
+                            <p className="text-slate-400">{r.checks_passed}/{r.checks_total} checks passed ({r.condition})</p>
                           </div>
                         ))}
                       </CardContent>
@@ -278,9 +278,9 @@ export default function RuleEngine() {
                   )}
 
                   {result.ml_verdict && (
-                    <Card className="bg-gray-800 border-gray-700">
+                    <Card className="bg-slate-900/80 border-white/[0.07]">
                       <CardContent className="pt-4">
-                        <p className="text-xs text-gray-400 mb-1">ML Cross-check</p>
+                        <p className="text-xs text-slate-400 mb-1">ML Cross-check</p>
                         <p className={`font-bold ${result.ml_verdict === "FRAUD" ? "text-red-400" : "text-green-400"}`}>
                           {result.ml_verdict} ({(result.ml_fraud_probability * 100).toFixed(1)}%)
                         </p>
@@ -291,7 +291,7 @@ export default function RuleEngine() {
                   {result.summary && (
                     <Card className="bg-blue-500/5 border-blue-500/20">
                       <CardContent className="pt-4">
-                        <p className="text-xs text-gray-400 leading-relaxed">{result.summary}</p>
+                        <p className="text-xs text-slate-400 leading-relaxed">{result.summary}</p>
                       </CardContent>
                     </Card>
                   )}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
@@ -37,20 +37,20 @@ function CorrelationHeatmap({ data, features }) {
           <div style={{ width: cellSize * 1.5 }} />
           {features.map((f) => (
             <div key={f} style={{ width: cellSize, fontSize: 10 }}
-              className="text-gray-400 text-center truncate px-0.5">{f}</div>
+              className="text-slate-400 text-center truncate px-0.5">{f}</div>
           ))}
         </div>
         {features.map((rowFeat) => (
           <div key={rowFeat} className="flex items-center">
             <div style={{ width: cellSize * 1.5, fontSize: 10 }}
-              className="text-gray-400 text-right pr-1 truncate">{rowFeat}</div>
+              className="text-slate-400 text-right pr-1 truncate">{rowFeat}</div>
             {features.map((colFeat) => {
               const cell = data.find((d) => d.x === colFeat && d.y === rowFeat);
               const val = cell ? cell.value : 0;
               return (
                 <div key={colFeat}
                   style={{ width: cellSize, height: cellSize, backgroundColor: getColor(val), fontSize: cellSize > 40 ? 10 : 8 }}
-                  className="flex items-center justify-center text-gray-800 font-semibold border border-gray-900"
+                  className="flex items-center justify-center text-slate-200 font-semibold border border-gray-900"
                   title={`${rowFeat} × ${colFeat}: ${val}`}>
                   {val.toFixed(1)}
                 </div>
@@ -58,7 +58,7 @@ function CorrelationHeatmap({ data, features }) {
             })}
           </div>
         ))}
-        <div className="flex items-center gap-2 mt-2 text-xs text-gray-400">
+        <div className="flex items-center gap-2 mt-2 text-xs text-slate-400">
           <div className="w-4 h-4 rounded" style={{ background: "rgb(40,40,255)" }} /> Strong +
           <div className="w-4 h-4 rounded ml-2" style={{ background: "rgb(220,220,255)" }} /> Weak +
           <div className="w-4 h-4 rounded ml-2" style={{ background: "rgb(220,220,220)" }} /> None
@@ -87,8 +87,8 @@ export default function ExploreData() {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -97,7 +97,7 @@ export default function ExploreData() {
           <MLWorkflowStepper />
           <div className="flex justify-between items-center mb-6">
             <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-              className="text-2xl font-bold text-blue-400">
+              className="text-2xl font-bold text-cyan-400">
               Explore Data
             </motion.h1>
             {data && (
@@ -138,9 +138,9 @@ export default function ExploreData() {
                     color: "yellow",
                   },
                 ].map((s) => (
-                  <Card key={s.label} className="bg-gray-800 border-gray-700">
+                  <Card key={s.label} className="bg-slate-900/80 border-white/[0.07]">
                     <CardContent className="pt-4 pb-3">
-                      <p className="text-xs text-gray-400">{s.label}</p>
+                      <p className="text-xs text-slate-400">{s.label}</p>
                       <p className={`text-2xl font-bold text-${s.color}-400`}>{s.value}</p>
                     </CardContent>
                   </Card>
@@ -152,7 +152,7 @@ export default function ExploreData() {
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
                   <Card className="bg-gray-800 border-blue-500/20">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-sm text-blue-400 flex items-center gap-2">
+                      <CardTitle className="text-sm text-cyan-400 flex items-center gap-2">
                         <Brain className="h-4 w-4" /> AI Dataset Insights
                       </CardTitle>
                     </CardHeader>
@@ -166,7 +166,7 @@ export default function ExploreData() {
                           className="flex items-start gap-2.5 bg-blue-500/8 border border-blue-500/15 rounded-lg p-3"
                         >
                           <Lightbulb className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                          <p className="text-sm text-gray-300 leading-relaxed">{insight}</p>
+                          <p className="text-sm text-slate-300 leading-relaxed">{insight}</p>
                         </motion.div>
                       ))}
                     </CardContent>
@@ -175,9 +175,9 @@ export default function ExploreData() {
               )}
 
               {/* Amount Distribution */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader>
-                  <CardTitle className="text-base text-blue-400">Amount Distribution</CardTitle>
+                  <CardTitle className="text-base text-cyan-400">Amount Distribution</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={250}>
@@ -195,7 +195,7 @@ export default function ExploreData() {
               </Card>
 
               {/* Daily Volume */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardHeader>
                   <CardTitle className="text-base text-green-400">Daily Transaction Volume</CardTitle>
                 </CardHeader>
@@ -216,7 +216,7 @@ export default function ExploreData() {
 
               {/* Correlation heatmap */}
               {data.correlation_features?.length > 1 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader>
                     <CardTitle className="text-base text-purple-400">Feature Correlation Heatmap</CardTitle>
                   </CardHeader>

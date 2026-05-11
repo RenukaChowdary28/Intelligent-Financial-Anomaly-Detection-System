@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import {
@@ -19,7 +19,7 @@ const TYPE_CONFIG = {
   fraud_alert:    { icon: ShieldAlert,   color: "text-red-400",    bg: "bg-red-500/10 border-red-500/30",    label: "Fraud Alert"    },
   budget_warning: { icon: AlertTriangle, color: "text-yellow-400", bg: "bg-yellow-500/10 border-yellow-500/30", label: "Budget Warning" },
   payment:        { icon: CheckCircle2,  color: "text-green-400",  bg: "bg-green-500/10 border-green-500/30",  label: "Payment"        },
-  system:         { icon: Info,          color: "text-blue-400",   bg: "bg-blue-500/10 border-blue-500/30",    label: "System"         },
+  system:         { icon: Info,          color: "text-cyan-400",   bg: "bg-blue-500/10 border-blue-500/30",    label: "System"         },
   split_bill:     { icon: Wallet,        color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/30", label: "Split Bill"    },
   recurring:      { icon: RefreshCw,     color: "text-cyan-400",   bg: "bg-cyan-500/10 border-cyan-500/30",    label: "Recurring"      },
 };
@@ -57,21 +57,21 @@ function NotifCard({ notif, onMarkRead, onDelete }) {
           <span className={`text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-900/50 ${cfg.color}`}>
             {cfg.label}
           </span>
-          <span className="text-xs text-gray-500">{timeAgo(notif.createdAt)}</span>
+          <span className="text-xs text-slate-500">{timeAgo(notif.createdAt)}</span>
         </div>
         <p className="text-sm font-semibold text-white mt-1">{notif.title}</p>
-        <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">{notif.message}</p>
+        <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">{notif.message}</p>
       </div>
       <div className="flex flex-col gap-1 flex-shrink-0">
         {!notif.read && (
           <button onClick={() => onMarkRead(notif.id)}
-            className="p-1.5 rounded-lg hover:bg-white/10 text-gray-400 hover:text-green-400 transition-colors"
+            className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-green-400 transition-colors"
             title="Mark read">
             <CheckCircle2 className="h-3.5 w-3.5" />
           </button>
         )}
         <button onClick={() => onDelete(notif.id)}
-          className="p-1.5 rounded-lg hover:bg-white/10 text-gray-400 hover:text-red-400 transition-colors"
+          className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-red-400 transition-colors"
           title="Delete">
           <Trash2 className="h-3.5 w-3.5" />
         </button>
@@ -177,8 +177,8 @@ export default function NotificationsCenter() {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -189,27 +189,27 @@ export default function NotificationsCenter() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                <Bell className="h-6 w-6 text-blue-400" /> Notifications
+                <Bell className="h-6 w-6 text-cyan-400" /> Notifications
                 {unreadCount > 0 && (
                   <span className="ml-1 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
                     {unreadCount}
                   </span>
                 )}
               </h1>
-              <p className="text-sm text-gray-400 mt-1">
+              <p className="text-sm text-slate-400 mt-1">
                 {unreadCount} unread · {notifications.length} total
               </p>
             </div>
             <div className="flex gap-2">
               {unreadCount > 0 && (
                 <Button onClick={markAllRead} size="sm" variant="outline"
-                  className="border-gray-600 text-gray-300 hover:bg-gray-700 text-xs gap-1">
+                  className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07] text-xs gap-1">
                   <CheckCheck className="h-3.5 w-3.5" /> Mark all read
                 </Button>
               )}
               {notifications.length > 0 && (
                 <Button onClick={clearAll} size="sm" variant="outline"
-                  className="border-gray-600 text-red-400 hover:bg-red-500/10 text-xs gap-1">
+                  className="border-white/[0.09] text-red-400 hover:bg-red-500/10 text-xs gap-1">
                   <Trash2 className="h-3.5 w-3.5" /> Clear all
                 </Button>
               )}
@@ -223,7 +223,7 @@ export default function NotificationsCenter() {
                 className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
                   filter === f
                     ? "bg-blue-600 border-blue-500 text-white"
-                    : "border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white"
+                    : "border-white/[0.07] text-slate-400 hover:border-gray-500 hover:text-white"
                 }`}>
                 <Filter className="inline h-3 w-3 mr-1" />
                 {f === "All" ? "All" : f === "Unread" ? "Unread" : TYPE_CONFIG[f]?.label || f}
@@ -239,11 +239,11 @@ export default function NotificationsCenter() {
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-slate-900/60 border-white/[0.06]">
               <CardContent className="flex flex-col items-center py-16 gap-3">
-                <Bell className="h-12 w-12 text-gray-600" />
-                <p className="text-gray-400">No notifications found</p>
-                <p className="text-xs text-gray-600">
+                <Bell className="h-12 w-12 text-slate-600" />
+                <p className="text-slate-400">No notifications found</p>
+                <p className="text-xs text-slate-600">
                   {filter !== "All" ? "Try changing the filter above" : "You're all caught up!"}
                 </p>
               </CardContent>

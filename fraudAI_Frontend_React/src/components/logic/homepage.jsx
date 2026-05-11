@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+﻿import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeft, Check, XCircle, HelpCircle, X, Shield, ShieldX, Lightbulb, Loader2, User, Activity, Clock, AlertTriangle as WarningIcon } from 'lucide-react';
+import { ArrowLeft, XCircle, HelpCircle, X, Shield, ShieldX, Lightbulb, Loader2, User, Activity, Clock, AlertTriangle as WarningIcon, Zap, Lock } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "./Header";
@@ -14,16 +14,6 @@ import { doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs
 import { cn } from "@/lib/utils";
 import TransactionSimulation from '../logic/TransactionSimulation'
 import MultiGatewayCheckout from '../logic/MultiGatewayCheckout'
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-  } from "@/components/ui/alert-dialog"
-  import {   AlertTriangle, ChevronRight } from 'lucide-react'
 
 
 const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -5292,7 +5282,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
     const [upiId, setUpiId] = useState("");
     const [recipientUpiId, setRecipientUpiId] = useState('')
     const [verificationStatus, setVerificationStatus] = useState(null);
-    const [isAlertOpen, setIsAlertOpen] = useState(false)
+    const [_isAlertOpen, _setIsAlertOpen] = useState(false)
     const [amount, setAmount] = useState(10000);
 
     // Cooling period state
@@ -5312,7 +5302,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
     const [pendingAfterPin, setPendingAfterPin] = useState(false); 
     
   
-    const handleSeeWhy = async () => {
+    const _handleSeeWhy = async () => {
         try {
           const usersRef = collection(db, "users");
           const q = query(usersRef, where("upiId", "==", upiId));
@@ -5685,23 +5675,325 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
           className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#0f172a] text-white"
         >
           {!user ? (
-            <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="flex flex-col items-center justify-center min-h-screen"
-            >
-              <h1 className="text-4xl font-bold mb-8 text-center">Welcome to AegisAI</h1>
-              <Button
-                onClick={handleGoogleSignIn}
-                className="px-8 py-4 bg-blue-500 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300"
+            <div className="relative flex items-center justify-center min-h-screen overflow-hidden">
+              {/* ── Deep-space background ── */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Primary cyan orb — top left */}
+                <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full opacity-20 blur-3xl"
+                  style={{ background: "radial-gradient(circle, #4cd7f6, transparent 70%)", animation: "pulse 5s ease-in-out infinite" }} />
+                {/* Violet orb — top right */}
+                <div className="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full opacity-18 blur-3xl"
+                  style={{ background: "radial-gradient(circle, #d0bcff, transparent 70%)", animation: "pulse 7s ease-in-out infinite", animationDelay: "1.5s" }} />
+                {/* Emerald orb — bottom center */}
+                <div className="absolute -bottom-24 left-1/3 w-[450px] h-[450px] rounded-full opacity-14 blur-3xl"
+                  style={{ background: "radial-gradient(circle, #4edea3, transparent 70%)", animation: "pulse 6s ease-in-out infinite", animationDelay: "3s" }} />
+                {/* Hex grid overlay — design system pattern */}
+                <div className="absolute inset-0"
+                  style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zm0-2L2 50V17L28 2l26 15v33L28 64z' fill='none' stroke='%23dce1fb' stroke-opacity='0.025' stroke-width='0.8'/%3E%3C/svg%3E")` }} />
+                {/* Scan line */}
+                <div className="absolute left-0 right-0 h-px opacity-20"
+                  style={{ background: "linear-gradient(90deg,transparent,#4cd7f6,#d0bcff,transparent)", animation: "scanLine 4s linear infinite" }} />
+              </div>
+
+              {/* ── Top ticker bar ── */}
+              <div className="absolute top-0 left-0 right-0 z-20 overflow-hidden border-b" style={{ background: "rgba(7,13,31,0.85)", backdropFilter: "blur(20px)", borderColor: "rgba(76,215,246,0.12)" }}>
+                <div className="flex items-center gap-0" style={{ animation: "marquee 28s linear infinite", whiteSpace: "nowrap", width: "max-content" }}>
+                  {[
+                    { label: "AI ENGINE ACTIVE", color: "#4edea3", dot: true },
+                    { label: "99.7% DETECTION ACCURACY", color: "#4cd7f6" },
+                    { label: "5M+ TRANSACTIONS SECURED", color: "#d0bcff" },
+                    { label: "REAL-TIME FRAUD MONITORING", color: "#4edea3" },
+                    { label: "ZERO TRUST ARCHITECTURE", color: "#4cd7f6" },
+                    { label: "256-BIT ENCRYPTION", color: "#d0bcff" },
+                    { label: "AI ENGINE ACTIVE", color: "#4edea3", dot: true },
+                    { label: "99.7% DETECTION ACCURACY", color: "#4cd7f6" },
+                    { label: "5M+ TRANSACTIONS SECURED", color: "#d0bcff" },
+                    { label: "REAL-TIME FRAUD MONITORING", color: "#4edea3" },
+                    { label: "ZERO TRUST ARCHITECTURE", color: "#4cd7f6" },
+                    { label: "256-BIT ENCRYPTION", color: "#d0bcff" },
+                  ].map((item, i) => (
+                    <span key={i} className="inline-flex items-center gap-2.5 px-5 py-2">
+                      {item.dot && <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: item.color, boxShadow: `0 0 8px ${item.color}` }} />}
+                      <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", color: item.color }}>{item.label}</span>
+                      <span className="text-[rgba(134,147,151,0.3)] mx-1">·</span>
+                    </span>
+                  ))}
+                </div>
+                <style>{`@keyframes marquee { 0% { transform: translateX(0) } 100% { transform: translateX(-50%) } } @keyframes scanLine { 0% { top: 0 } 100% { top: 100% } }`}</style>
+              </div>
+
+              {/* Main sign-in card */}
+              <motion.div
+                initial={{ y: 30, opacity: 0, scale: 0.95 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="relative z-10 w-full max-w-[420px] mx-4"
               >
-                Sign in with Google
-              </Button>
-            </motion.div>
+                {/* Rim glow */}
+                <div className="absolute -inset-px rounded-3xl pointer-events-none"
+                  style={{ background: "linear-gradient(180deg, rgba(76,215,246,0.22) 0%, rgba(208,188,255,0.1) 50%, transparent 100%)" }} />
+
+                <div className="relative rounded-3xl p-8"
+                  style={{ background: "rgba(21,27,45,0.88)", backdropFilter: "blur(32px) saturate(1.5)", border: "1px solid rgba(76,215,246,0.14)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(255,255,255,0.03), 0 24px 60px rgba(0,0,0,0.55)" }}>
+
+                  {/* Logo */}
+                  <div className="flex flex-col items-center mb-7">
+                    <div className="relative mb-4">
+                      <div className="absolute inset-0 rounded-2xl blur-xl opacity-50 scale-150"
+                        style={{ background: "linear-gradient(135deg, #4cd7f6, #d0bcff)" }} />
+                      <div className="relative w-16 h-16 rounded-2xl flex items-center justify-center"
+                        style={{ background: "linear-gradient(135deg, rgba(76,215,246,0.15), rgba(208,188,255,0.1))", border: "1px solid rgba(76,215,246,0.3)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12), 0 0 20px rgba(76,215,246,0.1)" }}>
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 2L4 5.5V11c0 4.5 3.3 8.7 8 9.9 4.7-1.2 8-5.4 8-9.9V5.5L12 2z"
+                            fill="rgba(76,215,246,0.15)" stroke="#4cd7f6" strokeWidth="1.2" strokeLinejoin="round" />
+                          <path d="M9 11l2 2 4-4" stroke="#4edea3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </div>
+                      <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 flex items-center justify-center"
+                        style={{ background: "#4edea3", borderColor: "rgba(21,27,45,1)" }}>
+                        <span className="absolute inset-0 rounded-full animate-ping opacity-60" style={{ background: "#4edea3" }} />
+                      </span>
+                    </div>
+                    <h1 className="text-3xl font-black tracking-tight mb-0.5">
+                      <span style={{ background: "linear-gradient(90deg, #4cd7f6, #d0bcff)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent", display: "inline-block" }}>Aegis</span>
+                      <span style={{ color: "#dce1fb" }}>AI</span>
+                    </h1>
+                    <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", color: "#4cd7f6", textTransform: "uppercase" }}>
+                      Neural Fraud Defense
+                    </p>
+                  </div>
+
+                  {/* Stats strip */}
+                  <div className="grid grid-cols-3 gap-px mb-6 rounded-xl overflow-hidden"
+                    style={{ background: "rgba(220,225,251,0.06)", border: "1px solid rgba(220,225,251,0.07)" }}>
+                    {[
+                      { val: "99.7%", label: "Accuracy", color: "#4cd7f6" },
+                      { val: "5M+",   label: "Secured",  color: "#4edea3" },
+                      { val: "<2ms",  label: "Latency",  color: "#d0bcff" },
+                    ].map((s) => (
+                      <div key={s.label} className="text-center py-3" style={{ background: "rgba(12,19,36,0.6)" }}>
+                        <p className="text-sm font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", color: s.color, letterSpacing: "0.02em" }}>{s.val}</p>
+                        <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(188,201,205,0.55)" }}>{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Headline */}
+                  <div className="text-center mb-6">
+                    <h2 className="text-xl font-bold mb-1.5 leading-snug" style={{ color: "#dce1fb" }}>
+                      AI-Powered Financial<br />
+                      <span style={{ background: "linear-gradient(90deg, #4cd7f6, #d0bcff, #4edea3)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent", display: "inline-block" }}>
+                        Security &amp; Intelligence
+                      </span>
+                    </h2>
+                    <p className="text-sm leading-relaxed" style={{ color: "rgba(188,201,205,0.6)" }}>
+                      Real-time fraud detection protecting your finances with enterprise-grade AI
+                    </p>
+                  </div>
+
+                  {/* Feature pills */}
+                  <div className="grid grid-cols-2 gap-2 mb-6">
+                    {[
+                      { Icon: Shield,    label: "AI Fraud Shield",   color: "#4cd7f6", bg: "rgba(76,215,246,0.07)"  },
+                      { Icon: Zap,       label: "Real-time Alerts",  color: "#d0bcff", bg: "rgba(208,188,255,0.07)" },
+                      { Icon: Lightbulb, label: "Smart Analytics",   color: "#4edea3", bg: "rgba(78,222,163,0.07)"  },
+                      { Icon: Lock,      label: "Zero Trust Guard",  color: "#4cd7f6", bg: "rgba(76,215,246,0.07)"  },
+                    ].map(({ Icon, label, color, bg }) => (
+                      <div key={label} className="flex items-center gap-2 px-3 py-2.5 rounded-xl"
+                        style={{ background: bg, border: `1px solid ${color}20` }}>
+                        <Icon className="w-3.5 h-3.5 flex-shrink-0" style={{ color }} />
+                        <span className="text-xs font-semibold" style={{ color: "#dce1fb" }}>{label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Google sign-in button */}
+                  <motion.button
+                    onClick={handleGoogleSignIn}
+                    whileHover={{ scale: 1.02, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-2xl font-bold text-sm relative overflow-hidden group"
+                    style={{ background: "linear-gradient(135deg, #4cd7f6, #d0bcff)", color: "#0c1324", boxShadow: "0 4px 24px rgba(76,215,246,0.3)" }}
+                  >
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.15), transparent)" }} />
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="flex-shrink-0 relative z-10">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="rgba(12,19,36,0.8)" />
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="rgba(12,19,36,0.7)" />
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="rgba(12,19,36,0.65)" />
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="rgba(12,19,36,0.8)" />
+                    </svg>
+                    <span className="relative z-10">Continue with Google</span>
+                  </motion.button>
+
+                  {/* Footer note */}
+                  <p className="text-center mt-4" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", color: "rgba(134,147,151,0.5)" }}>
+                    By signing in you agree to our{" "}
+                    <span className="hover:text-[#4cd7f6] cursor-pointer transition-colors" style={{ color: "rgba(76,215,246,0.55)" }}>Terms</span>
+                    {" "}&amp;{" "}
+                    <span className="hover:text-[#4cd7f6] cursor-pointer transition-colors" style={{ color: "rgba(76,215,246,0.55)" }}>Privacy</span>
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* ── LEFT PANEL: AI Fraud Detection Visual ── */}
+              <motion.div
+                initial={{ opacity: 0, x: -40, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.6, ease: [0.22,1,0.36,1] }}
+                className="absolute left-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-3 w-56"
+              >
+                {/* AI Radar Card */}
+                <div className="rounded-2xl p-4"
+                  style={{ background: "rgba(21,27,45,0.75)", backdropFilter: "blur(24px) saturate(1.4)", border: "1px solid rgba(76,215,246,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.3)" }}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: "#4cd7f6" }} />
+                      <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: "#4cd7f6" }} />
+                    </span>
+                    <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#4cd7f6" }}>Live AI Scan</p>
+                  </div>
+                  {/* Radar SVG */}
+                  <div className="flex justify-center mb-3">
+                    <svg width="100" height="100" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(76,215,246,0.1)" strokeWidth="1"/>
+                      <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(76,215,246,0.16)" strokeWidth="1"/>
+                      <circle cx="50" cy="50" r="18" fill="none" stroke="rgba(76,215,246,0.22)" strokeWidth="1"/>
+                      <circle cx="50" cy="50" r="4"  fill="rgba(76,215,246,0.85)"/>
+                      <line x1="50" y1="50" x2="50" y2="5"  stroke="rgba(76,215,246,0.2)" strokeWidth="1"/>
+                      <line x1="50" y1="50" x2="95" y2="50" stroke="rgba(76,215,246,0.2)" strokeWidth="1"/>
+                      <line x1="50" y1="50" x2="50" y2="95" stroke="rgba(76,215,246,0.2)" strokeWidth="1"/>
+                      <line x1="50" y1="50" x2="5"  y2="50" stroke="rgba(76,215,246,0.2)" strokeWidth="1"/>
+                      <path d="M50 50 L50 5 A45 45 0 0 1 88 72 Z" fill="url(#radarGrad2)" opacity="0.35">
+                        <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="3s" repeatCount="indefinite"/>
+                      </path>
+                      <circle cx="72" cy="28" r="3" fill="#ffb4ab" opacity="0.9">
+                        <animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.5s" repeatCount="indefinite"/>
+                      </circle>
+                      <circle cx="30" cy="65" r="2.5" fill="#4edea3" opacity="0.8">
+                        <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+                      </circle>
+                      <circle cx="62" cy="68" r="2" fill="#ffb4ab" opacity="0.9">
+                        <animate attributeName="opacity" values="0.9;0.1;0.9" dur="0.9s" repeatCount="indefinite"/>
+                      </circle>
+                      <defs>
+                        <radialGradient id="radarGrad2" cx="50%" cy="50%">
+                          <stop offset="0%" stopColor="#4cd7f6" stopOpacity="0"/>
+                          <stop offset="100%" stopColor="#4cd7f6" stopOpacity="0.5"/>
+                        </radialGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <div className="space-y-1.5">
+                    {[
+                      { label: "Threats Blocked", val: "247",    color: "#ffb4ab" },
+                      { label: "Safe Today",      val: "12,483", color: "#4edea3" },
+                      { label: "Accuracy",        val: "99.7%",  color: "#4cd7f6" },
+                    ].map(r => (
+                      <div key={r.label} className="flex justify-between items-center">
+                        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", letterSpacing: "0.08em", color: "rgba(134,147,151,0.7)" }}>{r.label}</span>
+                        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "11px", fontWeight: 700, color: r.color }}>{r.val}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Neural Activity Waveform Card */}
+                <div className="rounded-2xl p-4"
+                  style={{ background: "rgba(21,27,45,0.75)", backdropFilter: "blur(24px) saturate(1.4)", border: "1px solid rgba(208,188,255,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.3)" }}>
+                  <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#d0bcff", marginBottom: "8px" }}>Neural Activity</p>
+                  <svg width="100%" height="40" viewBox="0 0 200 40" preserveAspectRatio="none">
+                    <polyline points="0,20 15,8 30,28 45,5 60,32 75,12 90,25 105,6 120,30 135,10 150,22 165,4 180,28 200,15"
+                      fill="none" stroke="url(#waveGrad2)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <defs>
+                      <linearGradient id="waveGrad2" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0%"   stopColor="#d0bcff"/>
+                        <stop offset="50%"  stopColor="#4cd7f6"/>
+                        <stop offset="100%" stopColor="#4edea3"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", letterSpacing: "0.08em", color: "rgba(134,147,151,0.6)", marginTop: "4px" }}>Real-time pattern analysis</p>
+                </div>
+              </motion.div>
+
+              {/* ── RIGHT PANEL: Transaction Shield Visual ── */}
+              <motion.div
+                initial={{ opacity: 0, x: 40, y: 20 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.8, duration: 0.6, ease: [0.22,1,0.36,1] }}
+                className="absolute right-6 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-3 w-56"
+              >
+                {/* Live Transactions Card */}
+                <div className="rounded-2xl p-4"
+                  style={{ background: "rgba(21,27,45,0.75)", backdropFilter: "blur(24px) saturate(1.4)", border: "1px solid rgba(78,222,163,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.3)" }}>
+                  <div className="flex items-center justify-between mb-3">
+                    <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#4edea3" }}>Live Transactions</p>
+                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", color: "rgba(134,147,151,0.6)" }}>5M+ secured</span>
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { upi:"raj***@okaxis",   amt:"₹2,500",  status:"safe",    time:"just now" },
+                      { upi:"pre***@ybl",      amt:"₹850",    status:"safe",    time:"2s ago" },
+                      { upi:"unk***@paytm",    amt:"₹45,000", status:"flagged", time:"4s ago" },
+                      { upi:"anu***@sbi",      amt:"₹1,200",  status:"safe",    time:"7s ago" },
+                    ].map((tx, i) => (
+                      <motion.div key={i}
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1.2 + i * 0.15 }}
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-xl"
+                        style={{
+                          background: tx.status === "flagged" ? "rgba(255,180,171,0.08)" : "rgba(220,225,251,0.04)",
+                          border: `1px solid ${tx.status === "flagged" ? "rgba(255,180,171,0.2)" : "rgba(220,225,251,0.06)"}`,
+                        }}>
+                        <div>
+                          <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 600, color: "#dce1fb" }}>{tx.upi}</p>
+                          <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", color: "rgba(134,147,151,0.6)" }}>{tx.time}</p>
+                        </div>
+                        <div className="text-right">
+                          <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, color: tx.status === "flagged" ? "#ffb4ab" : "#4edea3" }}>{tx.amt}</p>
+                          <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "9px", color: tx.status === "flagged" ? "rgba(255,180,171,0.7)" : "rgba(78,222,163,0.7)" }}>{tx.status === "flagged" ? "⚠ ALERT" : "✓ SAFE"}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Security Score Card */}
+                <div className="rounded-2xl p-4"
+                  style={{ background: "rgba(21,27,45,0.75)", backdropFilter: "blur(24px) saturate(1.4)", border: "1px solid rgba(208,188,255,0.15)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.3)" }}>
+                  <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#d0bcff", marginBottom: "12px" }}>Fraud Risk Score</p>
+                  <div className="flex items-center gap-3">
+                    <svg width="52" height="52" viewBox="0 0 52 52">
+                      <circle cx="26" cy="26" r="22" fill="none" stroke="rgba(220,225,251,0.06)" strokeWidth="5"/>
+                      <circle cx="26" cy="26" r="22" fill="none" stroke="url(#scoreGrad2)" strokeWidth="5"
+                        strokeDasharray="138.2" strokeDashoffset="14" strokeLinecap="round"
+                        transform="rotate(-90 26 26)"/>
+                      <text x="26" y="30" textAnchor="middle" fontSize="11" fontWeight="900" fill="#dce1fb" fontFamily="'JetBrains Mono',monospace">97</text>
+                      <defs>
+                        <linearGradient id="scoreGrad2" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stopColor="#4edea3"/>
+                          <stop offset="100%" stopColor="#4cd7f6"/>
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    <div>
+                      <p className="font-black text-base" style={{ color: "#4edea3" }}>Excellent</p>
+                      <p className="text-xs leading-tight" style={{ color: "rgba(188,201,205,0.6)" }}>Your account security<br/>score is very high</p>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {["ML Model","Biometric","Pattern","Behaviour"].map(b => (
+                      <span key={b} style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "8px", fontWeight: 600, letterSpacing: "0.06em", padding: "2px 6px", borderRadius: "999px", background: "rgba(78,222,163,0.1)", color: "#4edea3", border: "1px solid rgba(78,222,163,0.2)" }}>{b}</span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           ) : (
             <div className="flex">
-              <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/10 bg-black/20">
+              <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl">
                 <SidebarContent />
               </aside>
     
@@ -5750,7 +6042,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                                 setDarkPatternWarning(checkDarkPatterns(e.target.value, remarks));
                               }}
                               placeholder="e.g. name1234@yesbank"
-                              className="flex-grow bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-blue-500"
+                              className="flex-grow bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-cyan-500"
                             />
                             <Button
                               onClick={handleVerifyUPI}
@@ -5772,7 +6064,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                                 exit={{ opacity: 0 }}
                                 className="flex items-center gap-2 text-sm text-white/70"
                               >
-                                <User className="h-4 w-4 text-blue-400" />
+                                <User className="h-4 w-4 text-cyan-400" />
                                 <span>{recipientName}</span>
                               </motion.div>
                             )}
@@ -5804,7 +6096,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                                 {fraudProbability != null && (
                                   <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                                     <div className="flex items-center gap-2 mb-3">
-                                      <Activity className="h-4 w-4 text-blue-400" />
+                                      <Activity className="h-4 w-4 text-cyan-400" />
                                       <span className="text-sm font-medium text-white/80">AI Risk Score</span>
                                     </div>
                                     <div className="flex items-center gap-4">
@@ -5845,7 +6137,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                                 {/* AI Insight */}
                                 {aiInsight && (
                                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 flex gap-2">
-                                    <Lightbulb className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                                    <Lightbulb className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
                                     <p className="text-sm text-white/80">{aiInsight}</p>
                                   </div>
                                 )}
@@ -5894,7 +6186,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                               value={amount}
                               onChange={(e) => setAmount(e.target.value)}
                               placeholder="0"
-                              className="pl-8 bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-blue-500"
+                              className="pl-8 bg-white/5 border-white/10 text-white focus:ring-2 focus:ring-cyan-500"
                             />
                           </div>
                         </motion.div>
@@ -5959,11 +6251,11 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
             {showGateway && user && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
                 style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(8px)" }}>
-                <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-2xl shadow-2xl p-6">
+                <div className="w-full max-w-md bg-gray-900 border border-white/[0.07] rounded-2xl shadow-2xl p-6">
                   <div className="flex items-center justify-between mb-4">
                     <p className="text-white font-bold text-lg">Choose Payment Method</p>
                     <button onClick={() => setShowGateway(false)}
-                      className="text-gray-400 hover:text-white transition-colors text-xl leading-none">✕</button>
+                      className="text-slate-400 hover:text-white transition-colors text-xl leading-none">✕</button>
                   </div>
                   <MultiGatewayCheckout
                     recipient={{
@@ -6072,7 +6364,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                   <div className="p-6 space-y-4">
                     <div className="text-center">
                       <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center mx-auto mb-3">
-                        <Shield className="h-6 w-6 text-blue-400" />
+                        <Shield className="h-6 w-6 text-cyan-400" />
                       </div>
                       <h3 className="text-lg font-bold text-white">Transaction PIN</h3>
                       <p className="text-sm text-white/50 mt-1">
@@ -6083,7 +6375,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                     <div className="flex justify-center gap-3">
                       {[0,1,2,3].map(i => (
                         <div key={i} className={`w-4 h-4 rounded-full border-2 transition-colors ${
-                          pinInput.length > i ? "bg-blue-400 border-blue-400" : "border-gray-600"
+                          pinInput.length > i ? "bg-blue-400 border-blue-400" : "border-white/[0.09]"
                         }`} />
                       ))}
                     </div>
@@ -6098,8 +6390,8 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                           }}
                           className={`h-12 rounded-xl text-lg font-semibold transition-colors ${
                             k === "" ? "" :
-                            k === "⌫" ? "bg-gray-700 hover:bg-gray-600 text-gray-300" :
-                            "bg-gray-700/70 hover:bg-gray-600 text-white"
+                            k === "⌫" ? "bg-white/[0.07] hover:bg-white/[0.09] text-slate-300" :
+                            "bg-white/[0.07]/70 hover:bg-white/[0.09] text-white"
                           }`}
                           disabled={k === ""}
                         >
@@ -6119,7 +6411,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                       <Button
                         onClick={() => { setShowPinModal(false); setPinInput(""); setPinError(""); }}
                         variant="outline"
-                        className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700"
+                        className="flex-1 border-white/[0.09] text-slate-300 hover:bg-white/[0.07]"
                       >
                         Cancel
                       </Button>
@@ -6166,7 +6458,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                       <Button
                         onClick={() => { setShowBudgetWarning(false); setPendingAfterBudget(false); }}
                         variant="outline"
-                        className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 text-sm"
+                        className="flex-1 border-white/[0.09] text-slate-300 hover:bg-white/[0.07] text-sm"
                       >
                         Cancel
                       </Button>
@@ -6217,14 +6509,14 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                     <div className="flex gap-2">
                       <button
                         onClick={() => navigate("/beneficiaries")}
-                        className="flex-1 text-xs py-2 px-3 rounded-lg border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 transition-colors"
+                        className="flex-1 text-xs py-2 px-3 rounded-lg border border-blue-500/30 text-cyan-400 hover:bg-blue-500/10 transition-colors"
                       >
                         Save as Beneficiary (skip wait)
                       </button>
                       <Button
                         onClick={() => { setShowCoolingModal(false); if (coolingTimerRef.current) clearInterval(coolingTimerRef.current); }}
                         variant="outline"
-                        className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-700 text-xs"
+                        className="flex-1 border-white/[0.09] text-slate-300 hover:bg-white/[0.07] text-xs"
                       >
                         Cancel
                       </Button>
@@ -6268,7 +6560,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                       <>
                         {aiInsight && (
                           <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 flex gap-2 mb-4">
-                            <Lightbulb className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                            <Lightbulb className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
                             <p className="text-sm text-white/80">{aiInsight}</p>
                           </div>
                         )}
@@ -6297,7 +6589,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
                       </>
                     ) : transactionData.length > 0 ? (
                       <ul className="space-y-2">
-                        {transactionData.map(([key, value], index) => (
+                        {transactionData.map(([key, value]) => (
                           <li key={key} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                             <span className="text-sm font-semibold text-white/70">{key}:</span>{" "}
                             <span className="text-sm text-white/50">{String(value)}</span>

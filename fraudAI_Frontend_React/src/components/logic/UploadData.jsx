@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+﻿import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
@@ -46,7 +46,7 @@ function QualityGrade({ score, grade }) {
       </div>
       <div>
         <p className="text-sm font-semibold text-white">Data Quality</p>
-        <p className="text-xs text-gray-400">Score: {score}/100</p>
+        <p className="text-xs text-slate-400">Score: {score}/100</p>
         <p className="text-xs" style={{ color }}>
           {grade === "A" ? "Excellent — ready to train" :
            grade === "B" ? "Good — minor issues" :
@@ -102,8 +102,8 @@ export default function UploadData() {
   const quality = result?.ai_quality;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -113,7 +113,7 @@ export default function UploadData() {
           <motion.h1
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold text-blue-400 mb-6"
+            className="text-2xl font-bold text-cyan-400 mb-6"
           >
             Upload Transaction Data
           </motion.h1>
@@ -124,7 +124,7 @@ export default function UploadData() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
             className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${
-              dragging ? "border-blue-400 bg-blue-400/10" : "border-gray-600 hover:border-blue-500"
+              dragging ? "border-blue-400 bg-blue-400/10" : "border-white/[0.09] hover:border-blue-500"
             }`}
             onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
             onDragLeave={() => setDragging(false)}
@@ -133,10 +133,10 @@ export default function UploadData() {
           >
             <input ref={fileRef} type="file" accept=".csv" className="hidden"
               onChange={(e) => handleFile(e.target.files[0])} />
-            <Upload className="mx-auto h-12 w-12 text-blue-400 mb-4" />
-            <p className="text-lg text-gray-300 mb-1">Drag & drop your CSV file here</p>
-            <p className="text-sm text-gray-500">or click to browse</p>
-            <p className="text-xs text-gray-600 mt-2">
+            <Upload className="mx-auto h-12 w-12 text-cyan-400 mb-4" />
+            <p className="text-lg text-slate-300 mb-1">Drag & drop your CSV file here</p>
+            <p className="text-sm text-slate-500">or click to browse</p>
+            <p className="text-xs text-slate-600 mt-2">
               Supports any CSV with numeric features. Optional fraud label: isFraud, is_fraud, fraud, label, Class
             </p>
           </motion.div>
@@ -144,7 +144,7 @@ export default function UploadData() {
           {loading && (
             <div className="mt-6 flex flex-col items-center gap-3 py-4">
               <div className="h-8 w-8 border-3 border-blue-400/30 border-t-blue-400 rounded-full animate-spin" />
-              <p className="text-blue-400 text-sm animate-pulse">Analysing dataset with AI quality checks…</p>
+              <p className="text-cyan-400 text-sm animate-pulse">Analysing dataset with AI quality checks…</p>
             </div>
           )}
 
@@ -172,9 +172,9 @@ export default function UploadData() {
                     { label: "Features Found",  value: result.feature_columns?.length ?? 0, color: "purple" },
                   ].map((item, i) => (
                     <motion.div key={item.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
-                      <Card className="bg-gray-800 border-gray-700">
+                      <Card className="bg-slate-900/80 border-white/[0.07]">
                         <CardContent className="pt-4 pb-3">
-                          <p className="text-xs text-gray-400">{item.label}</p>
+                          <p className="text-xs text-slate-400">{item.label}</p>
                           <p className={`text-2xl font-bold text-${item.color}-400`}>{item.value}</p>
                         </CardContent>
                       </Card>
@@ -185,9 +185,9 @@ export default function UploadData() {
                 {/* AI Data Quality Card */}
                 {quality && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                    <Card className="bg-gray-800 border-gray-700">
+                    <Card className="bg-slate-900/80 border-white/[0.07]">
                       <CardHeader className="pb-3">
-                        <CardTitle className="text-sm text-blue-400 flex items-center gap-2">
+                        <CardTitle className="text-sm text-cyan-400 flex items-center gap-2">
                           <ShieldCheck className="h-4 w-4" /> AI Data Quality Report
                         </CardTitle>
                       </CardHeader>
@@ -197,7 +197,7 @@ export default function UploadData() {
                         {/* Issues */}
                         {quality.issues?.length > 0 && (
                           <div className="space-y-2">
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Issues Detected</p>
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Issues Detected</p>
                             {quality.issues.map((issue, i) => {
                               const Icon = SEVERITY_ICON[issue.severity] ?? AlertCircle;
                               return (
@@ -213,11 +213,11 @@ export default function UploadData() {
                         {/* Recommendations */}
                         {quality.recommendations?.length > 0 && (
                           <div className="space-y-1.5">
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
                               <TrendingUp className="h-3 w-3" /> AI Recommendations
                             </p>
                             {quality.recommendations.map((rec, i) => (
-                              <div key={i} className="flex items-start gap-2 text-xs text-gray-300">
+                              <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
                                 <Star className="h-3 w-3 text-yellow-400 flex-shrink-0 mt-0.5" />
                                 {rec}
                               </div>
@@ -230,38 +230,38 @@ export default function UploadData() {
                 )}
 
                 {/* Dataset Info */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-gray-400 flex items-center gap-2">
+                    <CardTitle className="text-sm text-slate-400 flex items-center gap-2">
                       <FileText className="h-4 w-4" /> Dataset Info
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-1 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Label column</span>
+                      <span className="text-slate-400">Label column</span>
                       <span className={result.label_column ? "text-green-400" : "text-yellow-400"}>
                         {result.label_column ?? "Not detected (unsupervised mode)"}
                       </span>
                     </div>
                     {result.label_column && (
                       <div className="flex justify-between">
-                        <span className="text-gray-400">Fraud transactions</span>
+                        <span className="text-slate-400">Fraud transactions</span>
                         <span className="text-red-400">
                           {result.fraud_count} ({result.fraud_rate}%)
                         </span>
                       </div>
                     )}
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Feature columns</span>
-                      <span className="text-blue-400 text-right max-w-[60%] truncate">{result.feature_columns?.join(", ")}</span>
+                      <span className="text-slate-400">Feature columns</span>
+                      <span className="text-cyan-400 text-right max-w-[60%] truncate">{result.feature_columns?.join(", ")}</span>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* Preview table */}
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-gray-400">Data Preview (first 5 rows)</CardTitle>
+                    <CardTitle className="text-sm text-slate-400">Data Preview (first 5 rows)</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
@@ -269,15 +269,15 @@ export default function UploadData() {
                         <thead>
                           <tr>
                             {result.columns?.map((col) => (
-                              <th key={col} className="text-left text-gray-400 pb-2 pr-4 whitespace-nowrap">{col}</th>
+                              <th key={col} className="text-left text-slate-400 pb-2 pr-4 whitespace-nowrap">{col}</th>
                             ))}
                           </tr>
                         </thead>
                         <tbody>
                           {result.preview?.map((row, i) => (
-                            <tr key={i} className="border-t border-gray-700">
+                            <tr key={i} className="border-t border-white/[0.07]">
                               {result.columns?.map((col) => (
-                                <td key={col} className="py-1 pr-4 text-gray-300 whitespace-nowrap">
+                                <td key={col} className="py-1 pr-4 text-slate-300 whitespace-nowrap">
                                   {row[col] !== undefined ? String(row[col]).slice(0, 15) : "—"}
                                 </td>
                               ))}

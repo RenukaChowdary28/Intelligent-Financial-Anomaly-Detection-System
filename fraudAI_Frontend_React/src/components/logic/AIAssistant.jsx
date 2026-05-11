@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
@@ -250,15 +250,15 @@ function MessageBubble({ msg }) {
       <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow whitespace-pre-line
         ${isUser
           ? "bg-gradient-to-br from-violet-600 to-blue-600 text-white rounded-br-sm"
-          : "bg-gray-800/80 border border-gray-700 text-gray-100 rounded-bl-sm"
+          : "bg-gray-800/80 border border-white/[0.07] text-white rounded-bl-sm"
         }`}
       >
         {msg.content}
       </div>
       {isUser && (
-        <div className="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center
+        <div className="w-8 h-8 rounded-full bg-white/[0.07] flex items-center justify-center
                         flex-shrink-0 mt-0.5 text-sm">
-          <User className="h-4 w-4 text-gray-300" />
+          <User className="h-4 w-4 text-slate-300" />
         </div>
       )}
     </motion.div>
@@ -309,7 +309,7 @@ export default function AIAssistant() {
 
   return (
     <div className="flex min-h-screen bg-[#0a0a0f] text-white">
-      <aside className="hidden lg:flex flex-col w-64 flex-shrink-0 min-h-screen bg-gray-950 border-r border-gray-800/60">
+      <aside className="hidden lg:flex flex-col w-64 flex-shrink-0 min-h-screen bg-gray-950 border-r border-white/[0.05]/60">
         <SidebarContent />
       </aside>
 
@@ -322,7 +322,7 @@ export default function AIAssistant() {
           <div className="flex-1 flex flex-col min-w-0 min-h-0">
 
             {/* Page title */}
-            <div className="flex-shrink-0 px-6 pt-5 pb-3 flex items-center justify-between border-b border-gray-800/40">
+            <div className="flex-shrink-0 px-6 pt-5 pb-3 flex items-center justify-between border-b border-white/[0.06]/40">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 to-blue-600
                                 flex items-center justify-center shadow-lg shadow-violet-500/30">
@@ -330,21 +330,21 @@ export default function AIAssistant() {
                 </div>
                 <div>
                   <h1 className="text-lg font-bold text-white leading-none">AI Financial Assistant</h1>
-                  <p className="text-xs text-gray-500 mt-0.5">Powered by your real data · Free · No API key needed</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Powered by your real data · Free · No API key needed</p>
                 </div>
               </div>
               <button onClick={resetChat}
-                className="text-gray-500 hover:text-gray-300 p-1.5 rounded-lg hover:bg-gray-800 transition-colors">
+                className="text-slate-500 hover:text-slate-300 p-1.5 rounded-lg hover:bg-white/[0.04] transition-colors">
                 <RefreshCw className="h-4 w-4" />
               </button>
             </div>
 
             {/* Quick action pills */}
-            <div className="flex-shrink-0 px-4 pt-3 pb-2 flex gap-2 flex-wrap border-b border-gray-800/40">
+            <div className="flex-shrink-0 px-4 pt-3 pb-2 flex gap-2 flex-wrap border-b border-white/[0.06]/40">
               {QUICK_ACTIONS.map(a => (
                 <button key={a.q} onClick={() => send(a.q)} disabled={loading}
                   className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full
-                             border border-gray-700/60 text-gray-400
+                             border border-white/[0.07]/60 text-slate-400
                              hover:border-violet-500/50 hover:text-violet-300 hover:bg-violet-500/5
                              transition-all disabled:opacity-40">
                   <a.icon className="h-3 w-3" />
@@ -368,7 +368,7 @@ export default function AIAssistant() {
                                   flex items-center justify-center flex-shrink-0 mt-0.5 shadow-lg">
                     <Sparkles className="h-4 w-4 text-white" />
                   </div>
-                  <div className="bg-gray-800/80 border border-gray-700 rounded-2xl rounded-bl-sm">
+                  <div className="bg-gray-800/80 border border-white/[0.07] rounded-2xl rounded-bl-sm">
                     <TypingDots />
                   </div>
                 </motion.div>
@@ -378,7 +378,7 @@ export default function AIAssistant() {
 
             {/* Input bar */}
             <div className="flex-shrink-0 px-4 pb-4 pt-2">
-              <div className="flex gap-2 bg-gray-900/80 border border-gray-700/60 rounded-2xl px-4 py-2
+              <div className="flex gap-2 bg-gray-900/80 border border-white/[0.07]/60 rounded-2xl px-4 py-2
                               focus-within:border-violet-500/50 transition-colors">
                 <input
                   value={input}
@@ -407,27 +407,27 @@ export default function AIAssistant() {
           </div>
 
           {/* ── Right panel ── */}
-          <div className="hidden xl:flex flex-col w-72 border-l border-gray-800/40 bg-gray-950/50 overflow-y-auto">
+          <div className="hidden xl:flex flex-col w-72 border-l border-white/[0.05]/40 bg-gray-950/50 overflow-y-auto">
 
             {/* Quick actions */}
-            <div className="p-4 border-b border-gray-800/40">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <div className="p-4 border-b border-white/[0.06]/40">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-yellow-400" /> Quick Queries
               </p>
               <div className="space-y-2">
                 {QUICK_ACTIONS.map((a, i) => (
                   <motion.button key={i} whileHover={{ x: 3 }} onClick={() => send(a.q)} disabled={loading}
                     className="w-full text-left flex items-center gap-2.5 px-3 py-2.5 rounded-xl
-                               bg-gray-900/60 hover:bg-gray-800/80 border border-gray-800
-                               hover:border-gray-700 transition-all group disabled:opacity-40">
+                               bg-gray-900/60 hover:bg-white/[0.04]/80 border border-white/[0.05]
+                               hover:border-white/[0.07] transition-all group disabled:opacity-40">
                     <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${a.color}
                                     flex items-center justify-center flex-shrink-0`}>
                       <a.icon className="h-3 w-3 text-white" />
                     </div>
-                    <p className="text-xs text-gray-400 group-hover:text-gray-200 transition-colors leading-relaxed flex-1">
+                    <p className="text-xs text-slate-400 group-hover:text-slate-200 transition-colors leading-relaxed flex-1">
                       {a.label}
                     </p>
-                    <ArrowRight className="h-3 w-3 text-gray-700 group-hover:text-violet-400 flex-shrink-0 transition-colors" />
+                    <ArrowRight className="h-3 w-3 text-slate-300 group-hover:text-violet-400 flex-shrink-0 transition-colors" />
                   </motion.button>
                 ))}
               </div>

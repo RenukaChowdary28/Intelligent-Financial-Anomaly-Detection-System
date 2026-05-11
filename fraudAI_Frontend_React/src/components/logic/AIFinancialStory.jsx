@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { auth, db } from "./firebase";
 import { collection, query, where, getDocs, limit } from "firebase/firestore";
@@ -114,7 +114,7 @@ function buildStory(txs, userName) {
     sections.push({
       icon: "💸",
       title: "The Spending Story",
-      color: "text-blue-400",
+      color: "text-cyan-400",
       border: "border-blue-500/30",
       bg: "bg-blue-500/5",
       paragraphs: [
@@ -230,7 +230,7 @@ function StorySection({ section, index, active }) {
         </CardHeader>
         <CardContent className="space-y-3">
           {section.paragraphs.map((para, i) => (
-            <p key={i} className="text-sm text-gray-300 leading-relaxed">
+            <p key={i} className="text-sm text-slate-300 leading-relaxed">
               {active && index === 0 && i === 0 ? <TypewriterPara text={para} /> : para}
             </p>
           ))}
@@ -307,7 +307,7 @@ export default function AIFinancialStory() {
 
   return (
     <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
-      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-gray-800 overflow-y-auto">
+      <div className="hidden lg:flex flex-col w-64 flex-shrink-0 bg-gray-950 border-r border-white/[0.05] overflow-y-auto">
         <SidebarContent />
       </div>
 
@@ -325,11 +325,11 @@ export default function AIFinancialStory() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-white">AI Financial Chronicle</h1>
-                <p className="text-sm text-gray-400">Your month, told as a story — powered by AegisAI's narrative engine</p>
+                <p className="text-sm text-slate-400">Your month, told as a story — powered by AegisAI's narrative engine</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button onClick={regenerate} variant="ghost" className="text-gray-400 hover:text-white border border-gray-700 h-9">
+              <Button onClick={regenerate} variant="ghost" className="text-slate-400 hover:text-white border border-white/[0.07] h-9">
                 <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
               </Button>
             </div>
@@ -338,7 +338,7 @@ export default function AIFinancialStory() {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-32 gap-4">
               <Loader2 className="h-10 w-10 text-purple-400 animate-spin" />
-              <p className="text-gray-400 text-sm">Gathering your financial data…</p>
+              <p className="text-slate-400 text-sm">Gathering your financial data…</p>
             </div>
           ) : !generated ? (
             /* Generate prompt screen */
@@ -352,9 +352,9 @@ export default function AIFinancialStory() {
                   <BookOpen className="h-12 w-12 text-purple-400 mx-auto mb-4" />
                   <p className="text-xs text-purple-300 tracking-widest uppercase mb-1">Your Financial Chronicle</p>
                   <p className="text-xl font-black text-white">{MONTHS[now.getMonth()]}</p>
-                  <p className="text-sm text-gray-400">{now.getFullYear()}</p>
-                  <div className="mt-4 pt-4 border-t border-gray-700">
-                    <p className="text-xs text-gray-500">Narrated by</p>
+                  <p className="text-sm text-slate-400">{now.getFullYear()}</p>
+                  <div className="mt-4 pt-4 border-t border-white/[0.07]">
+                    <p className="text-xs text-slate-500">Narrated by</p>
                     <p className="text-sm font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">AegisAI</p>
                   </div>
                 </div>
@@ -363,14 +363,14 @@ export default function AIFinancialStory() {
               {story && (
                 <div className="flex gap-6 flex-wrap justify-center">
                   {[
-                    { icon: IndianRupee, label: "Total Spent", value: `₹${story.stats.total.toLocaleString("en-IN")}`, color: "text-blue-400" },
+                    { icon: IndianRupee, label: "Total Spent", value: `₹${story.stats.total.toLocaleString("en-IN")}`, color: "text-cyan-400" },
                     { icon: Calendar, label: "Transactions", value: story.stats.txCount, color: "text-green-400" },
                     { icon: ShieldAlert, label: "Fraud Alerts", value: story.stats.fraudCount, color: story.stats.fraudCount > 0 ? "text-red-400" : "text-green-400" },
                   ].map(({ icon: Icon, label, value, color }) => (
-                    <div key={label} className="flex flex-col items-center gap-1 bg-gray-800/60 rounded-2xl px-6 py-4 border border-gray-700">
+                    <div key={label} className="flex flex-col items-center gap-1 bg-gray-800/60 rounded-2xl px-6 py-4 border border-white/[0.07]">
                       <Icon className={`h-5 w-5 ${color}`} />
                       <p className={`text-2xl font-black ${color}`}>{value}</p>
-                      <p className="text-xs text-gray-500">{label}</p>
+                      <p className="text-xs text-slate-500">{label}</p>
                     </div>
                   ))}
                 </div>
@@ -397,7 +397,7 @@ export default function AIFinancialStory() {
                   {["Analysing transaction patterns…", "Computing spending DNA…", "Checking fraud events…", "Crafting your narrative…"].map((msg, i) => (
                     <motion.p key={msg} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.5 }}
-                      className="text-xs text-gray-500 flex items-center justify-center gap-2">
+                      className="text-xs text-slate-500 flex items-center justify-center gap-2">
                       <CheckCircle2 className="h-3 w-3 text-purple-400" />
                       {msg}
                     </motion.p>
@@ -411,11 +411,11 @@ export default function AIFinancialStory() {
               <motion.div key="story" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
 
                 {/* Chronicle header */}
-                <div className="text-center py-6 border-b border-gray-800">
+                <div className="text-center py-6 border-b border-white/[0.06]">
                   <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}>
                     <p className="text-xs tracking-[0.3em] uppercase text-purple-400 mb-2">Financial Chronicle · {MONTHS[now.getMonth()]} {now.getFullYear()}</p>
                     <h2 className="text-3xl font-black text-white">{story?.firstName}'s Financial Story</h2>
-                    <p className="text-gray-500 text-sm mt-1">Generated by AegisAI Narrative Engine · {new Date().toLocaleTimeString("en-IN")}</p>
+                    <p className="text-slate-500 text-sm mt-1">Generated by AegisAI Narrative Engine · {new Date().toLocaleTimeString("en-IN")}</p>
                   </motion.div>
                 </div>
 
@@ -424,16 +424,16 @@ export default function AIFinancialStory() {
                   <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                     className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                     {[
-                      { icon: IndianRupee, label: "Month Spend", value: `₹${story.stats.total.toLocaleString("en-IN")}`, sub: story.stats.change ? `${story.stats.change > 0 ? "+" : ""}${story.stats.change}% vs last month` : "First month", color: "text-blue-400", trend: story.stats.change },
+                      { icon: IndianRupee, label: "Month Spend", value: `₹${story.stats.total.toLocaleString("en-IN")}`, sub: story.stats.change ? `${story.stats.change > 0 ? "+" : ""}${story.stats.change}% vs last month` : "First month", color: "text-cyan-400", trend: story.stats.change },
                       { icon: Target, label: "Transactions", value: story.stats.txCount, sub: `${story.stats.uniqueRecipients} unique recipients`, color: "text-green-400" },
                       { icon: Star, label: "Top Category", value: story.stats.topCat?.[0] || "—", sub: story.stats.topCat ? `₹${Math.round(story.stats.topCat[1]).toLocaleString("en-IN")}` : "No data", color: "text-yellow-400" },
                       { icon: ShieldAlert, label: "Fraud Alerts", value: story.stats.fraudCount, sub: story.stats.fraudCount === 0 ? "Clean month ✓" : "Review needed", color: story.stats.fraudCount > 0 ? "text-red-400" : "text-green-400" },
                     ].map(({ icon: Icon, label, value, sub, color, trend }) => (
-                      <Card key={label} className="bg-gray-800/60 border border-gray-700">
+                      <Card key={label} className="bg-gray-800/60 border border-white/[0.07]">
                         <CardContent className="p-4">
                           <div className="flex items-center gap-2 mb-2">
                             <Icon className={`h-4 w-4 ${color}`} />
-                            <span className="text-xs text-gray-400">{label}</span>
+                            <span className="text-xs text-slate-400">{label}</span>
                             {trend !== undefined && trend !== null && (
                               parseFloat(trend) > 0
                                 ? <TrendingUp className="h-3 w-3 text-red-400 ml-auto" />
@@ -441,7 +441,7 @@ export default function AIFinancialStory() {
                             )}
                           </div>
                           <p className={`text-xl font-black ${color} truncate`}>{value}</p>
-                          <p className="text-xs text-gray-500 mt-0.5">{sub}</p>
+                          <p className="text-xs text-slate-500 mt-0.5">{sub}</p>
                         </CardContent>
                       </Card>
                     ))}
@@ -457,11 +457,11 @@ export default function AIFinancialStory() {
 
                 {/* Footer */}
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-                  className="text-center py-6 border-t border-gray-800">
-                  <p className="text-xs text-gray-600">
+                  className="text-center py-6 border-t border-white/[0.05]">
+                  <p className="text-xs text-slate-600">
                     Chronicle auto-generated by AegisAI Neural Narrative Engine · Powered by your Firestore transaction data
                   </p>
-                  <p className="text-xs text-gray-700 mt-1">
+                  <p className="text-xs text-slate-300 mt-1">
                     Next chronicle available: {new Date(now.getFullYear(), now.getMonth() + 1, 1).toLocaleDateString("en-IN", { day: "numeric", month: "long" })}
                   </p>
                 </motion.div>

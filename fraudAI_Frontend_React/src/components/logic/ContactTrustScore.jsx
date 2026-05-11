@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -125,10 +125,10 @@ const BANDS = [
 
 function LegendCard() {
   return (
-    <Card className="bg-gray-800 border-gray-700">
+    <Card className="bg-slate-900/80 border-white/[0.07]">
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-semibold text-gray-200 flex items-center gap-2">
-          <Shield className="h-4 w-4 text-blue-400" /> Trust Score Legend
+        <CardTitle className="text-sm font-semibold text-slate-200 flex items-center gap-2">
+          <Shield className="h-4 w-4 text-cyan-400" /> Trust Score Legend
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -137,9 +137,9 @@ function LegendCard() {
             <div key={b.label} className={`rounded-xl p-3 ${b.bg}`}>
               <div className="flex items-center justify-between mb-1">
                 <span className={`text-xs font-bold ${b.color}`}>{b.label}</span>
-                <span className="text-xs text-gray-400 font-mono">{b.range}</span>
+                <span className="text-xs text-slate-400 font-mono">{b.range}</span>
               </div>
-              <p className="text-xs text-gray-400 leading-snug">{b.desc}</p>
+              <p className="text-xs text-slate-400 leading-snug">{b.desc}</p>
             </div>
           ))}
         </div>
@@ -161,7 +161,7 @@ function ContactCard({ contact, index }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04, duration: 0.3 }}
     >
-      <Card className={`bg-gray-800 border ${expanded ? "border-blue-500/50" : "border-gray-700"} hover:border-gray-600 transition-all duration-200`}>
+      <Card className={`bg-gray-800 border ${expanded ? "border-blue-500/50" : "border-white/[0.07]"} hover:border-white/[0.09] transition-all duration-200`}>
         <CardContent className="p-4">
           {/* Main row */}
           <div className="flex items-center gap-4">
@@ -173,13 +173,13 @@ function ContactCard({ contact, index }) {
             {/* Info */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <p className="text-sm font-semibold text-gray-100 truncate">{contact.name}</p>
+                <p className="text-sm font-semibold text-white truncate">{contact.name}</p>
                 <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${band.bg} ${band.color}`}>
                   {band.label}
                 </span>
               </div>
-              <p className="text-xs text-gray-400 font-mono mt-0.5 truncate">{contact.upiId}</p>
-              <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+              <p className="text-xs text-slate-400 font-mono mt-0.5 truncate">{contact.upiId}</p>
+              <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
                 <span>{contact.txCount} transaction{contact.txCount !== 1 ? "s" : ""}</span>
                 {lastPaid !== null && (
                   <span className="flex items-center gap-1">
@@ -195,7 +195,7 @@ function ContactCard({ contact, index }) {
               <CircularGauge score={contact.score} color={band.ring} />
               <button
                 onClick={() => setExpanded(v => !v)}
-                className="text-gray-500 hover:text-gray-300 transition-colors"
+                className="text-slate-500 hover:text-slate-300 transition-colors"
               >
                 {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
@@ -212,20 +212,20 @@ function ContactCard({ contact, index }) {
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <div className="mt-4 pt-4 border-t border-gray-700 space-y-3">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Transaction Summary</p>
+                <div className="mt-4 pt-4 border-t border-white/[0.07] space-y-3">
+                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Transaction Summary</p>
                   <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-gray-700/50 rounded-lg p-2 text-center">
+                    <div className="bg-white/[0.04] rounded-lg p-2 text-center">
                       <p className="text-green-400 font-bold text-sm">{contact.safeCount}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">Safe</p>
+                      <p className="text-xs text-slate-500 mt-0.5">Safe</p>
                     </div>
-                    <div className="bg-gray-700/50 rounded-lg p-2 text-center">
+                    <div className="bg-white/[0.04] rounded-lg p-2 text-center">
                       <p className="text-yellow-400 font-bold text-sm">{contact.mediumCount}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">Medium Risk</p>
+                      <p className="text-xs text-slate-500 mt-0.5">Medium Risk</p>
                     </div>
-                    <div className="bg-gray-700/50 rounded-lg p-2 text-center">
+                    <div className="bg-white/[0.04] rounded-lg p-2 text-center">
                       <p className="text-red-400 font-bold text-sm">{contact.highCount}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">High Risk</p>
+                      <p className="text-xs text-slate-500 mt-0.5">High Risk</p>
                     </div>
                   </div>
 
@@ -245,7 +245,7 @@ function ContactCard({ contact, index }) {
 
                   {/* Score breakdown */}
                   <div className="space-y-1.5">
-                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Score Factors</p>
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Score Factors</p>
                     {[
                       { label: "Transaction history (volume)",  value: contact.txCount > 10 ? "+30" : contact.txCount > 5 ? "+20" : "+0", active: contact.txCount > 5 },
                       { label: "All transactions SAFE",         value: "+25", active: contact.safeCount === contact.txCount && contact.txCount > 0 },
@@ -255,9 +255,9 @@ function ContactCard({ contact, index }) {
                       { label: "Account known > 30 days",       value: "+10", active: contact.accountOld },
                     ].map(f => (
                       <div key={f.label} className="flex items-center justify-between text-xs">
-                        <span className={f.active ? "text-gray-300" : "text-gray-600"}>{f.label}</span>
+                        <span className={f.active ? "text-slate-300" : "text-slate-600"}>{f.label}</span>
                         <span className={
-                          !f.active ? "text-gray-600" :
+                          !f.active ? "text-slate-600" :
                           f.warn ? "text-red-400 font-semibold" : "text-emerald-400 font-semibold"
                         }>{f.active ? f.value : "—"}</span>
                       </div>
@@ -393,8 +393,8 @@ export default function ContactTrustScore() {
   ]
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -410,11 +410,11 @@ export default function ContactTrustScore() {
           >
             <div className="flex items-center gap-3 mb-1">
               <div className="p-2 rounded-xl bg-blue-500/15 border border-blue-500/30">
-                <Shield className="h-6 w-6 text-blue-400" />
+                <Shield className="h-6 w-6 text-cyan-400" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-100">Contact Trust Scores</h1>
-                <p className="text-sm text-gray-400">AI-computed trust rating for each of your payment contacts</p>
+                <h1 className="text-2xl font-bold text-white">Contact Trust Scores</h1>
+                <p className="text-sm text-slate-400">AI-computed trust rating for each of your payment contacts</p>
               </div>
             </div>
           </motion.div>
@@ -422,7 +422,7 @@ export default function ContactTrustScore() {
           {/* ── Stats Row ────────────────────────────────────────────────────── */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
             {[
-              { label: "Total Contacts", value: contacts.length,    color: "text-blue-400",    icon: Users },
+              { label: "Total Contacts", value: contacts.length,    color: "text-cyan-400",    icon: Users },
               { label: "Trusted",        value: trustedCount,        color: "text-emerald-400", icon: ShieldCheck },
               { label: "Suspicious",     value: suspiciousCount,     color: "text-red-400",     icon: ShieldAlert },
               { label: "New",            value: newCount,            color: "text-orange-400",  icon: AlertTriangle },
@@ -435,12 +435,12 @@ export default function ContactTrustScore() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Card className="bg-gray-800 border-gray-700">
+                  <Card className="bg-slate-900/80 border-white/[0.07]">
                     <CardContent className="p-3 flex items-center gap-3">
                       <Icon className={`h-5 w-5 ${s.color} flex-shrink-0`} />
                       <div>
                         <p className={`text-xl font-bold ${s.color}`}>{s.value}</p>
-                        <p className="text-xs text-gray-500">{s.label}</p>
+                        <p className="text-xs text-slate-500">{s.label}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -458,17 +458,17 @@ export default function ContactTrustScore() {
           <div className="flex flex-col sm:flex-row gap-3 mb-5">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <Input
                 placeholder="Search contacts by name, UPI ID or band..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="pl-9 pr-8 bg-gray-800 border-gray-700 text-gray-100 placeholder-gray-500 h-9"
+                className="pl-9 pr-8 bg-slate-900/80 border-white/[0.07] text-white placeholder-gray-500 h-9"
               />
               {search && (
                 <button
                   onClick={() => setSearch("")}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -484,7 +484,7 @@ export default function ContactTrustScore() {
                   className={`text-xs px-3 py-2 rounded-lg border transition-colors whitespace-nowrap ${
                     filter === tab.key
                       ? "bg-blue-600 border-blue-500 text-white"
-                      : "border-gray-700 text-gray-400 hover:border-gray-500 hover:text-white bg-gray-800"
+                      : "border-white/[0.07] text-slate-400 hover:border-gray-500 hover:text-white bg-gray-800"
                   }`}
                 >
                   {tab.label}
@@ -501,13 +501,13 @@ export default function ContactTrustScore() {
               ))}
             </div>
           ) : visible.length === 0 ? (
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-slate-900/60 border-white/[0.06]">
               <CardContent className="flex flex-col items-center py-16 gap-3">
-                <Shield className="h-12 w-12 text-gray-600" />
-                <p className="text-gray-400 font-medium">
+                <Shield className="h-12 w-12 text-slate-600" />
+                <p className="text-slate-400 font-medium">
                   {contacts.length === 0 ? "No contacts found" : "No contacts match your filters"}
                 </p>
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-slate-600">
                   {contacts.length === 0
                     ? "Add beneficiaries to see their trust scores here"
                     : "Try adjusting your search or filter"}
@@ -517,7 +517,7 @@ export default function ContactTrustScore() {
                     size="sm"
                     variant="outline"
                     onClick={() => { setSearch(""); setFilter("ALL") }}
-                    className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                    className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07]"
                   >
                     Clear Filters
                   </Button>

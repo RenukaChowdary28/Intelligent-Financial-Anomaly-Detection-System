@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -40,24 +40,24 @@ export default function FraudCalendar() {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <Calendar className="h-6 w-6" /> Fraud Calendar
             </h1>
-            <p className="text-gray-400 text-sm mb-6">Temporal fraud patterns by hour and day of week.</p>
+            <p className="text-slate-400 text-sm mb-6">Temporal fraud patterns by hour and day of week.</p>
           </motion.div>
 
           {loading && (
             <div className="flex items-center justify-center py-20">
               <div className="h-8 w-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mr-3" />
-              <span className="text-gray-400">Analysing temporal patterns…</span>
+              <span className="text-slate-400">Analysing temporal patterns…</span>
             </div>
           )}
 
@@ -72,43 +72,43 @@ export default function FraudCalendar() {
 
               {/* Summary cards */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-1 flex flex-row items-center justify-between">
-                    <CardTitle className="text-xs text-gray-400">Peak Fraud Hour</CardTitle>
+                    <CardTitle className="text-xs text-slate-400">Peak Fraud Hour</CardTitle>
                     <Clock className="h-4 w-4 text-red-400" />
                   </CardHeader>
                   <CardContent>
                     <p className="text-2xl font-bold text-red-400">{data.peak_fraud_hour_label}</p>
-                    <p className="text-xs text-gray-500">{data.peak_fraud_rate_pct?.toFixed(1)}% fraud rate</p>
+                    <p className="text-xs text-slate-500">{data.peak_fraud_rate_pct?.toFixed(1)}% fraud rate</p>
                   </CardContent>
                 </Card>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-1 flex flex-row items-center justify-between">
-                    <CardTitle className="text-xs text-gray-400">High-Risk Hours</CardTitle>
+                    <CardTitle className="text-xs text-slate-400">High-Risk Hours</CardTitle>
                     <AlertTriangle className="h-4 w-4 text-yellow-400" />
                   </CardHeader>
                   <CardContent>
                     <p className="text-2xl font-bold text-yellow-400">{data.high_risk_hours?.length ?? 0}</p>
-                    <p className="text-xs text-gray-500">{data.high_risk_hours?.slice(0, 3).join(", ")}{data.high_risk_hours?.length > 3 ? "…" : ""}</p>
+                    <p className="text-xs text-slate-500">{data.high_risk_hours?.slice(0, 3).join(", ")}{data.high_risk_hours?.length > 3 ? "…" : ""}</p>
                   </CardContent>
                 </Card>
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-1 flex flex-row items-center justify-between">
-                    <CardTitle className="text-xs text-gray-400">Data Sources</CardTitle>
-                    <TrendingUp className="h-4 w-4 text-blue-400" />
+                    <CardTitle className="text-xs text-slate-400">Data Sources</CardTitle>
+                    <TrendingUp className="h-4 w-4 text-cyan-400" />
                   </CardHeader>
                   <CardContent>
-                    <p className="text-2xl font-bold text-blue-400">{data.data_sources?.length ?? 0}</p>
-                    <p className="text-xs text-gray-500">{data.data_sources?.join(", ")}</p>
+                    <p className="text-2xl font-bold text-cyan-400">{data.data_sources?.length ?? 0}</p>
+                    <p className="text-xs text-slate-500">{data.data_sources?.join(", ")}</p>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Hourly heatmap bar chart */}
               {data.hour_heatmap?.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base text-blue-400 flex items-center gap-2">
+                    <CardTitle className="text-base text-cyan-400 flex items-center gap-2">
                       <Clock className="h-4 w-4" /> Fraud Rate by Hour of Day
                     </CardTitle>
                   </CardHeader>
@@ -130,7 +130,7 @@ export default function FraudCalendar() {
                         </Bar>
                       </BarChart>
                     </ResponsiveContainer>
-                    <div className="flex items-center gap-4 mt-2 justify-center text-xs text-gray-400">
+                    <div className="flex items-center gap-4 mt-2 justify-center text-xs text-slate-400">
                       {["HIGH", "MEDIUM", "LOW"].map((r) => (
                         <span key={r} className="flex items-center gap-1">
                           <span className="w-3 h-3 rounded-sm inline-block" style={{ background: RISK_COLOR[r] }} />
@@ -144,7 +144,7 @@ export default function FraudCalendar() {
 
               {/* Day of week heatmap */}
               {data.day_heatmap?.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-purple-400 flex items-center gap-2">
                       <Calendar className="h-4 w-4" /> Fraud Rate by Day of Week
@@ -153,7 +153,7 @@ export default function FraudCalendar() {
                   <CardContent>
                     <div className="grid grid-cols-7 gap-2">
                       {data.day_heatmap.map((day) => (
-                        <div key={day.day_index} className={`rounded-lg border p-3 text-center ${RISK_BG[day.risk_band] || "bg-gray-700 border-gray-600"}`}>
+                        <div key={day.day_index} className={`rounded-lg border p-3 text-center ${RISK_BG[day.risk_band] || "bg-white/[0.06] border-white/[0.08]"}`}>
                           <p className="text-xs font-semibold truncate">{day.day_name.slice(0, 3)}</p>
                           <p className="text-lg font-bold mt-1">{day.fraud_rate_pct?.toFixed(1)}%</p>
                           <p className="text-xs opacity-70">{day.fraud_count} fraud</p>
@@ -166,7 +166,7 @@ export default function FraudCalendar() {
 
               {/* Hourly detail table */}
               {data.hour_heatmap?.length > 0 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-yellow-400">Hourly Detail</CardTitle>
                   </CardHeader>
@@ -174,12 +174,12 @@ export default function FraudCalendar() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="border-b border-gray-700">
-                            <th className="text-left text-gray-400 py-2 pr-4">Hour</th>
-                            <th className="text-right text-gray-400 py-2 px-4">Transactions</th>
-                            <th className="text-right text-gray-400 py-2 px-4">Fraud Count</th>
-                            <th className="text-right text-gray-400 py-2 px-4">Fraud Rate</th>
-                            <th className="text-right text-gray-400 py-2 px-4">Risk</th>
+                          <tr className="border-b border-white/[0.07]">
+                            <th className="text-left text-slate-400 py-2 pr-4">Hour</th>
+                            <th className="text-right text-slate-400 py-2 px-4">Transactions</th>
+                            <th className="text-right text-slate-400 py-2 px-4">Fraud Count</th>
+                            <th className="text-right text-slate-400 py-2 px-4">Fraud Rate</th>
+                            <th className="text-right text-slate-400 py-2 px-4">Risk</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -188,10 +188,10 @@ export default function FraudCalendar() {
                             .sort((a, b) => b.fraud_rate_pct - a.fraud_rate_pct)
                             .slice(0, 12)
                             .map((h) => (
-                              <tr key={h.hour} className="border-b border-gray-700/50">
-                                <td className="py-2 pr-4 text-gray-300 font-mono">{h.label}</td>
-                                <td className="text-right py-2 px-4 text-gray-400">{h.total_transactions}</td>
-                                <td className="text-right py-2 px-4 text-gray-400">{h.fraud_count}</td>
+                              <tr key={h.hour} className="border-b border-white/[0.07]/50">
+                                <td className="py-2 pr-4 text-slate-300 font-mono">{h.label}</td>
+                                <td className="text-right py-2 px-4 text-slate-400">{h.total_transactions}</td>
+                                <td className="text-right py-2 px-4 text-slate-400">{h.fraud_count}</td>
                                 <td className="text-right py-2 px-4 font-mono" style={{ color: RISK_COLOR[h.risk_band] }}>
                                   {h.fraud_rate_pct?.toFixed(2)}%
                                 </td>
@@ -215,12 +215,12 @@ export default function FraudCalendar() {
               {data.ai_summary && (
                 <Card className="bg-blue-500/5 border-blue-500/20">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-blue-400 flex items-center gap-2">
+                    <CardTitle className="text-sm text-cyan-400 flex items-center gap-2">
                       AI Insight
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-gray-300 leading-relaxed">{data.ai_summary}</p>
+                    <p className="text-sm text-slate-300 leading-relaxed">{data.ai_summary}</p>
                   </CardContent>
                 </Card>
               )}

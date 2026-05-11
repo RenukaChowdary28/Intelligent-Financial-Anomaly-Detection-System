@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
@@ -7,7 +8,7 @@ import {
   CreditCard, Smartphone, ShieldCheck, CheckCircle2,
   Loader, Eye, EyeOff, Lock, Wifi, Search,
   AlertCircle, Hash, IndianRupee, Copy, Check, Star, Zap,
-  Shield, ArrowRight, RotateCcw, Sparkles, BadgeCheck,
+  Shield, ArrowRight, RotateCcw, Sparkles, BadgeCheck, ArrowLeft,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -136,10 +137,10 @@ function StepBar({ current }) {
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all
                   ${done   ? 'bg-emerald-500 border-emerald-400 text-white shadow-lg shadow-emerald-500/30'
                   : active ? 'bg-blue-600 border-blue-400 text-white shadow-lg shadow-blue-500/30'
-                  :          'bg-gray-900 border-gray-700 text-gray-500'}`}>
+                  :          'bg-slate-950 border-white/[0.08] text-slate-500'}`}>
                 {done ? <CheckCircle2 className="w-4 h-4" /> : id}
               </motion.div>
-              <span className={`text-[9px] font-medium whitespace-nowrap ${active ? 'text-blue-300' : done ? 'text-emerald-400' : 'text-gray-600'}`}>{s}</span>
+              <span className={`text-[9px] font-medium whitespace-nowrap ${active ? 'text-blue-300' : done ? 'text-emerald-400' : 'text-slate-600'}`}>{s}</span>
             </div>
             {i < STEPS.length - 1 && (
               <div className={`h-0.5 flex-1 mx-1 mb-4 rounded transition-all duration-500 ${done ? 'bg-emerald-500' : 'bg-gray-800'}`} />
@@ -223,7 +224,7 @@ function ATMCard({ number, expiry, name, network, bankColor, flipped }) {
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-9 bg-gray-200/10 rounded" />
                 <div className="w-14 h-9 bg-white/90 rounded flex items-center justify-center">
-                  <p className="text-gray-800 font-mono text-sm font-bold">CVV</p>
+                  <p className="text-slate-200 font-mono text-sm font-bold">CVV</p>
                 </div>
               </div>
               <p className="text-[9px] text-white/30 text-center leading-relaxed">
@@ -246,7 +247,7 @@ function BankCard({ bank, selected, onSelect }) {
     <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
       onClick={() => onSelect(bank)}
       className={`relative flex flex-col items-center gap-2 p-3 rounded-2xl border text-center transition-all
-        ${selected ? 'border-blue-500 bg-blue-900/30 shadow-lg shadow-blue-500/20' : 'border-gray-800 bg-gray-900/60 hover:border-gray-600 hover:bg-gray-800/60'}`}>
+        ${selected ? 'border-blue-500 bg-blue-900/30 shadow-lg shadow-blue-500/20' : 'border-white/[0.05] bg-gray-900/60 hover:border-white/[0.09] hover:bg-white/[0.04]/60'}`}>
       {bank.popular && !selected && (
         <div className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-amber-500 rounded-full flex items-center justify-center">
           <Star className="w-2.5 h-2.5 text-white" />
@@ -261,10 +262,10 @@ function BankCard({ bank, selected, onSelect }) {
         style={{ background: bank.color.startsWith('#') ? bank.color : `#${bank.color}` }}>
         {initials}
       </div>
-      <p className={`text-[10px] font-semibold leading-tight ${selected ? 'text-blue-200' : 'text-gray-300'}`}>
+      <p className={`text-[10px] font-semibold leading-tight ${selected ? 'text-blue-200' : 'text-slate-300'}`}>
         {bank.name.replace('Bank','').replace('Mahindra','').trim()}
       </p>
-      <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-medium ${TAG_STYLE[bank.tag] || 'bg-gray-800 text-gray-400 border-gray-700'}`}>
+      <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-medium ${TAG_STYLE[bank.tag] || 'bg-gray-800 text-slate-400 border-white/[0.07]'}`}>
         {TAG_LABEL[bank.tag]}
       </span>
     </motion.button>
@@ -275,6 +276,7 @@ function BankCard({ bank, selected, onSelect }) {
 // MAIN COMPONENT
 // ══════════════════════════════════════════════════════════════════════════════
 export default function BankLinking() {
+  const navigate = useNavigate();
   const [user, setUser]     = useState(null);
   const [step, setStep]     = useState(1);
   const [loading, setLoading] = useState(false);
@@ -452,12 +454,15 @@ export default function BankLinking() {
 
         {/* Header */}
         <div className="flex items-center gap-3">
+          <button onClick={() => navigate(-1)} className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all flex-shrink-0">
+            <ArrowLeft className="h-4 w-4" />
+          </button>
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-500 flex items-center justify-center shadow-xl shadow-blue-600/30">
             <CreditCard className="w-6 h-6 text-white" />
           </div>
           <div>
             <h1 className="text-xl font-bold">Link Bank Account</h1>
-            <p className="text-xs text-gray-400">NPCI · UPI · All Indian Banks</p>
+            <p className="text-xs text-slate-400">NPCI · UPI · All Indian Banks</p>
           </div>
           <div className="ml-auto flex items-center gap-1.5 px-2.5 py-1 bg-emerald-900/30 border border-emerald-700/30 rounded-full">
             <ShieldCheck className="w-3 h-3 text-emerald-400" />
@@ -482,20 +487,20 @@ export default function BankLinking() {
           {/* ═══ STEP 1: Mobile ════════════════════════════════════════════════ */}
           {step === 1 && (
             <motion.div key="s1" {...slide} className="space-y-4">
-              <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6 space-y-5">
+              <div className="bg-gray-900 border border-white/[0.05] rounded-3xl p-6 space-y-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-900/50 flex items-center justify-center"><Smartphone className="w-4 h-4 text-blue-400" /></div>
-                  <div><p className="text-sm font-semibold">Enter Mobile Number</p><p className="text-xs text-gray-500">Registered with your bank</p></div>
+                  <div className="w-9 h-9 rounded-xl bg-blue-900/50 flex items-center justify-center"><Smartphone className="w-4 h-4 text-cyan-400" /></div>
+                  <div><p className="text-sm font-semibold">Enter Mobile Number</p><p className="text-xs text-slate-500">Registered with your bank</p></div>
                 </div>
                 <div className="flex gap-2">
-                  <div className="flex items-center gap-1.5 px-3 py-3 bg-gray-800 border border-gray-700 rounded-xl text-sm text-white font-mono shrink-0">
-                    🇮🇳 <span className="text-gray-400">+91</span>
+                  <div className="flex items-center gap-1.5 px-3 py-3 bg-gray-800 border border-white/[0.07] rounded-xl text-sm text-white font-mono shrink-0">
+                    🇮🇳 <span className="text-slate-400">+91</span>
                   </div>
                   <Input value={mobile} onChange={e => setMobile(e.target.value.replace(/\D/g,'').slice(0,10))}
                     placeholder="9876543210" maxLength={10}
-                    className="bg-gray-800 border-gray-700 text-white font-mono text-lg tracking-widest flex-1" />
+                    className="bg-slate-900/80 border-white/[0.07] text-white font-mono text-lg tracking-widest flex-1" />
                 </div>
-                <p className="text-xs text-gray-600">We'll discover banks linked to this number via NPCI and send a one-time password.</p>
+                <p className="text-xs text-slate-600">We'll discover banks linked to this number via NPCI and send a one-time password.</p>
               </div>
               <Button onClick={sendOtp} disabled={loading || mobile.replace(/\D/g,'').length !== 10}
                 className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-cyan-500 font-bold py-5 text-base rounded-2xl gap-2 shadow-xl shadow-blue-600/25 transition-all">
@@ -507,15 +512,15 @@ export default function BankLinking() {
           {/* ═══ STEP 2: OTP ═══════════════════════════════════════════════════ */}
           {step === 2 && (
             <motion.div key="s2" {...slide} className="space-y-4">
-              <div className="bg-gray-900 border border-gray-800 rounded-3xl p-6 space-y-5">
+              <div className="bg-gray-900 border border-white/[0.05] rounded-3xl p-6 space-y-5">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-violet-900/50 flex items-center justify-center"><Hash className="w-4 h-4 text-violet-400" /></div>
-                  <div><p className="text-sm font-semibold">Verify OTP</p><p className="text-xs text-gray-500">Sent to +91 {mobile.slice(0,5)}XXXXX</p></div>
+                  <div><p className="text-sm font-semibold">Verify OTP</p><p className="text-xs text-slate-500">Sent to +91 {mobile.slice(0,5)}XXXXX</p></div>
                 </div>
                 <div className="flex justify-center gap-2">
                   {otp.map((d,i) => (
                     <input key={i} ref={el => otpRefs.current[i]=el} value={d} onChange={() => {}} onKeyDown={e => handleOtpKey(i,e)} maxLength={1}
-                      className="w-12 h-14 text-center text-xl font-bold bg-gray-800 border-2 border-gray-700 focus:border-blue-500 rounded-xl text-white outline-none transition-colors" />
+                      className="w-12 h-14 text-center text-xl font-bold bg-gray-800 border-2 border-white/[0.07] focus:border-cyan-500/50 rounded-xl text-white outline-none transition-colors" />
                   ))}
                 </div>
                 {demoOtp && (
@@ -524,7 +529,7 @@ export default function BankLinking() {
                     Demo mode — OTP auto-filled: <span className="font-mono font-bold ml-1 tracking-widest">{demoOtp}</span>
                   </div>
                 )}
-                <button onClick={() => { setStep(1); setOtp(['','','','','','']); }} className="text-xs text-gray-500 hover:text-gray-300 w-full text-center">← Change number</button>
+                <button onClick={() => { setStep(1); setOtp(['','','','','','']); }} className="text-xs text-slate-500 hover:text-slate-300 w-full text-center">← Change number</button>
               </div>
               <Button onClick={verifyOtp} disabled={loading || otp.join('').length < 6}
                 className="w-full bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 font-bold py-5 text-base rounded-2xl gap-2">
@@ -538,10 +543,10 @@ export default function BankLinking() {
             <motion.div key="s3" {...slide} className="space-y-4">
               {/* Search */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <Input value={bankSearch} onChange={e => setBankSearch(e.target.value)}
                   placeholder="Search 45+ banks…"
-                  className="pl-9 bg-gray-900 border-gray-700 text-white" />
+                  className="pl-9 bg-slate-950 border-white/[0.08] text-white" />
               </div>
 
               {/* Filter tabs */}
@@ -549,14 +554,14 @@ export default function BankLinking() {
                 {[['all','All Banks'],['popular','⭐ Popular'],['public','Public'],['private','Private'],['small','Small Fin.'],['payment','Payment']].map(([val,label]) => (
                   <button key={val} onClick={() => setBankFilter(val)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap border transition-all flex-shrink-0
-                      ${bankFilter===val ? 'bg-blue-600 border-blue-500 text-white' : 'bg-gray-900 border-gray-700 text-gray-400 hover:border-gray-600'}`}>
+                      ${bankFilter===val ? 'bg-blue-600 border-blue-500 text-white' : 'bg-slate-950 border-white/[0.08] text-slate-400 hover:border-white/[0.09]'}`}>
                     {label}
                   </button>
                 ))}
               </div>
 
               {/* Bank count */}
-              <p className="text-xs text-gray-500">{filterBanks().length} banks available</p>
+              <p className="text-xs text-slate-500">{filterBanks().length} banks available</p>
 
               {/* Bank grid */}
               <div className="grid grid-cols-3 gap-2.5 max-h-[420px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
@@ -566,7 +571,7 @@ export default function BankLinking() {
               </div>
 
               {filterBanks().length === 0 && (
-                <div className="py-8 text-center text-gray-500 text-sm">No banks match your search.</div>
+                <div className="py-8 text-center text-slate-500 text-sm">No banks match your search.</div>
               )}
             </motion.div>
           )}
@@ -586,25 +591,25 @@ export default function BankLinking() {
                 </motion.div>
               )}
 
-              <div className="bg-gray-900 border border-gray-800 rounded-3xl p-5 space-y-4">
+              <div className="bg-gray-900 border border-white/[0.05] rounded-3xl p-5 space-y-4">
                 {/* Selected bank header */}
-                <div className="flex items-center gap-3 pb-3 border-b border-gray-800">
+                <div className="flex items-center gap-3 pb-3 border-b border-white/[0.06]">
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-[10px] font-black"
                     style={{ background: selBank?.color?.startsWith('#') ? selBank.color : `#${selBank?.color}` }}>
                     {selBank?.name?.split(' ').map(w=>w[0]).slice(0,2).join('')}
                   </div>
-                  <div className="flex-1"><p className="text-sm font-semibold">{selBank?.name}</p><p className="text-xs text-gray-500">@{selBank?.handle}</p></div>
-                  <button onClick={() => setStep(3)} className="text-xs text-blue-400 hover:text-blue-300">Change</button>
+                  <div className="flex-1"><p className="text-sm font-semibold">{selBank?.name}</p><p className="text-xs text-slate-500">@{selBank?.handle}</p></div>
+                  <button onClick={() => setStep(3)} className="text-xs text-cyan-400 hover:text-blue-300">Change</button>
                 </div>
 
                 {/* Card number */}
                 <div className="space-y-1.5">
-                  <label className="text-xs text-gray-400">Card Number</label>
+                  <label className="text-xs text-slate-400">Card Number</label>
                   <div className="relative">
                     <Input value={cardNum} onChange={e => onCardNum(e.target.value)} placeholder="1234 5678 9012 3456" maxLength={19}
-                      className="bg-gray-800 border-gray-700 text-white font-mono pr-28" />
+                      className="bg-slate-900/80 border-white/[0.07] text-white font-mono pr-28" />
                     <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-                      {binLoading && <Loader className="w-3 h-3 text-gray-500 animate-spin" />}
+                      {binLoading && <Loader className="w-3 h-3 text-slate-500 animate-spin" />}
                       {luhnOk === true  && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />}
                       {luhnOk === false && <AlertCircle  className="w-3.5 h-3.5 text-amber-400"  />}
                       {network && <NetBadge network={network} />}
@@ -617,15 +622,15 @@ export default function BankLinking() {
 
                 {/* Name on card */}
                 <div className="space-y-1.5">
-                  <label className="text-xs text-gray-400">Name on Card</label>
+                  <label className="text-xs text-slate-400">Name on Card</label>
                   <Input value={cardName} onChange={e => setCardName(e.target.value)} placeholder="As printed on card"
-                    className="bg-gray-800 border-gray-700 text-white" />
+                    className="bg-slate-900/80 border-white/[0.07] text-white" />
                 </div>
 
                 {/* Expiry + CVV */}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1.5">
-                    <label className="text-xs text-gray-400">Expiry MM/YY</label>
+                    <label className="text-xs text-slate-400">Expiry MM/YY</label>
                     <Input value={cardExp}
                       onChange={e => {
                         let d = e.target.value.replace(/\D/g,'').slice(0, 4);
@@ -635,35 +640,35 @@ export default function BankLinking() {
                         }
                         setCardExp(d.length >= 3 ? d.slice(0,2) + '/' + d.slice(2) : d);
                       }}
-                      placeholder="12/27" maxLength={5} className="bg-gray-800 border-gray-700 text-white font-mono" />
+                      placeholder="12/27" maxLength={5} className="bg-slate-900/80 border-white/[0.07] text-white font-mono" />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs text-gray-400">CVV</label>
+                    <label className="text-xs text-slate-400">CVV</label>
                     <div className="relative">
                       <Input type="password" value={cardCvv} maxLength={4}
                         onFocus={() => setCardFlipped(true)}
                         onBlur={() => setCardFlipped(false)}
                         onChange={e => setCardCvv(e.target.value.replace(/\D/g,'').slice(0,4))}
-                        placeholder="•••" className="bg-gray-800 border-gray-700 text-white font-mono" />
+                        placeholder="•••" className="bg-slate-900/80 border-white/[0.07] text-white font-mono" />
                     </div>
                   </div>
                 </div>
 
                 {/* Account type */}
                 <div className="space-y-2">
-                  <label className="text-xs text-gray-400">Account Type</label>
+                  <label className="text-xs text-slate-400">Account Type</label>
                   <div className="grid grid-cols-2 gap-2">
                     {[['savings','Savings','Day-to-day banking'],['current','Current','Business account'],['salary','Salary','Employer linked'],['nri','NRI','Non-resident Indian']].map(([val,label,desc]) => (
                       <button key={val} onClick={() => setAccType(val)}
-                        className={`p-2.5 rounded-xl border text-left transition-all ${accountType===val ? 'border-blue-500 bg-blue-900/30' : 'border-gray-700 hover:border-gray-600'}`}>
-                        <p className={`text-xs font-semibold ${accountType===val ? 'text-blue-200' : 'text-gray-300'}`}>{label}</p>
-                        <p className="text-[10px] text-gray-500">{desc}</p>
+                        className={`p-2.5 rounded-xl border text-left transition-all ${accountType===val ? 'border-blue-500 bg-blue-900/30' : 'border-white/[0.07] hover:border-white/[0.09]'}`}>
+                        <p className={`text-xs font-semibold ${accountType===val ? 'text-blue-200' : 'text-slate-300'}`}>{label}</p>
+                        <p className="text-[10px] text-slate-500">{desc}</p>
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <p className="text-[10px] text-gray-600 flex items-center gap-1.5"><Lock className="w-3 h-3" /> Card details are used only for identity verification — not stored on our servers.</p>
+                <p className="text-[10px] text-slate-600 flex items-center gap-1.5"><Lock className="w-3 h-3" /> Card details are used only for identity verification — not stored on our servers.</p>
               </div>
 
               <Button onClick={() => {
@@ -687,10 +692,10 @@ export default function BankLinking() {
           {/* ═══ STEP 5: UPI ID & PIN ═══════════════════════════════════════════ */}
           {step === 5 && (
             <motion.div key="s5" {...slide} className="space-y-4">
-              <div className="bg-gray-900 border border-gray-800 rounded-3xl p-5 space-y-5">
+              <div className="bg-gray-900 border border-white/[0.05] rounded-3xl p-5 space-y-5">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-emerald-900/50 flex items-center justify-center"><IndianRupee className="w-4 h-4 text-emerald-400" /></div>
-                  <div><p className="text-sm font-semibold">Choose UPI ID</p><p className="text-xs text-gray-500">Your payment address</p></div>
+                  <div><p className="text-sm font-semibold">Choose UPI ID</p><p className="text-xs text-slate-500">Your payment address</p></div>
                 </div>
 
                 {/* UPI suggestions */}
@@ -698,12 +703,12 @@ export default function BankLinking() {
                   {UPI_SUGGESTIONS.map((s, i) => (
                     <button key={i} onClick={() => { setUpiChoice(i); setUseCustom(false); }}
                       className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl border text-left transition-all
-                        ${!useCustom && upiChoice===i ? 'border-emerald-500 bg-emerald-900/20' : 'border-gray-700 hover:border-gray-600'}`}>
+                        ${!useCustom && upiChoice===i ? 'border-emerald-500 bg-emerald-900/20' : 'border-white/[0.07] hover:border-white/[0.09]'}`}>
                       <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center
-                        ${!useCustom && upiChoice===i ? 'border-emerald-500 bg-emerald-500' : 'border-gray-600'}`}>
+                        ${!useCustom && upiChoice===i ? 'border-emerald-500 bg-emerald-500' : 'border-white/[0.09]'}`}>
                         {!useCustom && upiChoice===i && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                       </div>
-                      <span className={`text-sm font-mono ${!useCustom && upiChoice===i ? 'text-emerald-300' : 'text-gray-300'}`}>{s}</span>
+                      <span className={`text-sm font-mono ${!useCustom && upiChoice===i ? 'text-emerald-300' : 'text-slate-300'}`}>{s}</span>
                       {i === 0 && <span className="ml-auto text-[9px] bg-blue-900/50 text-blue-300 border border-blue-700/30 px-1.5 py-0.5 rounded-full">Recommended</span>}
                     </button>
                   ))}
@@ -711,17 +716,17 @@ export default function BankLinking() {
                   {/* Custom UPI */}
                   <button onClick={() => setUseCustom(true)}
                     className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl border text-left transition-all
-                      ${useCustom ? 'border-violet-500 bg-violet-900/20' : 'border-gray-700 hover:border-gray-600'}`}>
-                    <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${useCustom ? 'border-violet-500 bg-violet-500' : 'border-gray-600'}`}>
+                      ${useCustom ? 'border-violet-500 bg-violet-900/20' : 'border-white/[0.07] hover:border-white/[0.09]'}`}>
+                    <div className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${useCustom ? 'border-violet-500 bg-violet-500' : 'border-white/[0.09]'}`}>
                       {useCustom && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                     </div>
-                    <span className="text-sm text-gray-400">Custom UPI ID</span>
+                    <span className="text-sm text-slate-400">Custom UPI ID</span>
                   </button>
                   {useCustom && (
                     <div className="flex gap-1">
                       <Input value={customUpi.split('@')[0] || ''} onChange={e => setCustomUpi(e.target.value.toLowerCase().replace(/[^a-z0-9._-]/g,'')+`@${handle}`)}
-                        placeholder="yourname" className="bg-gray-800 border-gray-700 text-white font-mono" />
-                      <div className="flex items-center px-3 bg-gray-800 border border-gray-700 rounded-xl text-gray-400 text-sm font-mono shrink-0">
+                        placeholder="yourname" className="bg-slate-900/80 border-white/[0.07] text-white font-mono" />
+                      <div className="flex items-center px-3 bg-gray-800 border border-white/[0.07] rounded-xl text-slate-400 text-sm font-mono shrink-0">
                         @{handle}
                       </div>
                     </div>
@@ -729,44 +734,44 @@ export default function BankLinking() {
                 </div>
 
                 {/* Final UPI ID preview */}
-                <div className="flex items-center gap-2 px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl">
+                <div className="flex items-center gap-2 px-3 py-2.5 bg-gray-800 border border-white/[0.07] rounded-xl">
                   <Sparkles className="w-4 h-4 text-yellow-400 shrink-0" />
                   <p className="text-sm font-mono text-emerald-300 flex-1">{finalUpi}</p>
-                  <p className="text-[10px] text-gray-500">Your UPI ID</p>
+                  <p className="text-[10px] text-slate-500">Your UPI ID</p>
                 </div>
               </div>
 
               {/* UPI PIN */}
-              <div className="bg-gray-900 border border-gray-800 rounded-3xl p-5 space-y-4">
+              <div className="bg-gray-900 border border-white/[0.05] rounded-3xl p-5 space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-violet-900/50 flex items-center justify-center"><Lock className="w-4 h-4 text-violet-400" /></div>
-                  <div><p className="text-sm font-semibold">Set UPI PIN</p><p className="text-xs text-gray-500">6-digit PIN for all payments</p></div>
+                  <div><p className="text-sm font-semibold">Set UPI PIN</p><p className="text-xs text-slate-500">6-digit PIN for all payments</p></div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1.5">
-                    <label className="text-xs text-gray-400">New UPI PIN</label>
+                    <label className="text-xs text-slate-400">New UPI PIN</label>
                     <div className="relative">
                       <Input type={showPin?'text':'password'} value={upiPin}
                         onChange={e => setUpiPin(e.target.value.replace(/\D/g,'').slice(0,6))}
-                        placeholder="••••••" maxLength={6} className="bg-gray-800 border-gray-700 text-white font-mono pr-9" />
-                      <button onClick={() => setShowPin(p=>!p)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
+                        placeholder="••••••" maxLength={6} className="bg-slate-900/80 border-white/[0.07] text-white font-mono pr-9" />
+                      <button onClick={() => setShowPin(p=>!p)} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
                         {showPin ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                       </button>
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs text-gray-400">Confirm PIN</label>
+                    <label className="text-xs text-slate-400">Confirm PIN</label>
                     <Input type="password" value={upiPin2}
                       onChange={e => setUpiPin2(e.target.value.replace(/\D/g,'').slice(0,6))}
-                      placeholder="••••••" maxLength={6} className="bg-gray-800 border-gray-700 text-white font-mono" />
+                      placeholder="••••••" maxLength={6} className="bg-slate-900/80 border-white/[0.07] text-white font-mono" />
                   </div>
                 </div>
 
                 {/* PIN strength */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs">
-                    <span className="text-gray-500">PIN strength</span>
+                    <span className="text-slate-500">PIN strength</span>
                     <span className={secScore >= 80 ? 'text-emerald-400' : secScore >= 50 ? 'text-amber-400' : 'text-red-400'}>
                       {secScore >= 80 ? 'Strong' : secScore >= 50 ? 'Medium' : 'Weak'}
                     </span>
@@ -809,9 +814,9 @@ export default function BankLinking() {
                 </div>
                 {/* UPI ID */}
                 <div className="relative z-10 bg-black/30 border border-emerald-700/30 rounded-2xl p-4">
-                  <p className="text-xs text-gray-400 mb-1">Your UPI ID</p>
+                  <p className="text-xs text-slate-400 mb-1">Your UPI ID</p>
                   <p className="text-lg font-mono font-bold text-emerald-300">{linked.upiId}</p>
-                  <button onClick={copyUpi} className="flex items-center gap-1.5 mx-auto mt-2 text-xs text-gray-400 hover:text-white transition-colors">
+                  <button onClick={copyUpi} className="flex items-center gap-1.5 mx-auto mt-2 text-xs text-slate-400 hover:text-white transition-colors">
                     {copied ? <><Check className="w-3 h-3 text-emerald-400" /> Copied!</> : <><Copy className="w-3 h-3" /> Copy UPI ID</>}
                   </button>
                 </div>
@@ -826,7 +831,7 @@ export default function BankLinking() {
                     ['Status',       'Active ✓'],
                   ].map(([label, val]) => (
                     <div key={label} className="bg-black/20 rounded-xl p-3">
-                      <p className="text-[10px] text-gray-500">{label}</p>
+                      <p className="text-[10px] text-slate-500">{label}</p>
                       <p className="text-xs text-white font-semibold mt-0.5">{val}</p>
                     </div>
                   ))}
@@ -838,7 +843,7 @@ export default function BankLinking() {
                 {[
                   { icon: IndianRupee, label:'Send Money',  color:'bg-blue-600',   href:'/send-money' },
                   { icon: Shield,      label:'Security',    color:'bg-violet-600', href:'/biometric-guard' },
-                  { icon: RotateCcw,   label:'Link Another',color:'bg-gray-700',   action: () => { setStep(1); setMobile(''); setOtp(['','','','','','']); setSelBank(null); setCardNum(''); setCardExp(''); setCardCvv(''); setUpiPin(''); setUpiPin2(''); setLinked(null); }},
+                  { icon: RotateCcw,   label:'Link Another',color:'bg-white/[0.07]',   action: () => { setStep(1); setMobile(''); setOtp(['','','','','','']); setSelBank(null); setCardNum(''); setCardExp(''); setCardCvv(''); setUpiPin(''); setUpiPin2(''); setLinked(null); }},
                 ].map((a,i) => (
                   <motion.a key={i} href={a.href || '#'} onClick={e => { if(a.action){ e.preventDefault(); a.action(); }}}
                     whileHover={{ scale:1.04 }} whileTap={{ scale:0.96 }}

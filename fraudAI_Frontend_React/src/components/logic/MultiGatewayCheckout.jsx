@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import {
@@ -133,7 +133,7 @@ export default function MultiGatewayCheckout({
     return (
       <div className="space-y-3">
         <button onClick={reset}
-          className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors mb-1">
+          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors mb-1">
           <ChevronLeft className="w-3.5 h-3.5" /> Change payment method
         </button>
         <RazorpayCheckout
@@ -183,7 +183,7 @@ export default function MultiGatewayCheckout({
             </div>
           </div>
           <div className="p-3 bg-black/30 rounded-lg border border-green-700/40 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-blue-400 shrink-0" />
+            <Shield className="w-4 h-4 text-cyan-400 shrink-0" />
             <p className="text-xs text-blue-200">AegisAI fraud shield — transaction marked CLEARED</p>
           </div>
         </motion.div>
@@ -195,7 +195,7 @@ export default function MultiGatewayCheckout({
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
         className="w-full space-y-4">
         <button onClick={reset}
-          className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors">
+          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
           <ChevronLeft className="w-3.5 h-3.5" /> Change payment method
         </button>
 
@@ -206,10 +206,10 @@ export default function MultiGatewayCheckout({
               {selected.logo}
               <div>
                 <p className="text-white font-bold">{selected.name}</p>
-                <p className="text-xs text-gray-400">{selected.tagline}</p>
+                <p className="text-xs text-slate-400">{selected.tagline}</p>
               </div>
               <div className="ml-auto text-right">
-                <p className="text-xs text-gray-400">Amount</p>
+                <p className="text-xs text-slate-400">Amount</p>
                 <p className="text-lg font-bold text-white flex items-center gap-1 justify-end">
                   <IndianRupee className="w-4 h-4" />{Number(amount).toLocaleString('en-IN')}
                 </p>
@@ -221,19 +221,19 @@ export default function MultiGatewayCheckout({
               <div className="bg-white p-4 rounded-2xl shadow-lg">
                 <QRCodeSVG value={qrValue} size={180} bgColor="#ffffff" fgColor="#111827" level="M" />
               </div>
-              <p className="text-xs text-gray-400 text-center">
+              <p className="text-xs text-slate-400 text-center">
                 Scan with <span className="text-white font-semibold">{selected.name}</span> or any UPI app
               </p>
             </div>
 
             {/* UPI ID copy */}
-            <div className="flex items-center gap-2 bg-gray-700/50 rounded-lg px-3 py-2">
-              <span className="text-xs text-gray-300 font-mono flex-1 truncate">UPI: {recipient.upiId}</span>
+            <div className="flex items-center gap-2 bg-white/[0.04] rounded-lg px-3 py-2">
+              <span className="text-xs text-slate-300 font-mono flex-1 truncate">UPI: {recipient.upiId}</span>
               <button onClick={() => {
                 navigator.clipboard.writeText(recipient.upiId);
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
-              }} className="text-gray-400 hover:text-white transition-colors">
+              }} className="text-slate-400 hover:text-white transition-colors">
                 {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
               </button>
             </div>
@@ -271,12 +271,12 @@ export default function MultiGatewayCheckout({
               </Button>
               <Button onClick={() => { reset(); onCancel?.(); }}
                 variant="outline"
-                className="border-gray-600 text-gray-300 text-sm">
+                className="border-white/[0.09] text-slate-300 text-sm">
                 <XCircle className="w-4 h-4 mr-1.5" /> Cancel
               </Button>
             </div>
 
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-xs text-slate-500 text-center">
               After paying in the app, tap <span className="text-white">"I've Paid"</span> to confirm
             </p>
           </CardContent>
@@ -289,8 +289,8 @@ export default function MultiGatewayCheckout({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-1">
-        <p className="text-sm font-semibold text-gray-300">Choose payment method</p>
-        <span className="text-xs text-gray-500 flex items-center gap-1">
+        <p className="text-sm font-semibold text-slate-300">Choose payment method</p>
+        <span className="text-xs text-slate-500 flex items-center gap-1">
           <Shield className="w-3 h-3" /> AegisAI protected
         </span>
       </div>
@@ -316,7 +316,7 @@ export default function MultiGatewayCheckout({
             {gw.logo}
             <div>
               <p className="text-sm font-bold text-white">{gw.name}</p>
-              <p className="text-[10px] text-gray-400 mt-0.5 leading-tight">{gw.tagline}</p>
+              <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">{gw.tagline}</p>
             </div>
           </motion.button>
         ))}
@@ -324,7 +324,7 @@ export default function MultiGatewayCheckout({
 
       <div className="flex items-center justify-center gap-2 pt-2">
         <IndianRupee className="w-4 h-4 text-green-400" />
-        <p className="text-sm text-gray-300">
+        <p className="text-sm text-slate-300">
           Paying <span className="font-bold text-white">₹{Number(amount).toLocaleString('en-IN')}</span>
           {' '}to <span className="font-semibold text-white">{recipient?.displayName}</span>
         </p>

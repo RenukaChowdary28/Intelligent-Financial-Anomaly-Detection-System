@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+﻿import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Fingerprint, Activity, Zap, ShieldCheck, ShieldAlert,
@@ -37,14 +37,14 @@ function daysSince(ts) {
 }
 
 function riskColor(deviation) {
-  if (deviation === null || deviation === undefined) return "text-gray-400";
+  if (deviation === null || deviation === undefined) return "text-slate-400";
   if (deviation < 15) return "text-emerald-400";
   if (deviation < 35) return "text-yellow-400";
   return "text-red-400";
 }
 
 function riskBg(deviation) {
-  if (deviation === null || deviation === undefined) return "bg-gray-700";
+  if (deviation === null || deviation === undefined) return "bg-white/[0.07]";
   if (deviation < 15) return "bg-emerald-500";
   if (deviation < 35) return "bg-yellow-500";
   return "bg-red-500";
@@ -68,15 +68,15 @@ function severityBadge(severity) {
 // ─── Toggle Switch ─────────────────────────────────────────────────────────────
 function ToggleSwitch({ enabled, onToggle, label, description }) {
   return (
-    <div className="flex items-center justify-between py-3 border-b border-gray-800 last:border-0">
+    <div className="flex items-center justify-between py-3 border-b border-white/[0.06] last:border-0">
       <div>
-        <p className="text-sm font-medium text-gray-200">{label}</p>
-        {description && <p className="text-xs text-gray-500 mt-0.5">{description}</p>}
+        <p className="text-sm font-medium text-slate-200">{label}</p>
+        {description && <p className="text-xs text-slate-500 mt-0.5">{description}</p>}
       </div>
       <button
         onClick={onToggle}
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
-          enabled ? "bg-emerald-500" : "bg-gray-700"
+          enabled ? "bg-emerald-500" : "bg-white/[0.07]"
         }`}
         aria-checked={enabled}
         role="switch"
@@ -100,7 +100,7 @@ function KeystrokeBar({ interval, maxInterval }) {
     interval < 150 ? "bg-emerald-500" : interval < 350 ? "bg-yellow-500" : "bg-red-500";
   return (
     <div className="flex flex-col items-center gap-0.5">
-      <div className="w-2 bg-gray-700 rounded-sm h-12 flex flex-col-reverse overflow-hidden">
+      <div className="w-2 bg-white/[0.07] rounded-sm h-12 flex flex-col-reverse overflow-hidden">
         <motion.div
           initial={{ height: 0 }}
           animate={{ height: `${pct}%` }}
@@ -313,7 +313,7 @@ const BiometricGuard = () => {
 
   const statusColor =
     typingMetrics.deviation === null
-      ? "bg-gray-600"
+      ? "bg-white/[0.09]"
       : typingMetrics.deviation < 15
       ? "bg-emerald-500"
       : typingMetrics.deviation < 35
@@ -322,9 +322,9 @@ const BiometricGuard = () => {
 
   // ─── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
+    <div className="flex min-h-screen text-white">
       {/* Sidebar */}
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
 
@@ -348,7 +348,7 @@ const BiometricGuard = () => {
               <h1 className="text-2xl font-bold tracking-tight text-white">
                 Behavioral Biometrics Guard
               </h1>
-              <p className="text-gray-400 text-sm mt-1">
+              <p className="text-slate-400 text-sm mt-1">
                 Passive authentication through your unique interaction patterns
               </p>
             </div>
@@ -362,10 +362,10 @@ const BiometricGuard = () => {
 
           {/* ── How It Works ── */}
           <motion.div custom={0} variants={cardVariants} initial="hidden" animate="visible">
-            <Card className="bg-gray-800/60 border-gray-700/60">
+            <Card className="bg-gray-800/60 border-white/[0.07]/60">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-semibold text-gray-300 flex items-center gap-2">
-                  <Info className="h-4 w-4 text-blue-400" />
+                <CardTitle className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                  <Info className="h-4 w-4 text-cyan-400" />
                   How It Works
                 </CardTitle>
               </CardHeader>
@@ -374,7 +374,7 @@ const BiometricGuard = () => {
                   {[
                     {
                       step: "1",
-                      icon: <Activity className="h-5 w-5 text-blue-400" />,
+                      icon: <Activity className="h-5 w-5 text-cyan-400" />,
                       title: "Type naturally",
                       desc: "Use the app as you normally would. No extra steps.",
                       color: "border-blue-700/50 bg-blue-900/20",
@@ -400,12 +400,12 @@ const BiometricGuard = () => {
                     >
                       <div className="flex items-center gap-2">
                         {item.icon}
-                        <span className="text-xs font-bold text-gray-400">
+                        <span className="text-xs font-bold text-slate-400">
                           Step {item.step}
                         </span>
                       </div>
                       <p className="text-sm font-semibold text-white">{item.title}</p>
-                      <p className="text-xs text-gray-400">{item.desc}</p>
+                      <p className="text-xs text-slate-400">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -415,10 +415,10 @@ const BiometricGuard = () => {
 
           {/* ── Baseline Status ── */}
           <motion.div custom={1} variants={cardVariants} initial="hidden" animate="visible">
-            <Card className="bg-gray-800/60 border-gray-700/60">
+            <Card className="bg-gray-800/60 border-white/[0.07]/60">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                  <CardTitle className="text-sm font-semibold text-slate-300 flex items-center gap-2">
                     <ShieldCheck className="h-4 w-4 text-emerald-400" />
                     Baseline Status
                   </CardTitle>
@@ -427,7 +427,7 @@ const BiometricGuard = () => {
                       Baseline Recorded
                     </Badge>
                   ) : (
-                    <Badge className="bg-gray-700 text-gray-400 border border-gray-600 text-xs">
+                    <Badge className="bg-white/[0.07] text-slate-400 border border-white/[0.09] text-xs">
                       No Baseline
                     </Badge>
                   )}
@@ -437,34 +437,34 @@ const BiometricGuard = () => {
                 {hasBaseline ? (
                   <div className="space-y-4">
                     <div className="grid grid-cols-3 gap-4">
-                      <div className="bg-gray-900/60 rounded-xl p-4 border border-gray-700/50 text-center">
+                      <div className="bg-gray-900/60 rounded-xl p-4 border border-white/[0.07]/50 text-center">
                         <p className="text-2xl font-bold text-emerald-400">
                           {profile.avgSpeed}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">chars / sec</p>
-                        <p className="text-xs text-gray-500 mt-0.5">Avg typing speed</p>
+                        <p className="text-xs text-slate-400 mt-1">chars / sec</p>
+                        <p className="text-xs text-slate-500 mt-0.5">Avg typing speed</p>
                       </div>
-                      <div className="bg-gray-900/60 rounded-xl p-4 border border-gray-700/50 text-center">
-                        <p className="text-2xl font-bold text-blue-400">
+                      <div className="bg-gray-900/60 rounded-xl p-4 border border-white/[0.07]/50 text-center">
+                        <p className="text-2xl font-bold text-cyan-400">
                           {profile.avgInterval ? `${Math.round(profile.avgInterval)}` : "—"}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">ms</p>
-                        <p className="text-xs text-gray-500 mt-0.5">Avg key interval</p>
+                        <p className="text-xs text-slate-400 mt-1">ms</p>
+                        <p className="text-xs text-slate-500 mt-0.5">Avg key interval</p>
                       </div>
-                      <div className="bg-gray-900/60 rounded-xl p-4 border border-gray-700/50 text-center">
+                      <div className="bg-gray-900/60 rounded-xl p-4 border border-white/[0.07]/50 text-center">
                         <p className="text-2xl font-bold text-purple-400">
                           {consistencyScore !== null ? `${consistencyScore}%` : "—"}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">score</p>
-                        <p className="text-xs text-gray-500 mt-0.5">Session consistency</p>
+                        <p className="text-xs text-slate-400 mt-1">score</p>
+                        <p className="text-xs text-slate-500 mt-0.5">Session consistency</p>
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <div className="flex items-center gap-2 text-xs text-slate-400">
                         <Clock className="h-3.5 w-3.5" />
                         <span>
                           Last calibrated:{" "}
-                          <span className="text-gray-300">
+                          <span className="text-slate-300">
                             {daysSinceCal === 0
                               ? "today"
                               : daysSinceCal === 1
@@ -478,7 +478,7 @@ const BiometricGuard = () => {
                         variant="outline"
                         onClick={resetCalibration}
                         disabled={recalibrating}
-                        className="border-gray-600 hover:bg-gray-700 text-gray-300 text-xs gap-1.5"
+                        className="border-white/[0.09] hover:bg-white/[0.07] text-slate-300 text-xs gap-1.5"
                       >
                         <RefreshCw className="h-3.5 w-3.5" />
                         Recalibrate
@@ -487,9 +487,9 @@ const BiometricGuard = () => {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center justify-center py-8 gap-3 text-center">
-                    <Fingerprint className="h-12 w-12 text-gray-600" />
-                    <p className="text-gray-400 text-sm">No biometric baseline recorded yet.</p>
-                    <p className="text-gray-500 text-xs max-w-xs">
+                    <Fingerprint className="h-12 w-12 text-slate-600" />
+                    <p className="text-slate-400 text-sm">No biometric baseline recorded yet.</p>
+                    <p className="text-slate-500 text-xs max-w-xs">
                       Use the live session monitor below to type the calibration phrase and
                       save your baseline.
                     </p>
@@ -501,11 +501,11 @@ const BiometricGuard = () => {
 
           {/* ── Live Session Monitor ── */}
           <motion.div custom={2} variants={cardVariants} initial="hidden" animate="visible">
-            <Card className="bg-gray-800/60 border-gray-700/60">
+            <Card className="bg-gray-800/60 border-white/[0.07]/60">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-sm font-semibold text-gray-300 flex items-center gap-2">
-                    <Wifi className="h-4 w-4 text-blue-400" />
+                  <CardTitle className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                    <Wifi className="h-4 w-4 text-cyan-400" />
                     Live Session Monitor
                   </CardTitle>
                   <div className="flex items-center gap-2">
@@ -524,9 +524,9 @@ const BiometricGuard = () => {
               <CardContent className="space-y-5">
                 {/* Input */}
                 <div className="space-y-2">
-                  <label className="text-xs text-gray-400">
+                  <label className="text-xs text-slate-400">
                     Type this phrase to calibrate:
-                    <span className="ml-1 text-gray-200 font-medium italic">
+                    <span className="ml-1 text-slate-200 font-medium italic">
                       "{CALIBRATION_PHRASE}"
                     </span>
                   </label>
@@ -537,12 +537,12 @@ const BiometricGuard = () => {
                       onChange={handleChange}
                       onKeyDown={handleKeyDown}
                       placeholder="Start typing here..."
-                      className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-600 transition-all"
+                      className="w-full bg-gray-900 border border-white/[0.07] rounded-lg px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-600 transition-all"
                     />
                     {testInput.length > 0 && (
                       <button
                         onClick={resetCalibration}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
                       >
                         <XCircle className="h-4 w-4" />
                       </button>
@@ -550,7 +550,7 @@ const BiometricGuard = () => {
                   </div>
                   {/* Progress bar for phrase completion */}
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 bg-gray-700 rounded-full h-1.5 overflow-hidden">
+                    <div className="flex-1 bg-white/[0.07] rounded-full h-1.5 overflow-hidden">
                       <motion.div
                         animate={{
                           width: `${Math.min(
@@ -562,7 +562,7 @@ const BiometricGuard = () => {
                         className="h-full bg-emerald-500 rounded-full"
                       />
                     </div>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-slate-500">
                       {Math.min(
                         Math.round((testInput.length / CALIBRATION_PHRASE.length) * 100),
                         100
@@ -574,30 +574,30 @@ const BiometricGuard = () => {
 
                 {/* Real-time metrics */}
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="bg-gray-900/60 rounded-lg p-3 border border-gray-700/50">
+                  <div className="bg-gray-900/60 rounded-lg p-3 border border-white/[0.07]/50">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <Activity className="h-3.5 w-3.5 text-blue-400" />
-                      <span className="text-xs text-gray-400">Speed</span>
+                      <Activity className="h-3.5 w-3.5 text-cyan-400" />
+                      <span className="text-xs text-slate-400">Speed</span>
                     </div>
                     <p className="text-lg font-bold text-white">
                       {typingMetrics.speed.toFixed(1)}
-                      <span className="text-xs text-gray-500 ml-1">c/s</span>
+                      <span className="text-xs text-slate-500 ml-1">c/s</span>
                     </p>
                   </div>
-                  <div className="bg-gray-900/60 rounded-lg p-3 border border-gray-700/50">
+                  <div className="bg-gray-900/60 rounded-lg p-3 border border-white/[0.07]/50">
                     <div className="flex items-center gap-1.5 mb-1">
                       <BarChart2 className="h-3.5 w-3.5 text-purple-400" />
-                      <span className="text-xs text-gray-400">Keystrokes</span>
+                      <span className="text-xs text-slate-400">Keystrokes</span>
                     </div>
                     <p className="text-lg font-bold text-white">
                       {typingMetrics.intervals.length}
-                      <span className="text-xs text-gray-500 ml-1">recorded</span>
+                      <span className="text-xs text-slate-500 ml-1">recorded</span>
                     </p>
                   </div>
-                  <div className="bg-gray-900/60 rounded-lg p-3 border border-gray-700/50">
+                  <div className="bg-gray-900/60 rounded-lg p-3 border border-white/[0.07]/50">
                     <div className="flex items-center gap-1.5 mb-1">
                       <AlertTriangle className="h-3.5 w-3.5 text-yellow-400" />
-                      <span className="text-xs text-gray-400">Deviation</span>
+                      <span className="text-xs text-slate-400">Deviation</span>
                     </div>
                     <p
                       className={`text-lg font-bold ${riskColor(typingMetrics.deviation)}`}
@@ -612,11 +612,11 @@ const BiometricGuard = () => {
                 {/* Keystroke waveform */}
                 {typingMetrics.intervals.length > 0 && (
                   <div className="space-y-1.5">
-                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                    <p className="text-xs text-slate-500 flex items-center gap-1">
                       <BarChart2 className="h-3 w-3" />
                       Keystroke interval waveform (ms)
                     </p>
-                    <div className="flex items-end gap-1 bg-gray-900/60 rounded-lg p-3 border border-gray-700/50 min-h-[64px] overflow-x-auto">
+                    <div className="flex items-end gap-1 bg-gray-900/60 rounded-lg p-3 border border-white/[0.07]/50 min-h-[64px] overflow-x-auto">
                       <AnimatePresence>
                         {typingMetrics.intervals.map((interval, i) => (
                           <motion.div
@@ -631,15 +631,15 @@ const BiometricGuard = () => {
                         ))}
                       </AnimatePresence>
                       {typingMetrics.intervals.length === 0 && (
-                        <p className="text-xs text-gray-600 mx-auto self-center">
+                        <p className="text-xs text-slate-600 mx-auto self-center">
                           Start typing to see waveform
                         </p>
                       )}
                     </div>
                     {hasBaseline && typingMetrics.deviation !== null && (
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-slate-500">
                         Baseline avg interval:{" "}
-                        <span className="text-gray-300">
+                        <span className="text-slate-300">
                           {Math.round(profile.avgInterval)} ms
                         </span>{" "}
                         · Current deviation:{" "}
@@ -689,7 +689,7 @@ const BiometricGuard = () => {
                       onClick={resetCalibration}
                       variant="ghost"
                       size="sm"
-                      className="text-gray-400 hover:text-white text-xs"
+                      className="text-slate-400 hover:text-white text-xs"
                     >
                       Clear
                     </Button>
@@ -701,13 +701,13 @@ const BiometricGuard = () => {
 
           {/* ── Session Risk Events ── */}
           <motion.div custom={3} variants={cardVariants} initial="hidden" animate="visible">
-            <Card className="bg-gray-800/60 border-gray-700/60">
+            <Card className="bg-gray-800/60 border-white/[0.07]/60">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-semibold text-gray-300 flex items-center gap-2">
+                <CardTitle className="text-sm font-semibold text-slate-300 flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4 text-yellow-400" />
                   Session Risk Events
                   {events.length > 0 && (
-                    <Badge className="ml-auto bg-gray-700 text-gray-300 border border-gray-600 text-xs">
+                    <Badge className="ml-auto bg-white/[0.07] text-slate-300 border border-white/[0.09] text-xs">
                       {events.length}
                     </Badge>
                   )}
@@ -717,8 +717,8 @@ const BiometricGuard = () => {
                 {events.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-8 gap-2 text-center">
                     <CheckCircle2 className="h-10 w-10 text-emerald-600/50" />
-                    <p className="text-gray-400 text-sm">No anomaly events recorded.</p>
-                    <p className="text-gray-600 text-xs">
+                    <p className="text-slate-400 text-sm">No anomaly events recorded.</p>
+                    <p className="text-slate-600 text-xs">
                       Events will appear here when deviations are detected.
                     </p>
                   </div>
@@ -735,7 +735,7 @@ const BiometricGuard = () => {
                             initial={{ opacity: 0, x: -12 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: i * 0.05 }}
-                            className="flex items-start justify-between gap-3 bg-gray-900/50 rounded-lg px-4 py-3 border border-gray-700/50"
+                            className="flex items-start justify-between gap-3 bg-gray-900/50 rounded-lg px-4 py-3 border border-white/[0.07]/50"
                           >
                             <div className="flex items-start gap-3 min-w-0">
                               <div
@@ -748,10 +748,10 @@ const BiometricGuard = () => {
                                 }`}
                               />
                               <div className="min-w-0">
-                                <p className="text-sm text-gray-200 truncate">
+                                <p className="text-sm text-slate-200 truncate">
                                   {evt.message || "Session event recorded"}
                                 </p>
-                                <p className="text-xs text-gray-500 mt-0.5">{ts}</p>
+                                <p className="text-xs text-slate-500 mt-0.5">{ts}</p>
                               </div>
                             </div>
                             <div className="flex-shrink-0">
@@ -769,10 +769,10 @@ const BiometricGuard = () => {
 
           {/* ── Protection Settings ── */}
           <motion.div custom={4} variants={cardVariants} initial="hidden" animate="visible">
-            <Card className="bg-gray-800/60 border-gray-700/60">
+            <Card className="bg-gray-800/60 border-white/[0.07]/60">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-semibold text-gray-300 flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-blue-400" />
+                <CardTitle className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-cyan-400" />
                   Protection Settings
                 </CardTitle>
               </CardHeader>

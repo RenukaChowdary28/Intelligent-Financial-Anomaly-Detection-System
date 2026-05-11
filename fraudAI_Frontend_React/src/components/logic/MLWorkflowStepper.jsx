@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+﻿import { useNavigate, useLocation } from "react-router-dom";
 import { Check } from "lucide-react";
 
 const STEPS = [
@@ -31,7 +31,7 @@ export default function MLWorkflowStepper() {
               {/* connector + circle row */}
               <div className="flex items-center w-full">
                 {/* left connector */}
-                <div className={`flex-1 h-px ${i === 0 ? "opacity-0" : isDone || isActive ? "bg-blue-500/50" : "bg-gray-700"}`} />
+                <div className={`flex-1 h-px ${i === 0 ? "opacity-0" : isDone || isActive ? "bg-blue-500/50" : "bg-white/[0.07]"}`} />
 
                 {/* circle */}
                 <button
@@ -44,7 +44,7 @@ export default function MLWorkflowStepper() {
                       ? "bg-blue-500 border-blue-400 text-white shadow-lg shadow-blue-500/30"
                       : isDone
                       ? "bg-green-500/20 border-green-500 text-green-400 hover:bg-green-500/30"
-                      : "bg-gray-800 border-gray-600 text-gray-500 hover:border-gray-500 hover:text-gray-400"
+                      : "bg-gray-800 border-white/[0.09] text-slate-500 hover:border-gray-500 hover:text-slate-400"
                     }
                   `}
                 >
@@ -52,14 +52,14 @@ export default function MLWorkflowStepper() {
                 </button>
 
                 {/* right connector */}
-                <div className={`flex-1 h-px ${i === STEPS.length - 1 ? "opacity-0" : isDone ? "bg-blue-500/50" : "bg-gray-700"}`} />
+                <div className={`flex-1 h-px ${i === STEPS.length - 1 ? "opacity-0" : isDone ? "bg-blue-500/50" : "bg-white/[0.07]"}`} />
               </div>
 
               {/* label */}
               <span className={`mt-1.5 text-center leading-tight px-0.5
-                ${isActive   ? "text-blue-400 font-semibold" :
+                ${isActive   ? "text-cyan-400 font-semibold" :
                   isDone     ? "text-green-400" :
-                               "text-gray-600"}
+                               "text-slate-600"}
                 text-[10px] hidden sm:block truncate w-full`}>
                 {step.label}
               </span>

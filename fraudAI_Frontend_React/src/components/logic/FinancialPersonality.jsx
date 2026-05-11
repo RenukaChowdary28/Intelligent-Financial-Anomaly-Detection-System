@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -8,8 +9,8 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, Cell,
 } from 'recharts';
 import {
-  Brain, RefreshCw, Info, Star, TrendingUp, TrendingDown,
-  Moon, Sun, Zap, Shield, Target, Sparkles,
+  Brain, RefreshCw, Info, Star, TrendingDown,
+  Moon, Zap, Target, Sparkles, ArrowLeft,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -181,6 +182,7 @@ const DEMO_TXNS = Array.from({ length: 40 }, (_, i) => ({
 
 // ═══════════════════════════════════════════════════════════════════════════════
 export default function FinancialPersonality() {
+  const navigate = useNavigate();
   const [user, setUser]       = useState(null);
   const [loading, setLoading] = useState(true);
   const [archKey, setArchKey] = useState('balancedPlanner');
@@ -224,10 +226,10 @@ export default function FinancialPersonality() {
   const BAR_COLORS = ['#6366f1','#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4'];
 
   if (loading) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-center space-y-3">
         <Brain className="w-12 h-12 text-violet-400 mx-auto animate-pulse" />
-        <p className="text-gray-400 text-sm">Analyzing your financial personality…</p>
+        <p className="text-slate-400 text-sm">Analyzing your financial personality…</p>
       </div>
     </div>
   );
@@ -238,17 +240,20 @@ export default function FinancialPersonality() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
+          <button onClick={() => navigate(-1)} className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all flex-shrink-0">
+            <ArrowLeft className="h-4 w-4" />
+          </button>
           <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600 to-pink-600 flex items-center justify-center shadow-lg shadow-violet-600/30">
             <Brain className="w-5 h-5 text-white" />
           </div>
           <div>
             <h1 className="text-xl font-bold">Financial Personality</h1>
-            <p className="text-xs text-gray-400">AI-derived spending archetype</p>
+            <p className="text-xs text-slate-400">AI-derived spending archetype</p>
           </div>
         </div>
         {user && (
           <Button onClick={() => load(user.uid)} variant="ghost" size="sm"
-            className="text-gray-400 hover:text-white gap-1.5 text-xs">
+            className="text-slate-400 hover:text-white gap-1.5 text-xs">
             <RefreshCw className="w-3.5 h-3.5" /> Re-analyze
           </Button>
         )}
@@ -271,10 +276,10 @@ export default function FinancialPersonality() {
           <div className="text-5xl">{arch.emoji}</div>
           <div>
             <p className="text-2xl font-bold text-white">{arch.name}</p>
-            <p className="text-sm text-gray-300 mt-1 italic">"{arch.tagline}"</p>
+            <p className="text-sm text-slate-300 mt-1 italic">"{arch.tagline}"</p>
           </div>
           <div className="flex justify-center">
-            <span className="text-xs px-3 py-1 rounded-full bg-white/10 text-gray-300 border border-white/10">
+            <span className="text-xs px-3 py-1 rounded-full bg-white/10 text-slate-300 border border-white/10">
               Based on {txnCount} transaction{txnCount !== 1 ? 's' : ''}
             </span>
           </div>
@@ -283,7 +288,7 @@ export default function FinancialPersonality() {
 
       {/* Radar chart */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="bg-gray-900 border border-gray-800 rounded-2xl p-5">
+        className="bg-gray-900 border border-white/[0.05] rounded-2xl p-5">
         <p className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-violet-400" /> Spending Profile Radar
         </p>
@@ -298,9 +303,9 @@ export default function FinancialPersonality() {
 
       {/* Day of week distribution */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-        className="bg-gray-900 border border-gray-800 rounded-2xl p-5">
+        className="bg-gray-900 border border-white/[0.05] rounded-2xl p-5">
         <p className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
-          <Target className="w-4 h-4 text-blue-400" /> Transactions by Day of Week
+          <Target className="w-4 h-4 text-cyan-400" /> Transactions by Day of Week
         </p>
         <ResponsiveContainer width="100%" height={120}>
           <BarChart data={dayData} barSize={28}>
@@ -321,7 +326,7 @@ export default function FinancialPersonality() {
 
       {/* Time of day */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}
-        className="bg-gray-900 border border-gray-800 rounded-2xl p-5">
+        className="bg-gray-900 border border-white/[0.05] rounded-2xl p-5">
         <p className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
           <Moon className="w-4 h-4 text-indigo-400" /> When You Spend
         </p>
@@ -331,7 +336,7 @@ export default function FinancialPersonality() {
             const pct = Math.round((h.count / max) * 100);
             return (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-xs text-gray-500 w-20 shrink-0">{h.label}</span>
+                <span className="text-xs text-slate-500 w-20 shrink-0">{h.label}</span>
                 <div className="flex-1 bg-gray-800 rounded-full h-2 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }} animate={{ width: `${pct}%` }}
@@ -340,7 +345,7 @@ export default function FinancialPersonality() {
                     style={{ background: arch.color }}
                   />
                 </div>
-                <span className="text-xs text-gray-500 w-8 text-right">{h.count}</span>
+                <span className="text-xs text-slate-500 w-8 text-right">{h.count}</span>
               </div>
             );
           })}
@@ -349,7 +354,7 @@ export default function FinancialPersonality() {
 
       {/* Strengths */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}
-        className="bg-gray-900 border border-gray-800 rounded-2xl p-5 space-y-3">
+        className="bg-gray-900 border border-white/[0.05] rounded-2xl p-5 space-y-3">
         <p className="text-sm font-semibold text-white flex items-center gap-2">
           <Star className="w-4 h-4 text-emerald-400" /> Your Strengths
         </p>
@@ -358,14 +363,14 @@ export default function FinancialPersonality() {
             <div className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mt-0.5 shrink-0">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
             </div>
-            <p className="text-sm text-gray-300">{s}</p>
+            <p className="text-sm text-slate-300">{s}</p>
           </div>
         ))}
       </motion.div>
 
       {/* Blind spots */}
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-        className="bg-gray-900 border border-gray-800 rounded-2xl p-5 space-y-3">
+        className="bg-gray-900 border border-white/[0.05] rounded-2xl p-5 space-y-3">
         <p className="text-sm font-semibold text-white flex items-center gap-2">
           <TrendingDown className="w-4 h-4 text-red-400" /> Blind Spots to Watch
         </p>
@@ -374,7 +379,7 @@ export default function FinancialPersonality() {
             <div className="w-4 h-4 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center mt-0.5 shrink-0">
               <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
             </div>
-            <p className="text-sm text-gray-300">{s}</p>
+            <p className="text-sm text-slate-300">{s}</p>
           </div>
         ))}
       </motion.div>
@@ -388,7 +393,7 @@ export default function FinancialPersonality() {
         {arch.tips.map((t, i) => (
           <div key={i} className="flex items-start gap-2.5">
             <span className="text-yellow-400 text-xs font-bold mt-0.5 shrink-0">{i + 1}.</span>
-            <p className="text-sm text-gray-300">{t}</p>
+            <p className="text-sm text-slate-300">{t}</p>
           </div>
         ))}
       </motion.div>

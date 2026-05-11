@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
+﻿import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, where, limit, doc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase';
@@ -10,7 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   PiggyBank, TrendingDown, AlertTriangle, CheckCircle,
   Zap, Calendar, Target, DollarSign, BarChart2,
-  RefreshCw, ChevronRight, Flame, Clock, ArrowUp, ArrowDown,
+  RefreshCw, ChevronRight, Flame, Clock, ArrowUp, ArrowDown, ArrowLeft,
 } from 'lucide-react';
 
 /* ── helpers ─────────────────────────────────────────────── */
@@ -158,6 +159,7 @@ function CurveTooltip({ active, payload, label }) {
    MAIN COMPONENT
 ═══════════════════════════════════════════════════════════ */
 export default function BudgetPredictor() {
+  const navigate = useNavigate();
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading]       = useState(true);
   const [error, setError]           = useState(null);
@@ -217,7 +219,7 @@ export default function BudgetPredictor() {
 
   /* ── loading ─────────────────────────────────────────── */
   if (loading) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <motion.div
           className="w-20 h-20 mx-auto mb-6 rounded-full border-4 border-violet-500/30 border-t-violet-500"
@@ -229,7 +231,7 @@ export default function BudgetPredictor() {
   );
 
   if (error) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="text-red-400 text-center"><AlertTriangle className="mx-auto mb-3 h-10 w-10" /><p>{error}</p></div>
     </div>
   );
@@ -251,6 +253,9 @@ export default function BudgetPredictor() {
         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div className="flex items-center gap-3 mb-1">
+            <button onClick={() => navigate(-1)} className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all flex-shrink-0">
+              <ArrowLeft className="h-4 w-4" />
+            </button>
             <div className="w-10 h-10 rounded-xl bg-violet-500/20 flex items-center justify-center">
               <PiggyBank className="h-5 w-5 text-violet-400" />
             </div>
@@ -327,7 +332,7 @@ export default function BudgetPredictor() {
       {/* ── Key Stats Grid ─────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Spent So Far',       value: fmt(prediction.spentSoFar),      icon: DollarSign,   color: 'text-blue-400',   sub: `${prediction.txCount} transactions` },
+          { label: 'Spent So Far',       value: fmt(prediction.spentSoFar),      icon: DollarSign,   color: 'text-cyan-400',   sub: `${prediction.txCount} transactions` },
           { label: 'Projected Total',    value: fmt(prediction.projectedTotal),   icon: TrendingDown, color: 'text-violet-400', sub: `vs ${fmt(prediction.autoBudget)} budget` },
           { label: 'Daily Velocity',     value: fmt(prediction.dailyVelocity),    icon: Zap,          color: 'text-amber-400',  sub: `Safe limit: ${fmt(prediction.safeDaily)}/day` },
           { label: 'Days Left',          value: String(DAYS_LEFT),                icon: Calendar,     color: 'text-teal-400',   sub: `of ${DAYS_IN_MONTH} days this month` },
@@ -508,7 +513,7 @@ export default function BudgetPredictor() {
               text: `Budget exhausts on ${prediction.exhaustionDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'long' })}. Consider a ${fmt(Math.round(prediction.projectedTotal - prediction.autoBudget))} top-up or cut spending by 25%.`,
             },
             {
-              icon: Target, color: 'text-blue-400',
+              icon: Target, color: 'text-cyan-400',
               text: `Your ideal daily budget is ${fmt(prediction.safeDaily)} for the remaining ${DAYS_LEFT} days.`,
             },
             prediction.changeVsLastMonth > 15 && {

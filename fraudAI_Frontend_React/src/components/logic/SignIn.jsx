@@ -1,9 +1,9 @@
-
+﻿
 import { handleGoogleSignIn } from "./auth";
 
 const SignIn = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white/[0.04]">
       <h1 className="text-3xl font-bold mb-6">Welcome to AegisAI</h1>
       <button
         onClick={handleGoogleSignIn}

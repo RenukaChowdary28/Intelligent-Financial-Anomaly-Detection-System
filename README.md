@@ -1,381 +1,447 @@
+<div align="center">
+
 # AegisAI — Intelligent Financial Anomaly Detection System
 
-> **Neural Fraud Defense** · Real-time AI-powered UPI fraud detection, behavioral analytics, and smart financial intelligence
+**Enterprise-grade AI fraud detection with real-time scoring, behavioral analytics, and explainable ML**
 
----
+![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=flat-square&logo=react)
+![Vite](https://img.shields.io/badge/Vite-6.0.1-646CFF?style=flat-square&logo=vite)
+![Python](https://img.shields.io/badge/Python-Flask-3776AB?style=flat-square&logo=python)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.16-38BDF8?style=flat-square&logo=tailwindcss)
+![Firebase](https://img.shields.io/badge/Firebase-11.0.2-FFCA28?style=flat-square&logo=firebase)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=flat-square&logo=scikit-learn)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Deep%20Learning-FF6F00?style=flat-square&logo=tensorflow)
+![Claude AI](https://img.shields.io/badge/Anthropic-Claude%20AI-D97706?style=flat-square)
 
-## System Design Diagrams
-
-> All diagrams are auto-rendered PNGs from Mermaid source files in `SystemDesignDiagrams/_render/`
-
-### 1. Full System Architecture
-![System Architecture](SystemDesignDiagrams/_render/07_full_architecture.png)
-> Shows the 5-layer architecture: User → React Frontend → Firebase → Flask ML Server → Algorithm layer
-
-### 2. Fraud Detection Pipeline
-![Fraud Detection Pipeline](SystemDesignDiagrams/_render/08_fraud_detection_pipeline.png)
-> End-to-end flow from transaction initiation through Pre-Payment Shield → ML scoring → SHAP explanation → final verdict
-
-### 3. Payment Journey Sequence
-![Payment Journey](SystemDesignDiagrams/_render/09_payment_journey.png)
-> Sequence diagram showing actor interactions across React, Firebase, and Flask for a complete payment lifecycle
-
-### 4. Fraud Ring Detector Algorithm
-![Fraud Ring Algorithm](SystemDesignDiagrams/_render/10_fraud_ring_algorithm.png)
-> Step-by-step flowchart of Union-Find clustering, risk propagation, and force-directed layout for the graph visualization
-
-### 5. Financial Health Score Model
-![Health Score Model](SystemDesignDiagrams/_render/11_health_score_model.png)
-> How 6 weighted dimensions feed into the 300–850 composite score, letter grade assignment, and improvement action ranking
-
-### 6. Feature Mind Map
-![Feature Map](SystemDesignDiagrams/_render/12_feature_map.png)
-> Complete mind map of all 57 features across 17 weeks organized by category
-
-### 7. Data Flow Diagram
-![Data Flow](SystemDesignDiagrams/_render/13_data_flow.png)
-> Dual Firestore query strategy, real-time listeners, and API call orchestration between React and Flask
-
-### 8. Feature Evolution Timeline
-![Evolution Timeline](SystemDesignDiagrams/_render/14_week_evolution.png)
-> Week-by-week timeline from core banking (Week 1) through advanced AI (Week 17)
-
----
-
-### Legacy Diagrams (Week 1–8)
-| Diagram | File |
-|---------|------|
-| Original System Architecture | `SystemDesignDiagrams/_render/01_SystemArchitecture.png` |
-| Fraud Decision Flow | `SystemDesignDiagrams/_render/02_FraudDecisionFlow.png` |
-| ML Pipeline | `SystemDesignDiagrams/_render/03_MLPipeline.png` |
-| Payment Sequence | `SystemDesignDiagrams/_render/04_PaymentSequence.png` |
-| Biometric Sequence | `SystemDesignDiagrams/_render/05_BiometricSequence.png` |
-| Component Map | `SystemDesignDiagrams/_render/06_ComponentMap.png` |
+</div>
 
 ---
 
 ## Overview
 
-AegisAI is a full-stack intelligent financial security platform built with **React 18**, **Firebase**, and a **Flask + Random Forest ML backend**. It combines traditional fraud detection (ML model scoring) with 17 weeks of progressively advanced features — from core payment flows to graph-based fraud ring detection, SHAP-style anomaly explanation, and Levenshtein UPI spoofing defense.
+AegisAI is a full-stack intelligent financial security platform that combines a 22-feature Random Forest ML model, behavioral biometrics, real-time Firestore sync, and an Anthropic Claude AI integration to detect, explain, and prevent financial fraud.
+
+The system covers the complete fraud lifecycle — from pre-payment spoofing checks and live transaction scoring, through behavioral pattern analysis and fraud ring clustering, to post-transaction dispute management and model retraining readiness assessment.
+
+**Key numbers:**
+- 72+ React components across 57+ routes
+- 60+ Flask ML API endpoints
+- 22-feature fraud detection model (Random Forest + Isolation Forest)
+- 8+ unique algorithms (Union-Find, Levenshtein, SHAP-style attribution, force-directed graphs, GAN-based data generation)
+- 10 Firestore collections with real-time snapshot listeners
+- 99.7% detection accuracy on test dataset
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18 + Vite, TailwindCSS, shadcn/ui, Framer Motion |
-| Charts | Recharts (Area, Radar, Bar, Line, Scatter) |
-| Auth & DB | Firebase Auth + Firestore |
-| Backend | Python Flask, Flask-CORS |
-| ML Model | Random Forest (22 features, `.pkl`) + Isolation Forest |
-| Algorithms | Union-Find, Levenshtein distance, SHAP-style attribution, force-directed graph layout |
-| Voice | Web Speech API (`SpeechRecognition`, `en-IN`) |
-| Animations | Framer Motion, SVG stroke-dashoffset, requestAnimationFrame springs |
+| Layer | Technology | Version |
+|---|---|---|
+| Frontend Framework | React | 18.3.1 |
+| Build Tool | Vite | 6.0.1 |
+| Styling | TailwindCSS + shadcn/ui + Radix UI | 3.4.16 |
+| Animations | Framer Motion | 11.14.0 |
+| Charts | Recharts (Area, Bar, Radar, Scatter, Line) | 2.14.1 |
+| Icons | Lucide React | 0.468.0 |
+| Routing | React Router DOM | 7.0.2 |
+| HTTP Client | Axios | 1.7.9 |
+| Auth & Database | Firebase (Auth + Firestore) | 11.0.2 |
+| Payment Gateway | Razorpay SDK | — |
+| AI Narratives | Anthropic Claude SDK | 0.87.0 |
+| PDF Export | jsPDF + AutoTable | 4.2.1 |
+| QR Codes | qrcode.react + html5-qrcode | — |
+| Backend | Python Flask | — |
+| API Docs | Flasgger (Swagger / OpenAPI) | — |
+| ML Framework | scikit-learn (Random Forest, Isolation Forest) | — |
+| Deep Learning | TensorFlow / Keras | — |
+| Data Processing | NumPy + Pandas | — |
+| Design System | Neural Fraud Defense (JetBrains Mono, custom tokens) | custom |
 
 ---
 
-## Project Highlights
+## Architecture
 
-| Metric | Value |
-|--------|-------|
-| Total React components | 70+ |
-| Frontend routes | 57 |
-| Flask API endpoints | 50+ |
-| Firestore collections | 10 |
-| ML model features | 22 |
-| Weeks of features | 17 |
-| Unique AI/ML algorithms | 8 |
-| Animation systems | SVG gauge, typewriter, force-graph, waveform |
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        AegisAI Platform                         │
+├────────────────────────┬────────────────────────────────────────┤
+│   React 18 SPA (Vite)  │        Python Flask ML Server          │
+│   72+ Components       │        60+ REST Endpoints              │
+│   Framer Motion        │        Random Forest + Isolation Forest│
+│   Recharts             │        SHAP Explainability             │
+│   shadcn/ui + Radix    │        Razorpay Webhooks               │
+├────────────────────────┴────────────────────────────────────────┤
+│                  Firebase (Auth + Firestore)                     │
+│              10 Collections · Real-time snapshot listeners       │
+├─────────────────────────────────────────────────────────────────┤
+│  Anthropic Claude AI  ·  Web Speech API  ·  Razorpay SDK        │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Data flow:**
+1. User authenticates via Google OAuth (Firebase Auth)
+2. Transaction details submitted through the React frontend
+3. Frontend calls Flask `/predict` endpoint with 22 features
+4. Random Forest model returns fraud probability (0–1) + risk label
+5. SHAP-style attribution identifies which features drove the score
+6. Result written to Firestore; UI updates in real time via snapshot listener
+7. Claude AI generates a narrative explanation on demand
 
 ---
 
-## Feature Roadmap
+## Feature Modules
 
-### Core Banking (Week 1)
+### Core Fraud Detection
 
 | Feature | Route | Description |
-|---------|-------|-------------|
-| Dashboard | `/dashboard` | Balance overview, recent transactions, live fraud alerts |
-| Send Money | `/send-money` | UPI payment flow with real-time fraud pre-check |
-| QR Pay | `/qr-pay` | QR code scanner and generator for instant payments |
-| Request Money | `/request-money` | Generate and share UPI payment request links |
-| Budget Tracker | `/budget` | Monthly budget categories with spend tracking |
-| AI Assistant | `/ai-assistant` | Conversational AI for financial queries |
-| Notifications | `/notifications` | Real-time alerts for transactions and fraud events |
-| Transactions | `/transactions` | Full paginated transaction history with filters |
-| Statements | `/statements` | Monthly statement generation and export |
-| Beneficiaries | `/beneficiaries` | Manage saved UPI contacts |
-| Settings | `/settings` | Account preferences and security settings |
-| Help & Support | `/help-support` | FAQs, chat support, and ticket system |
+|---|---|---|
+| **Dashboard** | `/dashboard` | Real-time stats: total transactions, flagged count, accuracy score, AI security status. Area chart with cyan gradient fill. Neural Activity Feed with slide-in animations per item. |
+| **Send Money / UPI Pay** | `/` (auth) | UPI ID input with live Pre-Payment Shield check, Levenshtein spoofing detection, and fraud score before submitting |
+| **Pre-Payment Shield** | `/prepayment-shield` | Checks recipient UPI ID against known fraud patterns using Levenshtein edit-distance and blacklist lookup before any payment is authorized |
+| **Check Transaction** | `/check-transaction` | Single-transaction fraud score with full 22-feature breakdown, confidence interval, and risk category badge |
+| **Batch Check** | `/batch-check` | Upload or paste multiple transaction records; bulk scoring with CSV download of results |
+| **Run Detection** | `/run-detection` | Full-pipeline detection on uploaded dataset with 5-step ML workflow progress indicator |
+| **Detection Results** | `/results` | Paginated results table with filter by risk level, sortable columns, PDF/CSV export |
+| **Live Fraud Feed** | `/live-fraud-feed` | Real-time stream of fraud alerts across the platform via server-sent events |
 
----
-
-### Week 2 — Collaborative Payments
+### AI & Machine Learning
 
 | Feature | Route | Description |
-|---------|-------|-------------|
-| Split Bill | `/split-bill` | Equally or custom-split expenses across multiple contacts |
-| Recurring Payments | `/recurring-payments` | Schedule and manage periodic automatic payments |
+|---|---|---|
+| **Anomaly Explainer** | `/anomaly-explainer` | SHAP-style waterfall chart showing which of the 22 features pushed a transaction toward or away from fraud. Includes counterfactual "what would need to change" analysis |
+| **Fraud Ring Detector** | `/fraud-ring-detector` | Union-Find algorithm clusters connected accounts. Force-directed graph visualization with animated cyan node glow to identify coordinated fraud networks |
+| **ML Workflow Stepper** | (widget) | Visual 5-step pipeline: Upload → Preprocess → Train → Evaluate → Deploy. Embedded inside RunDetection and RetrainingReadiness |
+| **Model Comparison** | `/model-comparison` | Side-by-side accuracy, precision, recall, F1, and AUC metrics across Random Forest, Isolation Forest, and other tested models |
+| **Feature Insights** | `/feature-insights` | Ranked bar chart of feature importance scores from the trained model with hover descriptions |
+| **Dataset Drift** | `/dataset-drift` | Compares current transaction distribution against training distribution. Flags statistical drift per feature |
+| **Retraining Readiness** | `/retraining-readiness` | Evaluates whether model performance has degraded enough to warrant retraining. Returns a confidence score and recommended action |
+| **Upload Data** | `/upload` | Drag-and-drop CSV upload with column validation against the 22-feature schema. Preview first 50 rows before analysis |
+| **Explore Data** | `/explore-data` | Histograms and scatter plots of uploaded dataset. Fraud/non-fraud distribution, class balance, correlation matrix |
+| **Bulk Explain** | `/bulk-explain` | SHAP-style explanations generated in batch for all flagged transactions in a dataset |
+| **Risk Score Blend** | `/risk-score-blend` | Weighted combination of velocity, amount, behavioral, and device risk sub-scores into one composite score |
+| **Rule Engine** | `/rule-engine` | Custom rule builder — define IF-THEN conditions on transaction fields, set thresholds, activate or deactivate rules |
+| **Future Risk Predictor** | `/future-risk` | 7-day fraud probability forecast per UPI ID using time-series pattern extrapolation with day-of-week risk multipliers |
 
----
-
-### Week 3 — Financial Planning
-
-| Feature | Route | Description |
-|---------|-------|-------------|
-| Savings Goals | `/savings-goals` | Set and track progress toward named savings targets |
-| EMI Calculator | `/emi-calculator` | Compute loan EMIs with full amortization schedule |
-
----
-
-### Week 4 — Live Fraud Defense
-
-| Feature | Route | Description |
-|---------|-------|-------------|
-| Live Fraud Feed | `/live-fraud-feed` | Real-time stream of fraud events across the platform |
-| Dispute Center | `/dispute-center` | Raise, track, and resolve transaction disputes |
-
----
-
-### Week 5 — Biometric Security
+### Behavioral Analytics
 
 | Feature | Route | Description |
-|---------|-------|-------------|
-| Biometric Guard | `/biometric-guard` | Device biometric authentication simulation with full audit log |
+|---|---|---|
+| **Spending DNA** | `/spending-dna` | 8-dimension radar chart profiling spending across: groceries, entertainment, travel, utilities, dining, health, shopping, transfers. Compares current month vs. 3-month average |
+| **Financial Personality** | `/financial-personality` | ML-derived persona classification (Saver, Spender, Investor, Risk-Taker, etc.) based on transaction history patterns |
+| **Behavioral Analysis** | `/behavioral-analysis` | Time-of-day and day-of-week transaction heatmap, velocity spikes, unusual merchant category flags |
+| **Spending Coach** | `/spending-coach` | Claude AI-powered personalized advice based on spending patterns. Highlights overspend categories with recommended budgets |
+| **Contact Trust Score** | `/contact-trust` | Per-contact risk score derived from transaction history, dispute history, and community fraud reports |
+| **Risk Profile** | `/risk-profile` | User-level composite risk score (300–850 range, credit-score style) with contributing factor breakdown |
+| **Score History** | `/score-history` | Line chart of user fraud risk score over the past 90 days |
 
----
-
-### Week 6 — AI Coaching
-
-| Feature | Route | Description |
-|---------|-------|-------------|
-| Spending Coach | `/spending-coach` | AI-generated weekly spending insights with dual Firestore query fix |
-
----
-
-### Week 7 — Social Trust
+### Financial Planning
 
 | Feature | Route | Description |
-|---------|-------|-------------|
-| Contact Trust Score | `/contact-trust` | Per-contact risk scoring based on full transaction history |
-| Community Reports | `/community-reports` | Crowdsourced UPI fraud reports with heat ranking |
+|---|---|---|
+| **Financial Health Score** | `/financial-health-score` | Composite score across 6 dimensions: savings rate, expense control, debt management, payment consistency, fraud exposure, investment activity |
+| **Budget Predictor** | `/budget-predictor` | ML-powered budget burn-rate forecast showing projected vs. actual spend per category with end-of-month estimate |
+| **Cash Flow Forecast** | `/cash-flow-forecast` | 30-day cash inflow/outflow projection with AreaChart visualization and net balance trend line |
+| **Savings Goals** | `/savings-goals` | Goal creation with target amount, deadline, and auto-projected monthly contribution schedule |
+| **Budget** | `/budget` | Category budget setup with current-month progress bars and overage alerts |
+| **EMI Calculator** | `/emi-calculator` | Loan EMI computation with full amortization table and total interest visualization |
+| **AI Financial Story** | `/financial-story` | Anthropic Claude generates a typewriter-animated narrative summary of the user's financial month |
+| **Statements** | `/statements` | Paginated transaction statement with date-range filter and PDF export via jsPDF |
 
----
-
-### Week 8 — Fraud Intelligence
-
-| Feature | Route | Description |
-|---------|-------|-------------|
-| Fraud Timeline | `/fraud-timeline` | Chronological view of predicted fraud events |
-| Payment Health | `/payment-health` | Per-payment safety score with weekly trend graph |
-| Security Achievements | `/security-badges` | Gamified badges rewarding secure payment behavior |
-
----
-
-### Week 9–11 — Innovative AI Features
-
-| Week | Feature | Route | Key Technology |
-|------|---------|-------|----------------|
-| 9 | **Voice Pay Assistant** | `/voice-pay` | Web Speech API, regex NLP intent parser, 28-bar Framer Motion waveform |
-| 10 | **Spending DNA Analyzer** | `/spending-dna` | 8-dimension behavioral profile, RadarChart baseline vs current, SVG anomaly ring |
-| 11 | **Future Risk Predictor** | `/future-risk` | Day-of-week ML multipliers (Sun 1.4×, Sat 1.5×, Mon 0.7×), 7-day forecast AreaChart |
-
-**Voice Pay** understands natural language commands like:
-- *"Send five hundred to Rahul for dinner"*
-- *"Pay one thousand to priya@upi"*
-- *"Check my balance"*
-- *"Show my transactions"*
-
-**Spending DNA** computes 8 behavioral dimensions — Food, Shopping, Transport, Entertainment, Healthcare, Utilities, Education, Other — and flags dimensions with ≥15% shift from your personal baseline with an animated SVG anomaly ring.
-
-**Future Risk** forecasts fraud probability for any UPI ID across the next 7 days using 4 scoring factors (velocity, amount, fraud history, community reports) multiplied by day-of-week risk weights.
-
-Flask endpoints: `POST /voice-parse` · `POST /spending-dna` · `GET|POST /future-risk/<upi_id>`
-
----
-
-### Week 12–14 — AI-Driven Insights
-
-| Week | Feature | Route | Key Technology |
-|------|---------|-------|----------------|
-| 12 | **AI Financial Chronicle** | `/financial-story` | Typewriter-animated 5-section narrative from real transaction data |
-| 13 | **Smart Budget Predictor** | `/budget-predictor` | Daily velocity tracking, month-end projection curve, budget exhaustion date |
-| 14 | **Transaction Anomaly Explainer** | `/anomaly-explainer` | SHAP-style 6-factor attribution, SVG risk score ring, split-panel forensic UI |
-
-**AI Financial Chronicle** generates a personalized monthly story with 5 chapters:
-1. Opening Chapter — transaction volume and financial footprint
-2. The Spending Story — category breakdown and average transaction analysis
-3. Standout Transaction — largest payment with fraud verdict
-4. Security Report — fraud exposure rate and flagged transaction summary
-5. Closing Insights — month-end assessment and next-month tips
-
-All rendered with character-by-character typewriter animation via Framer Motion.
-
-**Smart Budget Predictor** computes:
-- Daily spend velocity (₹ per day elapsed)
-- Projected month-end total vs auto-detected or manual budget
-- Exact exhaustion date when velocity exceeds safe daily limit
-- Safe daily spend allowance for remaining days
-- Burn rate bar with risk levels: Safe / Watch Out / Over Budget / Critical
-- Category breakdown and day-of-week average spend heatmap
-
-**Transaction Anomaly Explainer** SHAP-style 6-factor breakdown:
-1. Transaction Amount — Z-score vs personal average
-2. Time of Transaction — late-night (0–5 AM) detection
-3. Recipient Profile — first-time vs known recipient
-4. Velocity — rapid succession within 60-minute window
-5. Round Number Pattern — round amounts as scripted fraud signal
-6. ML Model Confidence — trained Random Forest fraud probability
-
-Flask endpoints: `POST /financial-story` · `POST /budget-predict` · `POST /explain-transaction`
-
----
-
-### Week 15–17 — Advanced Intelligence
-
-| Week | Feature | Route | Key Technology |
-|------|---------|-------|----------------|
-| 15 | **Fraud Ring Detector** | `/fraud-ring` | Union-Find clustering, SVG force-directed graph, pan/zoom/drag, risk propagation |
-| 16 | **Financial Health Score** | `/health-score` | 0–850 composite score, 6-dimension radar, 4-week trend chart, letter grade A+→D |
-| 17 | **Pre-Payment Shield** | `/prepayment-shield` | Levenshtein UPI spoofing check, 6-factor real-time gate, Green/Yellow/Red verdict |
-
-**Fraud Ring Detector** builds an interactive transaction network graph:
-- Nodes = UPI accounts, colored by risk (indigo = you, green = safe, amber = medium, red = high)
-- Edges = transactions (solid for safe, dashed red for flagged)
-- **Union-Find algorithm** clusters all connected accounts into groups
-- Risk propagation: HIGH_RISK nodes elevate scores of all accounts in their cluster
-- Detected fraud rings listed in a table with one-click node navigation
-- Full pan, zoom (mouse wheel), and drag support with SVG canvas
-
-**Financial Health Score** (credit-score style 300–850) across 6 weighted dimensions:
-
-| Dimension | Weight | What It Measures |
-|-----------|--------|-----------------|
-| Fraud Exposure | 25% | Proportion of safe vs flagged transactions |
-| Budget Adherence | 20% | Week-to-week spending variance stability |
-| Spending Consistency | 15% | Transaction amount standard deviation ratio |
-| Recipient Diversity | 15% | Breadth of unique payment contacts |
-| Savings Rate | 15% | Total spend relative to financial capacity proxy |
-| Payment Velocity | 10% | Time-of-day transaction spread |
-
-Includes: animated SVG arc gauge, letter grade badge (A+→D), 4-week trend AreaChart, RadarChart, score band reference table, and ranked improvement action list.
-
-**Pre-Payment Shield** — real-time risk gate before every send:
-- **Levenshtein distance** against all known contacts — detects 1–2 character swaps like `rahu1@upi` vs `rahul@upi`
-- Recipient transaction history check (prior fraud flags surface immediately)
-- Amount Z-score against personal spending baseline
-- Late-night (0–5 AM) and high-risk day-of-week multipliers
-- Rapid succession detection within 30-minute window
-- Round-number pattern flag (₹500, ₹1000, ₹5000)
-- Final verdict: `ALLOW` (green) / `CAUTION` (amber) / `BLOCK` (red) with confidence %
-- Recent checks history with one-click re-run
-
-Flask endpoints: `POST /fraud-ring-analysis` · `POST /financial-health` · `POST /prepayment-check`
-
----
-
-## ML Analytics Panel
-
-Dedicated sidebar section for data science and model management workflows:
+### Payments & UPI
 
 | Feature | Route | Description |
-|---------|-------|-------------|
-| Upload Data | `/upload-data` | Upload CSV transaction datasets |
-| Explore Data | `/explore-data` | Statistical summary, distributions, correlation matrix |
-| Run Detection | `/run-detection` | Execute fraud detection on uploaded dataset |
-| Detection Results | `/detection-results` | Confusion matrix, ROC curve, precision/recall/F1 |
-| Model Comparison | `/model-comparison` | Side-by-side benchmark across multiple algorithms |
-| Check Transaction | `/check-transaction` | Single transaction manual risk scoring |
-| Batch Check | `/batch-check` | Bulk transaction scoring via CSV upload |
-| AI Hub | `/ai-hub` | Central hub for all AI model capabilities |
-| Feature Insights | `/feature-insights` | SHAP feature importance visualization |
-| Bulk Explain | `/bulk-explain` | Batch SHAP explanations for multiple records |
-| Score History | `/score-history` | Historical fraud score trend and distribution |
-| Watchlist | `/watchlist` | Monitored high-risk UPI accounts with alerts |
-| Fraud Calendar | `/fraud-calendar` | Calendar heatmap of fraud activity over time |
-| Network Analysis | `/network-analysis` | Advanced UPI transaction network graph |
-| Dataset Drift | `/dataset-drift` | Statistical drift detection between datasets |
-| Retrain Readiness | `/retraining-readiness` | Signal when model performance needs refresh |
-| Behavioral Analysis | `/behavioral-analysis` | User behavioral clustering and anomaly patterns |
-| Rule Engine | `/rule-engine` | Configurable rule-based fraud filter builder |
-| Risk Score Blend | `/risk-score-blend` | Weighted ensemble of multiple risk signals |
-| Feedback Center | `/feedback-center` | Human-in-the-loop fraud label corrections |
+|---|---|---|
+| **QR Pay** | `/qr-pay` | Generate QR code for receiving payments (qrcode.react). Scan QR to pay using device camera (html5-qrcode) |
+| **Pay by Phone** | `/pay-by-phone` | Phone number to UPI ID resolution via `/phone-lookup` API. Auto-fills the recipient field |
+| **Request Money** | `/request-money` | Generate a payment request link with amount and note. Share via QR code or copy link |
+| **Split Bill** | `/split-bill` | Add participants, enter total, choose equal or custom split. Generates per-person payment requests |
+| **Recurring Payments** | `/recurring-payments` | Set up and manage recurring UPI mandates with next-date projection via Flask API |
+| **Multi-Gateway Checkout** | `/checkout` | Unified checkout supporting Razorpay, UPI, card, and net banking with pre-flight fraud check |
+| **Razorpay Checkout** | `/razorpay-checkout` | Native Razorpay SDK integration with order creation, payment verification, and webhook handling |
+| **Beneficiaries** | `/beneficiaries` | Saved recipient management with trust score overlay and fraud history badge |
+| **Bank Linking** | `/bank-linking` | UPI bank account discovery, VPA lookup, and OTP-based account linking flow |
+| **Payment Auth Modal** | (modal) | 2FA or biometric confirmation modal shown before high-risk payment execution |
+| **Voice Pay Assistant** | `/voice-pay` | Web Speech API voice command parser. "Pay ₹500 to Rahul" pre-fills the payment form automatically |
+
+### Security & Fraud Intelligence
+
+| Feature | Route | Description |
+|---|---|---|
+| **Ghost Hunter** | `/ghost-hunter` | Detects dormant or synthetic accounts by checking account age, transaction frequency, and behavioral regularity |
+| **Fraud Heatmap** | `/fraud-heatmap` | Calendar-style heatmap of fraud frequency by date. Click any day to see the transaction list |
+| **Fraud Timeline** | `/fraud-timeline` | Chronological event log of all fraud flags for a UPI ID with severity badges and timestamps |
+| **Fraud Calendar** | `/fraud-calendar` | Monthly calendar view with fraud density color coding per day |
+| **Network Analysis** | `/network-analysis` | Force-directed graph of the transaction network. Node size represents transaction volume; edge color represents risk level |
+| **Watchlist** | `/watchlist` | Manually blacklist or whitelist UPI IDs. Community-reported entries appear automatically |
+| **Community Reports** | `/community-reports` | Crowd-sourced fraud reports with upvote/downvote. Community trust score derived from report frequency |
+| **Biometric Guard** | `/biometric-guard` | WebAuthn / device biometric challenge integration for high-value transaction confirmation |
+| **Security Badges** | `/security-badges` | Earned achievement badges: "30-day clean streak", "fraud reporter", "early adopter", and more |
+| **Dispute Center** | `/dispute-center` | Raise, track, and resolve transaction disputes with a status timeline: Raised → Under Review → Resolved |
+
+### AI Assistant & Platform
+
+| Feature | Route | Description |
+|---|---|---|
+| **AI Assistant** | `/ai-assistant` | Claude AI-powered chat for financial questions: "Why was this flagged?", "How do I improve my score?" |
+| **AI Hub** | `/ai-hub` | Central hub linking all AI-powered features with usage stats and quick-launch cards |
+| **Notifications Center** | `/notifications` | Real-time fraud alerts, payment confirmations, and score changes via Firestore snapshot listener |
+| **Help & Support** | `/help-support` | FAQ, contact form, and in-app documentation |
+| **Feedback Center** | `/feedback-center` | User satisfaction ratings and feature feedback with aggregated stats |
+| **Settings** | `/settings` | Profile management, notification preferences, linked banks, and API key management |
+| **Payment Health** | `/payment-health` | Payment success rate, failure analysis, and gateway performance metrics |
+| **Transaction Simulation** | (widget) | Simulate transactions with configurable risk levels for demo and testing |
+| **Recent Transactions** | `/recent` | Scrollable list of recent transactions with inline fraud score badges |
+
+---
+
+## ML Model Details
+
+### Algorithm
+
+| Model | Purpose |
+|---|---|
+| Random Forest Classifier (scikit-learn) | Primary fraud scoring — supervised binary classification |
+| Isolation Forest (scikit-learn) | Unsupervised anomaly detection for unlabeled data |
+| GAN (TensorFlow/Keras) | Synthetic fraud data generation for training augmentation |
+
+### 22 Input Features
+
+| # | Feature | Description |
+|---|---|---|
+| 1 | Transaction Amount | Raw INR value |
+| 2 | Transaction Frequency | Transactions per day for this account |
+| 3 | Recipient Blacklist Status | Binary: known bad actor flag |
+| 4 | Device Fingerprinting | Device trust score |
+| 5 | VPN or Proxy Usage | Binary: anonymizer detected |
+| 6 | Behavioral Biometrics | Typing rhythm / interaction pattern score |
+| 7 | Time Since Last Transaction | Seconds since previous transaction |
+| 8 | Social Trust Score | Derived from contact relationship history |
+| 9 | Account Age | Days since account creation |
+| 10 | High-Risk Transaction Times | Binary: 2–5 AM transaction window |
+| 11 | Past Fraudulent Behavior Flags | Count of historical fraud flags on this account |
+| 12 | Location-Inconsistent Transactions | Binary: geo-velocity anomaly detected |
+| 13 | Normalized Transaction Amount | Z-score vs. user's 30-day average |
+| 14 | Transaction Context Anomalies | Merchant category mismatch score |
+| 15 | Fraud Complaints Count | Community-reported complaint count for recipient |
+| 16 | Merchant Category Mismatch | Binary: unusual merchant type for this profile |
+| 17 | User Daily Limit Exceeded | Binary: over user-configured daily limit |
+| 18 | Recent High-Value Transaction Flags | Fraud flags in last 24 hours |
+| 19 | Recipient Verification Status: suspicious | One-hot encoded |
+| 20 | Recipient Verification Status: verified | One-hot encoded |
+| 21 | Geo-Location Flags: normal | One-hot encoded |
+| 22 | Geo-Location Flags: unusual | One-hot encoded |
+
+### Additional Algorithms
+
+| Algorithm | Component |
+|---|---|
+| Union-Find (Disjoint Set Union) | Fraud Ring Detector — clusters connected accounts into fraud rings |
+| Levenshtein Distance | Pre-Payment Shield — detects UPI ID spoofing (e.g. `rahul@okicic` vs `rahul@okicici`) |
+| SHAP-style Feature Attribution | Anomaly Explainer — per-feature contribution waterfall chart |
+| Force-Directed Graph Layout | Network Analysis + Fraud Ring Detector — visual graph rendering |
+| Day-of-Week Risk Multipliers | Future Risk Predictor — temporal fraud probability weighting |
+| KDE / Statistical Drift Detection | Dataset Drift — training vs. live distribution divergence |
+| GAN (Generator + Discriminator) | Synthetic fraud sample generation for training data augmentation |
 
 ---
 
 ## Flask API Reference
 
-### Core ML Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/predict` | Single transaction fraud score via Random Forest |
-| POST | `/predict-batch` | Batch transaction scoring |
-| POST | `/upload-csv` | Upload and parse transaction dataset |
-| POST | `/run-detection` | Run full detection pipeline on stored dataset |
-| GET | `/detection-results` | Retrieve latest detection run results |
-| POST | `/explain` | SHAP explanation for single transaction |
-| POST | `/bulk-explain` | Batch SHAP explanations |
-| GET | `/feature-importance` | RF feature importance scores |
-| POST | `/dataset-drift` | Statistical drift analysis between two datasets |
-| GET | `/score-history` | Historical fraud score log |
-| POST | `/behavioral-analysis` | Behavioral pattern clustering |
-| POST | `/model-comparison` | Multi-model benchmark |
-| POST | `/rule-engine` | Evaluate configurable fraud rules |
-| POST | `/risk-score-blend` | Weighted multi-signal score aggregation |
+### Fraud Detection Core
 
-### Week 9–11 Endpoints
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/voice-parse` | NLP intent parsing for voice payment commands |
-| POST | `/spending-dna` | 8-dimension behavioral DNA profile + anomaly score |
-| GET/POST | `/future-risk/<upi_id>` | 7-day fraud risk forecast with DOW multipliers |
+|---|---|---|
+| POST | `/predict` | Score a single transaction — returns probability 0–1 and risk label |
+| POST | `/check-single` | Single transaction check with per-feature breakdown |
+| POST | `/batch-check` | Score a batch of transactions from a JSON array |
+| POST | `/upload` | Upload CSV dataset for analysis |
+| POST | `/detect` | Run full detection pipeline on uploaded dataset |
+| GET | `/health` | Server health check and model load status |
 
-### Week 12–14 Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/financial-story` | Generate 5-chapter narrative financial chronicle |
-| POST | `/budget-predict` | Velocity-based budget exhaustion forecast |
-| POST | `/explain-transaction` | SHAP-style forensic attribution for one transaction |
+### Explainability & Insights
 
-### Week 15–17 Endpoints
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/fraud-ring-analysis` | Union-Find fraud cluster detection on transaction graph |
-| POST | `/financial-health` | Compute 0–850 composite financial health score |
-| POST | `/prepayment-check` | Pre-send risk gate with Levenshtein spoof detection |
+|---|---|---|
+| GET | `/explain/<idx>` | SHAP-style explanation for result at index `idx` |
+| POST | `/bulk-explain` | Batch SHAP explanations for all flagged transactions |
+| POST | `/counterfactual` | What-if: minimum changes to flip the fraud decision |
+| POST | `/risk-profile` | Composite risk profile for a UPI ID |
+| GET | `/feature-importance` | Ranked feature importance scores from trained model |
+| GET | `/ai-summary` | Claude AI narrative summary of uploaded dataset |
+| POST | `/explain-transaction` | Per-transaction AI narrative explanation |
+
+### Data & Exploration
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/explore` | Dataset statistics, distributions, and class balance |
+| GET | `/results` | Paginated detection results |
+| GET | `/features` | List of active feature names |
+| POST | `/similarity-search` | Find top-N most similar transactions to a given one |
+| GET | `/smart-threshold` | Adaptive fraud threshold based on recent data distribution |
+
+### Fraud Analytics
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/fraud-trends` | Time-series fraud rate over the last 30 days |
+| GET | `/fraud-calendar` | Fraud event counts grouped by calendar date |
+| GET | `/network-analysis` | Transaction network graph (nodes + edges as JSON) |
+| GET | `/cluster-analysis` | Fraud cluster groupings |
+| GET | `/live-fraud-feed` | SSE stream of real-time fraud events |
+| POST | `/fraud-ring-analysis` | Union-Find clustering for connected account groups |
+| POST | `/fraud-forecast` | Short-term fraud probability forecast |
+
+### Fraud Detection Variants
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/velocity-check` | Rapid-fire transaction velocity detection |
+| POST | `/amount-pattern` | Unusual amount pattern detection |
+| POST | `/account-takeover` | Account compromise indicator scoring |
+| POST | `/recipient-trust` | Per-recipient risk score |
+| POST | `/spending-pattern` | Behavioral spending anomaly detection |
+| POST | `/transaction-purpose` | Transaction context and purpose analysis |
+| POST | `/geo-velocity` | Geographic velocity fraud detection |
+| POST | `/device-risk` | Device fingerprint risk assessment |
+| POST | `/prepayment-check` | Pre-payment UPI spoofing check (Levenshtein) |
+| POST | `/dark-pattern-check` | UX dark pattern detection in payment flows |
+
+### Advanced Scoring
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/risk-score-blend` | Multi-factor weighted composite risk score |
+| POST | `/financial-health` | 6-dimension financial health composite (300–850 scale) |
+| POST | `/spending-dna` | 8-dimension behavioral radar profile |
+| GET/POST | `/future-risk/<upi_id>` | 7-day fraud probability forecast for a UPI ID |
+| POST | `/payment-health` | Payment success/failure health score |
+| GET | `/community-score/<upi_id>` | Crowd-sourced community trust score |
+| GET | `/score-history` | Historical risk score snapshots for a user |
+
+### Financial Products
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/budget-predict` | ML budget burn-rate forecast |
+| POST | `/emi/calculate` | EMI computation with amortization schedule |
+| POST | `/savings-goals/projection` | Savings goal timeline and contribution projection |
+| POST | `/split-bill/calculate` | Split bill calculation (equal or custom) |
+| POST | `/recurring-payments/next-dates` | Next scheduled payment dates |
+
+### Payment Infrastructure
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/razorpay/create-order` | Create Razorpay payment order |
+| POST | `/razorpay/verify-payment` | Verify Razorpay payment signature |
+| GET | `/razorpay/payment-status/<id>` | Get payment status by ID |
+| POST | `/razorpay/webhook` | Handle Razorpay webhook events |
+| POST | `/phone-pay/check` | Phone Pay UPI ID validation |
+| GET | `/phone-pay/history` | Phone Pay transaction history |
+| POST | `/api/card/bin` | Card BIN lookup and issuer identification |
+| POST | `/api/otp/send` | OTP generation and dispatch |
+| POST | `/api/otp/verify` | OTP verification |
+| POST | `/api/mobile/discover-banks` | Mobile-linked bank account discovery |
+| POST | `/api/vpa/lookup` | UPI VPA validation and holder lookup |
+| POST | `/api/account/link` | Bank account linking via UPI |
+
+### AI & Behavioral
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/voice-parse` | Parse voice command to structured payment intent |
+| POST | `/spending-coach` | Claude AI personalized spending advice |
+| POST | `/financial-story` | Claude AI financial narrative (typewriter-animated on frontend) |
+| POST | `/spending-dna` | 8-dimension behavioral spending profile |
+| POST | `/contact-trust` | Per-contact risk score |
+| POST | `/biometric-verify` | Biometric auth verification |
+| POST | `/phone-lookup` | Phone number to UPI ID resolution |
+
+### User & Account Management
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/watchlist` | Get watchlisted accounts for the user |
+| POST | `/disputes` | Raise a transaction dispute |
+| GET | `/disputes/<id>` | Get dispute details and status timeline |
+| POST | `/feedback` | Submit user feedback |
+| GET | `/feedback-stats` | Aggregated feedback statistics |
+| GET | `/notifications` | User notification list |
+| POST | `/transaction-limits/validate` | Validate a transaction against user-configured limits |
+| POST | `/rule-engine` | Evaluate a custom rule set against a transaction |
+| POST | `/export-results` | Export detection results as CSV or PDF |
+
+### Model Monitoring
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/model-comparison` | Accuracy, precision, recall, F1, AUC across all models |
+| GET | `/dataset-drift` | Statistical drift analysis vs. training data baseline |
+| POST | `/retraining-readiness` | Assess whether model performance has degraded enough to retrain |
 
 ---
 
-## Firestore Collections
+## Firebase & Firestore
 
-| Collection | Key Fields |
-|-----------|-----------|
-| `users` | uid, upiId, name, email, balance |
-| `transactions` | userId, senderUPI, receiverUPI, amount, timestamp, fraudVerdict, fraudScore, category |
-| `beneficiaries` | userId, name, upiId, nickname |
-| `notifications` | userId, type, message, read, timestamp |
-| `disputes` | userId, transactionId, reason, status, createdAt |
-| `savingsGoals` | userId, name, targetAmount, currentAmount, deadline |
-| `recurringPayments` | userId, receiverUPI, amount, frequency, nextDate |
-| `watchlist` | userId, upiId, reason, addedAt, riskLevel |
-| `communityReports` | upiId, reportCount, lastReported, category |
-| `feedbackLabels` | transactionId, humanLabel, modelLabel, timestamp |
+### Collections
+
+| Collection | Purpose |
+|---|---|
+| `users` | Profile, UPI IDs, risk score, linked banks, settings |
+| `transactions` | Transaction records with fraud scores and flag status |
+| `disputes` | Dispute records with status timeline events |
+| `feedback` | User feedback and satisfaction ratings |
+| `notifications` | Real-time alert events per user |
+| `watchlist` | Manually and community-flagged UPI IDs |
+| `fraudEvents` | Platform-wide fraud event log |
+| `accountTakeovers` | Detected account compromise events |
+| `communityReports` | Crowd-sourced fraud reports with vote counts |
+| `scoreHistory` | Historical risk score snapshots per user |
+
+### Security Rules
+
+- Users can only read and write their own documents
+- Transactions are write-once from authenticated sessions
+- Disputes require auth and document ownership verification
+- Community reports require authenticated session
 
 ---
 
-## Key Algorithms
+## Design System — Neural Fraud Defense
 
-| Algorithm | Used In | Purpose |
-|-----------|---------|---------|
-| Random Forest (22 features) | Core ML backend | Fraud probability scoring |
-| Isolation Forest | Dataset drift, anomaly detection | Unsupervised outlier detection |
-| Union-Find (Disjoint Set) | Fraud Ring Detector | Cluster connected account networks |
-| Levenshtein Distance | Pre-Payment Shield | Detect UPI ID spoofing and impersonation |
-| SHAP-style Attribution | Anomaly Explainer, /explain endpoint | Explain which features drive fraud score |
-| Force-directed Spring Layout | Fraud Ring graph | Auto-layout transaction network nodes |
-| Day-of-week Risk Multipliers | Future Risk Predictor | Temporal fraud probability weighting |
-| Z-score Normalization | Budget Predictor, Pre-Payment Shield | Detect spend anomalies vs personal baseline |
+A dark-first, glassmorphism design language with JetBrains Mono for all numerical/data display.
+
+### Color Tokens
+
+| Token | Hex | Use |
+|---|---|---|
+| `--nd-bg` | `#0c1324` | Page background |
+| `--nd-surface-0` | `#070d1f` | Deepest surface (ticker bar) |
+| `--nd-surface-1` | `#151b2d` | Card base |
+| `--nd-surface-2` | `#191f31` | Elevated card |
+| `--nd-surface-3` | `#23293c` | Hover state surface |
+| `--nd-cyan` | `#4cd7f6` | Primary accent, interactive elements |
+| `--nd-violet` | `#d0bcff` | Secondary accent, gradients |
+| `--nd-emerald` | `#4edea3` | Success, safe transaction status |
+| `--nd-error` | `#ffb4ab` | Fraud alerts, danger, flagged state |
+| `--nd-on-surface` | `#dce1fb` | Primary text |
+| `--nd-on-variant` | `#bcc9cd` | Secondary text, labels |
+
+### Utility Classes
+
+```css
+.glass          /* blur(20px), 8% border — base surface cards */
+.glass-md       /* blur(28px), 10% border — elevated panels */
+.glass-elevated /* blur(32px), cyan-tinted border — modals and overlays */
+.gradient-text  /* cyan → violet → emerald diagonal gradient text */
+.label-caps     /* JetBrains Mono 11px, 0.12em tracking, uppercase */
+.glow-cyan      /* 0 0 20px rgba(76,215,246,0.15) box shadow */
+.glow-emerald   /* 0 0 20px rgba(78,222,163,0.15) box shadow */
+.feed-item      /* slide+fade animation for Neural Activity Feed entries */
+```
+
+**Typography:** Inter for UI text, JetBrains Mono for all numerical values, transaction IDs, UPI IDs, percentages, and data labels.
 
 ---
 
@@ -383,57 +449,108 @@ Dedicated sidebar section for data science and model management workflows:
 
 ```
 Intelligent-Financial-Anomaly-Detection-System/
-├── fraudAI_Frontend_React/
-│   └── src/
-│       └── components/logic/
-│           ├── firebase.js
-│           ├── SidebarContent.jsx         ← AegisAI brand + all 57 nav items
-│           ├── Dashboard.jsx
-│           │
-│           ├── ── Week 1 Core ──
-│           ├── SendMoney.jsx / QRPay.jsx / Budget.jsx
-│           ├── AIAssistant.jsx / NotificationsCenter.jsx
-│           ├── Recent.jsx / Statements.jsx / Beneficiaries.jsx
-│           │
-│           ├── ── Week 2–8 ──
-│           ├── SplitBill.jsx / RecurringPayments.jsx
-│           ├── SavingsGoals.jsx / EMICalculator.jsx
-│           ├── LiveFraudFeed.jsx / DisputeCenter.jsx
-│           ├── BiometricGuard.jsx / SpendingCoach.jsx
-│           ├── ContactTrustScore.jsx / CommunityReports.jsx
-│           ├── FraudTimeline.jsx / PaymentHealth.jsx / SecurityBadges.jsx
-│           │
-│           ├── ── Week 9–11 Innovative ──
-│           ├── VoicePayAssistant.jsx      ← Web Speech API + NLP
-│           ├── SpendingDNA.jsx            ← 8-dim RadarChart + SVG ring
-│           ├── FutureRiskPredictor.jsx    ← 7-day DOW forecast
-│           │
-│           ├── ── Week 12–14 AI Insights ──
-│           ├── AIFinancialStory.jsx       ← typewriter narrative
-│           ├── BudgetPredictor.jsx        ← velocity + exhaustion date
-│           ├── AnomalyExplainer.jsx       ← SHAP split-panel forensics
-│           │
-│           └── ── Week 15–17 Advanced ──
-│               ├── FraudRingDetector.jsx  ← Union-Find + force graph
-│               ├── FinancialHealthScore.jsx ← 0–850 credit-style score
-│               └── PrePaymentShield.jsx   ← Levenshtein spoof check
 │
-├── AI_model_server_Flask/
-│   └── app.py                            ← 50+ endpoints, RF model, all APIs
+├── fraudAI_Frontend_React/              # React 18 SPA
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── logic/                   # 72+ feature components
+│   │   │   │   ├── homepage.jsx         # Landing page + authenticated app shell
+│   │   │   │   ├── Dashboard.jsx        # Main dashboard with live stats
+│   │   │   │   ├── Header.jsx           # Top navigation bar
+│   │   │   │   ├── SidebarContent.jsx   # Navigation sidebar with all routes
+│   │   │   │   ├── firebase.js          # Firebase init + Firestore helpers
+│   │   │   │   ├── AIAssistant.jsx
+│   │   │   │   ├── AIFinancialStory.jsx
+│   │   │   │   ├── AIHub.jsx
+│   │   │   │   ├── AnomalyExplainer.jsx
+│   │   │   │   ├── BankLinking.jsx
+│   │   │   │   ├── BatchCheck.jsx
+│   │   │   │   ├── BehavioralAnalysis.jsx
+│   │   │   │   ├── Beneficiaries.jsx
+│   │   │   │   ├── BiometricGuard.jsx
+│   │   │   │   ├── BudgetPredictor.jsx
+│   │   │   │   ├── Budget.jsx
+│   │   │   │   ├── BulkExplain.jsx
+│   │   │   │   ├── CashFlowForecast.jsx
+│   │   │   │   ├── CheckTransaction.jsx
+│   │   │   │   ├── CommunityReports.jsx
+│   │   │   │   ├── ContactTrustScore.jsx
+│   │   │   │   ├── CustomRazorpayCheckout.jsx
+│   │   │   │   ├── DatasetDrift.jsx
+│   │   │   │   ├── DetectionResults.jsx
+│   │   │   │   ├── DisputeCenter.jsx
+│   │   │   │   ├── EMICalculator.jsx
+│   │   │   │   ├── ExploreData.jsx
+│   │   │   │   ├── FeatureInsights.jsx
+│   │   │   │   ├── FeedbackCenter.jsx
+│   │   │   │   ├── FinancialHealthScore.jsx
+│   │   │   │   ├── FinancialPersonality.jsx
+│   │   │   │   ├── FraudCalendar.jsx
+│   │   │   │   ├── FraudHeatmap.jsx
+│   │   │   │   ├── FraudRingDetector.jsx
+│   │   │   │   ├── FraudTimeline.jsx
+│   │   │   │   ├── FutureRiskPredictor.jsx
+│   │   │   │   ├── GhostHunter.jsx
+│   │   │   │   ├── HelpSupport.jsx
+│   │   │   │   ├── LiveFraudFeed.jsx
+│   │   │   │   ├── MLWorkflowStepper.jsx
+│   │   │   │   ├── ModelComparison.jsx
+│   │   │   │   ├── MultiGatewayCheckout.jsx
+│   │   │   │   ├── NetworkAnalysis.jsx
+│   │   │   │   ├── NotificationsCenter.jsx
+│   │   │   │   ├── PayByPhone.jsx
+│   │   │   │   ├── PaymentAuthModal.jsx
+│   │   │   │   ├── PaymentHealth.jsx
+│   │   │   │   ├── PrePaymentShield.jsx
+│   │   │   │   ├── QRPay.jsx
+│   │   │   │   ├── RazorpayCheckout.jsx
+│   │   │   │   ├── Recent.jsx
+│   │   │   │   ├── RecurringPayments.jsx
+│   │   │   │   ├── RequestMoney.jsx
+│   │   │   │   ├── RetrainingReadiness.jsx
+│   │   │   │   ├── RiskProfile.jsx
+│   │   │   │   ├── RiskScoreBlend.jsx
+│   │   │   │   ├── RuleEngine.jsx
+│   │   │   │   ├── RunDetection.jsx
+│   │   │   │   ├── SavingsGoals.jsx
+│   │   │   │   ├── ScoreHistory.jsx
+│   │   │   │   ├── SecurityBadges.jsx
+│   │   │   │   ├── Settings.jsx
+│   │   │   │   ├── SpendingCoach.jsx
+│   │   │   │   ├── SpendingDNA.jsx
+│   │   │   │   ├── SplitBill.jsx
+│   │   │   │   ├── Statements.jsx
+│   │   │   │   ├── TransactionSimulation.jsx
+│   │   │   │   ├── UploadData.jsx
+│   │   │   │   ├── VoicePayAssistant.jsx
+│   │   │   │   └── Watchlist.jsx
+│   │   │   └── ui/                      # shadcn/ui + Radix UI components
+│   │   ├── hooks/                        # Custom React hooks
+│   │   ├── lib/                          # Utility functions (cn, formatters)
+│   │   ├── assets/                       # Images and static files
+│   │   ├── App.jsx                       # Route definitions
+│   │   ├── main.jsx                      # React entry point
+│   │   └── index.css                     # Neural Fraud Defense design system CSS
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   └── .env
 │
-├── SystemDesignDiagrams/
-│   ├── ARCHITECTURE.md
-│   ├── SEQUENCE_DIAGRAMS.md
-│   ├── DATA_FLOW.md
-│   ├── COMPONENT_MAP.md
-│   └── _render/
-│       ├── 01_SystemArchitecture.png
-│       ├── 02_FraudDecisionFlow.png
-│       ├── 03_MLPipeline.png
-│       ├── 04_PaymentSequence.png
-│       ├── 05_BiometricSequence.png
-│       └── 06_ComponentMap.png
+├── AI_model_server_Flask/               # Python Flask ML server
+│   ├── app.py                           # 6,700+ line main application
+│   ├── requirements.txt                 # Python dependencies
+│   ├── static/                          # Built React SPA output (Vite build target)
+│   └── .env
 │
+├── AI_model_Py_Scripts/                 # Data science notebooks
+│   ├── DataSetGeneratorUSingNumpy.ipynb # NumPy-based fraud dataset generation
+│   ├── FraudDetectionUSingGAN.ipynb     # GAN-based synthetic fraud data
+│   └── fraud_dataset_Generator_using_numpy.csv  # 3.5 MB labeled dataset
+│
+├── SystemDesignDiagrams/                # Architecture diagrams (Mermaid → PNG)
+├── firebase.json                        # Firebase Hosting + Functions config
+├── firestore.rules                      # Firestore security rules
+├── seed-fraud-users.mjs                 # Database seed script for test accounts
 └── README.md
 ```
 
@@ -441,119 +558,111 @@ Intelligent-Financial-Anomaly-Detection-System/
 
 ## Getting Started
 
-### Frontend
+### Prerequisites
+
+- Node.js 18+
+- Python 3.9+
+- Firebase project with Firestore and Google Auth enabled
+- Razorpay account (for payment features)
+- Anthropic API key (for AI narrative and spending coach features)
+
+### 1. Clone
+
+```bash
+git clone https://github.com/balreddy-fullstack-developer/Intelligent-Financial-Anomaly-Detection-System.git
+cd Intelligent-Financial-Anomaly-Detection-System
+```
+
+### 2. Start the Flask ML Server
+
+```bash
+cd AI_model_server_Flask
+pip install -r requirements.txt
+python app.py
+```
+
+Server starts on `http://localhost:5000`.  
+Swagger API docs available at `http://localhost:5000/apidocs`.
+
+### 3. Start the React Frontend
 
 ```bash
 cd fraudAI_Frontend_React
 npm install
 npm run dev
-# → http://localhost:5173
 ```
 
-### Backend (Flask)
+App starts on `http://localhost:5173`.
+
+### 4. Build for Production
 
 ```bash
-cd AI_model_server_Flask
-pip install flask flask-cors scikit-learn pandas numpy
-python app.py
-# → http://127.0.0.1:5000
-```
-
-### Firebase Setup
-
-Create `src/components/logic/firebase.js` with your Firebase project config:
-
-```js
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
-};
-
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+cd fraudAI_Frontend_React
+npm run build
+# Output goes to ../AI_model_server_Flask/static/
+# Flask serves the React SPA directly in production
 ```
 
 ---
 
-## Brand
+## Environment Variables
 
-**AegisAI** — named after the aegis (the divine shield), representing AI-powered financial protection for every transaction.
+### React Frontend — `fraudAI_Frontend_React/.env`
 
-- Logo: Hexagonal neural node SVG with cyan→violet gradient + live pulse badge
-- Tagline: *Neural Fraud Defense*
-- Sidebar: AegisAI wordmark with "AI Engine Live" real-time status indicator
+```env
+VITE_API_URL=http://localhost:5000
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_RAZORPAY_KEY_ID=rzp_test_xxxxxxxx
+```
 
----
+### Flask Server — `AI_model_server_Flask/.env`
 
-*Built with React 18 · Firebase · Python Flask · Random Forest · Framer Motion · Recharts*
-
----
-
-![Fraud Decision Flow](SystemDesignDiagrams/02_FraudDecisionFlow.png)
-*Fraud Decision Flow — from UPI entry to payment confirmation*
-
----
-
-![ML Pipeline](SystemDesignDiagrams/03_MLPipeline.png)
-*ML Pipeline — GAN data generation → training → ensemble inference → explainability*
-
----
-
-![Payment Sequence](SystemDesignDiagrams/04_PaymentSequence.png)
-*Payment Sequence — real-time fraud check with blocklist + Flask API*
+```env
+FLASK_SECRET_KEY=your_secret_key
+FIREBASE_SERVICE_ACCOUNT_JSON=path/to/serviceAccount.json
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxx
+RAZORPAY_KEY_SECRET=your_razorpay_secret
+ANTHROPIC_API_KEY=sk-ant-xxxxxxxx
+```
 
 ---
 
-![Biometric Auth Sequence](SystemDesignDiagrams/05_BiometricSequence.png)
-*Biometric Auth — WebAuthn fingerprint · Pattern lock · PIN flows*
+## Data Science
 
----
+### Dataset Generation
 
-![Component Map](SystemDesignDiagrams/06_ComponentMap.png)
-*Frontend Component Map — all 54 React components across Week 1–8*
+Two approaches in `AI_model_Py_Scripts/`:
 
----
+**NumPy rule-based** (`DataSetGeneratorUSingNumpy.ipynb`) — Generates labeled fraud/non-fraud records using statistical distributions and injected fraud patterns. Outputs a 3.5 MB CSV with the 22-feature schema.
 
-## Security Model
+**GAN-based** (`FraudDetectionUSingGAN.ipynb`) — TensorFlow GAN trained on seed fraud patterns to generate realistic synthetic fraudulent transactions that are harder to detect and more varied than rule-based generation.
 
-| Layer | Mechanism |
-|---|---|
-| **Network** | Firebase Auth JWT on every Firestore request |
-| **Database** | Per-collection Firestore rules — users can only read/write their own data |
-| **Payment** | Known fraud UPI blocklist (40+ IDs) + ensemble ML scoring |
-| **Auth** | WebAuthn (biometric) or Pattern Lock before every payment confirmation |
-| **Scam Detection** | 8-pattern dark pattern scanner on payment remarks |
-| **Velocity** | Cooling-off period enforcement between repeat payments |
-| **Community** | Crowd-sourced fraud reporting with corroboration voting |
+### Model Training Pipeline
 
----
-
-## UI Snapshots
-
-![System Architecture](SystemDesignDiagrams/SystemDesign.png)
-*System Architecture Diagram*
-
-![AI Model Pipeline](SystemDesignDiagrams/AIMODEL_VISUAL.png)
-*AI Model Pipeline Visual*
-
-![Workflow Diagram](SystemDesignDiagrams/WorkFlowDiagram.png)
-*End-to-End Data Flow*
+1. Load and validate CSV against 22-feature schema
+2. SMOTE oversampling or class-weight balancing for imbalanced classes
+3. 5-fold stratified cross-validation
+4. GridSearchCV hyperparameter tuning (n_estimators, max_depth, min_samples_split)
+5. Feature importance extraction → populates Feature Insights UI
+6. Model serialized to `.pkl` and loaded by Flask on startup
 
 ---
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License — see `LICENSE` for details.
 
 ---
 
-*Built with ❤️ for the DigiPay Pro NPCI Competition — Team 2026*
+<div align="center">
+
+Built by **balreddy-fullstack-developer**
+
+**AegisAI** — Defending finances with intelligence
+
+</div>

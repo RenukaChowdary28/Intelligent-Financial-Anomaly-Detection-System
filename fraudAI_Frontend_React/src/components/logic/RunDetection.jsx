@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
@@ -30,7 +30,7 @@ const PRESETS = [
     key: "balanced",
     label: "Balanced",
     icon: Target,
-    color: "text-blue-400",
+    color: "text-cyan-400",
     border: "border-blue-500/40",
     bg: "bg-blue-500/10",
     desc: "Good precision/recall trade-off",
@@ -65,13 +65,13 @@ function Slider({ label, min, max, step, value, onChange, format }) {
   return (
     <div className="space-y-1">
       <div className="flex justify-between text-sm">
-        <span className="text-gray-400">{label}</span>
-        <span className="text-blue-400 font-mono">{format ? format(value) : value}</span>
+        <span className="text-slate-400">{label}</span>
+        <span className="text-cyan-400 font-mono">{format ? format(value) : value}</span>
       </div>
       <input type="range" min={min} max={max} step={step} value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-2 rounded-full appearance-none bg-gray-700 accent-blue-500" />
-      <div className="flex justify-between text-xs text-gray-600">
+        className="w-full h-2 rounded-full appearance-none bg-white/[0.07] accent-blue-500" />
+      <div className="flex justify-between text-xs text-slate-600">
         <span>{min}</span><span>{max}</span>
       </div>
     </div>
@@ -143,8 +143,8 @@ export default function RunDetection() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
@@ -152,7 +152,7 @@ export default function RunDetection() {
         <div className="p-6 max-w-3xl mx-auto">
           <MLWorkflowStepper />
           <motion.h1 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold text-blue-400 mb-6">
+            className="text-2xl font-bold text-cyan-400 mb-6">
             Run Anomaly Detection
           </motion.h1>
 
@@ -170,9 +170,9 @@ export default function RunDetection() {
           )}
 
           {/* AI Preset Configurations */}
-          <Card className="bg-gray-800 border-gray-700 mb-4">
+          <Card className="bg-slate-900/80 border-white/[0.07] mb-4">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base text-blue-400 flex items-center gap-2">
+              <CardTitle className="text-base text-cyan-400 flex items-center gap-2">
                 <Brain className="h-4 w-4" /> AI Preset Configurations
               </CardTitle>
             </CardHeader>
@@ -186,12 +186,12 @@ export default function RunDetection() {
                       key={preset.key}
                       onClick={() => applyPreset(preset)}
                       className={`p-3 rounded-lg border text-left transition-all ${
-                        isActive ? `${preset.border} ${preset.bg}` : "border-gray-700 hover:border-gray-600"
+                        isActive ? `${preset.border} ${preset.bg}` : "border-white/[0.07] hover:border-white/[0.09]"
                       }`}
                     >
-                      <Icon className={`h-4 w-4 mb-1 ${isActive ? preset.color : "text-gray-500"}`} />
-                      <p className={`text-xs font-semibold ${isActive ? preset.color : "text-gray-400"}`}>{preset.label}</p>
-                      <p className="text-xs text-gray-500 mt-0.5 leading-tight">{preset.desc}</p>
+                      <Icon className={`h-4 w-4 mb-1 ${isActive ? preset.color : "text-slate-500"}`} />
+                      <p className={`text-xs font-semibold ${isActive ? preset.color : "text-slate-400"}`}>{preset.label}</p>
+                      <p className="text-xs text-slate-500 mt-0.5 leading-tight">{preset.desc}</p>
                     </button>
                   );
                 })}
@@ -200,9 +200,9 @@ export default function RunDetection() {
           </Card>
 
           {/* Model selection */}
-          <Card className="bg-gray-800 border-gray-700 mb-4">
+          <Card className="bg-slate-900/80 border-white/[0.07] mb-4">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base text-gray-300">Select Models</CardTitle>
+              <CardTitle className="text-base text-slate-300">Select Models</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {[
@@ -223,7 +223,7 @@ export default function RunDetection() {
               ].map((m) => (
                 <label key={m.key}
                   className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
-                    models[m.key] ? "border-blue-500 bg-blue-500/10" : "border-gray-700 hover:border-gray-600"
+                    models[m.key] ? "border-blue-500 bg-blue-500/10" : "border-white/[0.07] hover:border-white/[0.09]"
                   }`}>
                   <input type="checkbox" checked={models[m.key]}
                     onChange={(e) => setModels((prev) => ({ ...prev, [m.key]: e.target.checked }))}
@@ -233,7 +233,7 @@ export default function RunDetection() {
                       <p className="font-medium text-sm text-white">{m.label}</p>
                       <span className={`text-xs px-1.5 py-0.5 rounded-full ${m.badgeColor}`}>{m.badge}</span>
                     </div>
-                    <p className="text-xs text-gray-400 mt-0.5">{m.desc}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{m.desc}</p>
                   </div>
                 </label>
               ))}
@@ -244,21 +244,21 @@ export default function RunDetection() {
           <AnimatePresence>
             {models.isolation_forest && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                <Card className="bg-gray-800 border-gray-700 mb-4">
+                <Card className="bg-slate-900/80 border-white/[0.07] mb-4">
                   <CardHeader className="pb-3">
-                    <CardTitle className="text-base text-blue-400 flex items-center gap-2">
+                    <CardTitle className="text-base text-cyan-400 flex items-center gap-2">
                       <Settings className="h-4 w-4" /> Isolation Forest Parameters
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-5">
                     <Slider label="Contamination (expected fraud %)" min={0.01} max={0.5} step={0.01}
                       value={ifContamination} onChange={setIfContamination} format={(v) => `${(v * 100).toFixed(0)}%`} />
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-slate-500">
                       💡 Set this close to your actual fraud rate. Too high → more false positives. Too low → misses fraud.
                     </p>
                     <Slider label="Number of Estimators (trees)" min={10} max={300} step={10}
                       value={ifEstimators} onChange={setIfEstimators} />
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-slate-500">
                       💡 More trees = better accuracy but slower. 100 is usually optimal.
                     </p>
                   </CardContent>
@@ -271,7 +271,7 @@ export default function RunDetection() {
           <AnimatePresence>
             {models.autoencoder && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                <Card className="bg-gray-800 border-gray-700 mb-4">
+                <Card className="bg-slate-900/80 border-white/[0.07] mb-4">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-base text-purple-400 flex items-center gap-2">
                       <Settings className="h-4 w-4" /> Autoencoder Parameters
@@ -279,12 +279,12 @@ export default function RunDetection() {
                   </CardHeader>
                   <CardContent className="space-y-5">
                     <Slider label="Training Epochs" min={5} max={100} step={5} value={aeEpochs} onChange={setAeEpochs} />
-                    <p className="text-xs text-gray-500">💡 More epochs = better model, longer training. 30 epochs is a good starting point.</p>
+                    <p className="text-xs text-slate-500">💡 More epochs = better model, longer training. 30 epochs is a good starting point.</p>
                     <Slider label="Encoding Dimension (bottleneck size)" min={2} max={32} step={2} value={aeEncDim} onChange={setAeEncDim} />
-                    <p className="text-xs text-gray-500">💡 Smaller = forces more compression. Start with 8; increase if reconstruction error is too high.</p>
+                    <p className="text-xs text-slate-500">💡 Smaller = forces more compression. Start with 8; increase if reconstruction error is too high.</p>
                     <Slider label="Anomaly Threshold Percentile" min={80} max={99} step={1}
                       value={aeThresholdPct} onChange={setAeThresholdPct} format={(v) => `${v}th`} />
-                    <p className="text-xs text-gray-500">💡 95th means top 5% of errors are flagged. Raise to reduce false positives.</p>
+                    <p className="text-xs text-slate-500">💡 95th means top 5% of errors are flagged. Raise to reduce false positives.</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -302,10 +302,10 @@ export default function RunDetection() {
             {done && narrative && (
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                 className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 mb-4 flex items-start gap-3">
-                <Brain className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <Brain className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-xs font-semibold text-blue-400 mb-1">AI Detection Summary</p>
-                  <p className="text-sm text-gray-300">{narrative}</p>
+                  <p className="text-xs font-semibold text-cyan-400 mb-1">AI Detection Summary</p>
+                  <p className="text-sm text-slate-300">{narrative}</p>
                 </div>
               </motion.div>
             )}
@@ -336,7 +336,7 @@ export default function RunDetection() {
             )}
           </Button>
 
-          <div className="flex justify-between text-xs text-gray-600 mt-2 px-1">
+          <div className="flex justify-between text-xs text-slate-600 mt-2 px-1">
             <span>Isolation Forest: ~seconds</span>
             <span>Autoencoder: ~30s–2min</span>
           </div>

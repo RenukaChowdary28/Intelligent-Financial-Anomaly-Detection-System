@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+﻿import { useEffect, useState, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, where, limit, doc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Network, AlertTriangle, Shield, ZoomIn, ZoomOut, RefreshCw,
-  Info, Users, TrendingUp, Eye, ChevronRight, Crosshair, Layers,
+  Network, AlertTriangle, ZoomIn, ZoomOut, RefreshCw,
+  Users, TrendingUp, Eye, ChevronRight, Crosshair, Layers, ArrowLeft,
 } from 'lucide-react';
 
 /* ── Union-Find for cluster detection ──────────────────── */
@@ -251,6 +252,7 @@ function GraphCanvas({ nodes, edges, positions, onNodeClick, selectedNode, scale
    MAIN COMPONENT
 ═══════════════════════════════════════════════════════════ */
 export default function FraudRingDetector() {
+  const navigate = useNavigate();
   const [txs, setTxs]               = useState([]);
   const [graph, setGraph]           = useState(null);
   const [selfUpi, setSelfUpi]       = useState('');
@@ -310,7 +312,7 @@ export default function FraudRingDetector() {
   const totalEdges     = graph?.edges.length || 0;
 
   if (loading) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <motion.div className="text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <motion.div className="w-16 h-16 mx-auto mb-4 rounded-full border-4 border-red-500/30 border-t-red-500"
           animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }} />
@@ -325,6 +327,9 @@ export default function FraudRingDetector() {
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between">
         <div className="flex items-center gap-3">
+          <button onClick={() => navigate(-1)} className="w-8 h-8 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all flex-shrink-0">
+            <ArrowLeft className="h-4 w-4" />
+          </button>
           <div className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center">
             <Network className="h-5 w-5 text-red-400" />
           </div>
@@ -343,7 +348,7 @@ export default function FraudRingDetector() {
       {/* Stats row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Network Nodes',    value: totalNodes,     icon: Users,      color: 'text-blue-400' },
+          { label: 'Network Nodes',    value: totalNodes,     icon: Users,      color: 'text-cyan-400' },
           { label: 'Transactions',     value: totalEdges,     icon: TrendingUp, color: 'text-violet-400' },
           { label: 'High-Risk Nodes',  value: highRiskNodes,  icon: AlertTriangle, color: 'text-red-400' },
           { label: 'Fraud Rings',      value: fraudRingCount, icon: Crosshair,  color: fraudRingCount > 0 ? 'text-red-400' : 'text-emerald-400' },

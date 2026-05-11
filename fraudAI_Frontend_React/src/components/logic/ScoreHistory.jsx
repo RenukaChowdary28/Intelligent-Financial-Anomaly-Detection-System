@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import axios from "axios";
@@ -66,24 +66,24 @@ export default function ScoreHistory() {
   })();
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 overflow-y-auto">
         <Header user={user} />
         <div className="p-6 max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-2xl font-bold text-blue-400 mb-1 flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-cyan-400 mb-1 flex items-center gap-2">
               <History className="h-6 w-6" /> Score History
             </h1>
-            <p className="text-gray-400 text-sm mb-6">Historical fraud scores from all checked transactions.</p>
+            <p className="text-slate-400 text-sm mb-6">Historical fraud scores from all checked transactions.</p>
           </motion.div>
 
           {loading && (
             <div className="flex items-center justify-center py-20">
               <div className="h-8 w-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mr-3" />
-              <span className="text-gray-400">Loading score history…</span>
+              <span className="text-slate-400">Loading score history…</span>
             </div>
           )}
 
@@ -100,15 +100,15 @@ export default function ScoreHistory() {
               {summary && (
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                   {[
-                    { label: "Total Scored", value: summary.total_scored, color: "text-blue-400" },
+                    { label: "Total Scored", value: summary.total_scored, color: "text-cyan-400" },
                     { label: "Fraud", value: summary.fraud_count, color: "text-red-400" },
                     { label: "Legitimate", value: summary.legitimate_count, color: "text-green-400" },
                     { label: "High Risk", value: summary.high_risk_count, color: "text-yellow-400" },
-                    { label: "Fraud Rate", value: `${summary.fraud_rate_pct?.toFixed(1)}%`, color: summary.fraud_rate_pct > 30 ? "text-red-400" : "text-blue-400" },
+                    { label: "Fraud Rate", value: `${summary.fraud_rate_pct?.toFixed(1)}%`, color: summary.fraud_rate_pct > 30 ? "text-red-400" : "text-cyan-400" },
                   ].map((s) => (
-                    <Card key={s.label} className="bg-gray-800 border-gray-700">
+                    <Card key={s.label} className="bg-slate-900/80 border-white/[0.07]">
                       <CardContent className="pt-4 pb-3">
-                        <p className="text-xs text-gray-400">{s.label}</p>
+                        <p className="text-xs text-slate-400">{s.label}</p>
                         <p className={`text-xl font-bold ${s.color}`}>{s.value}</p>
                       </CardContent>
                     </Card>
@@ -118,9 +118,9 @@ export default function ScoreHistory() {
 
               {/* Trend chart */}
               {chartData.length > 1 && (
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm text-gray-300">Score Trend (current page)</CardTitle>
+                    <CardTitle className="text-sm text-slate-300">Score Trend (current page)</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ResponsiveContainer width="100%" height={180}>
@@ -139,43 +139,43 @@ export default function ScoreHistory() {
 
               {/* Filters */}
               <div className="flex flex-wrap items-center gap-2">
-                <Filter className="h-4 w-4 text-gray-400" />
-                <span className="text-xs text-gray-400">Filter:</span>
+                <Filter className="h-4 w-4 text-slate-400" />
+                <span className="text-xs text-slate-400">Filter:</span>
                 {["FRAUD", "LEGITIMATE"].map((v) => (
                   <button key={v} onClick={() => handleFilter("verdict", v)}
                     className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-                      filterVerdict === v ? "bg-blue-600 border-blue-500 text-white" : "border-gray-600 text-gray-400 hover:border-gray-400"
+                      filterVerdict === v ? "bg-blue-600 border-blue-500 text-white" : "border-white/[0.09] text-slate-400 hover:border-gray-400"
                     }`}>{v}</button>
                 ))}
                 {["HIGH", "MEDIUM", "LOW"].map((r) => (
                   <button key={r} onClick={() => handleFilter("risk", r)}
                     className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-                      filterRisk === r ? "bg-blue-600 border-blue-500 text-white" : "border-gray-600 text-gray-400 hover:border-gray-400"
+                      filterRisk === r ? "bg-blue-600 border-blue-500 text-white" : "border-white/[0.09] text-slate-400 hover:border-gray-400"
                     }`}>{r}</button>
                 ))}
                 {(filterVerdict || filterRisk) && (
                   <button onClick={() => { setFilterVerdict(""); setFilterRisk(""); setPage(1); }}
-                    className="text-xs px-3 py-1 rounded-full border border-gray-600 text-gray-400 hover:text-white">
+                    className="text-xs px-3 py-1 rounded-full border border-white/[0.09] text-slate-400 hover:text-white">
                     Clear
                   </button>
                 )}
               </div>
 
               {/* History table */}
-              <Card className="bg-gray-800 border-gray-700">
+              <Card className="bg-slate-900/80 border-white/[0.07]">
                 <CardContent className="pt-4">
                   {history.length === 0 ? (
-                    <p className="text-gray-500 text-sm text-center py-8">No records match the current filters.</p>
+                    <p className="text-slate-500 text-sm text-center py-8">No records match the current filters.</p>
                   ) : (
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
                         <thead>
-                          <tr className="border-b border-gray-700">
-                            <th className="text-left text-gray-400 py-2 pr-4">Time</th>
-                            <th className="text-left text-gray-400 py-2 px-4">Verdict</th>
-                            <th className="text-right text-gray-400 py-2 px-4">Probability</th>
-                            <th className="text-right text-gray-400 py-2 px-4">Risk</th>
-                            <th className="text-left text-gray-400 py-2 px-4">Source</th>
+                          <tr className="border-b border-white/[0.07]">
+                            <th className="text-left text-slate-400 py-2 pr-4">Time</th>
+                            <th className="text-left text-slate-400 py-2 px-4">Verdict</th>
+                            <th className="text-right text-slate-400 py-2 px-4">Probability</th>
+                            <th className="text-right text-slate-400 py-2 px-4">Risk</th>
+                            <th className="text-left text-slate-400 py-2 px-4">Source</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -183,8 +183,8 @@ export default function ScoreHistory() {
                             const VIcon = VERDICT_ICON[h.verdict] || ShieldCheck;
                             return (
                               <motion.tr key={h.id || i} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                                transition={{ delay: i * 0.02 }} className="border-b border-gray-700/50 hover:bg-gray-700/30">
-                                <td className="py-2 pr-4 text-gray-400 font-mono text-xs">
+                                transition={{ delay: i * 0.02 }} className="border-b border-white/[0.07]/50 hover:bg-white/[0.07]/30">
+                                <td className="py-2 pr-4 text-slate-400 font-mono text-xs">
                                   {h.timestamp ? new Date(h.timestamp).toLocaleString() : "—"}
                                 </td>
                                 <td className="py-2 px-4">
@@ -198,7 +198,7 @@ export default function ScoreHistory() {
                                     {h.risk_level}
                                   </span>
                                 </td>
-                                <td className="py-2 px-4 text-gray-500 text-xs">{h.source || "—"}</td>
+                                <td className="py-2 px-4 text-slate-500 text-xs">{h.source || "—"}</td>
                               </motion.tr>
                             );
                           })}
@@ -212,18 +212,18 @@ export default function ScoreHistory() {
               {/* Pagination */}
               {pagination && pagination.pages > 1 && (
                 <div className="flex items-center justify-between">
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-slate-400">
                     Page {pagination.page} of {pagination.pages} ({pagination.total} total)
                   </p>
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm" disabled={page <= 1}
                       onClick={() => setPage(p => p - 1)}
-                      className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                      className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07]">
                       <ChevronLeft className="h-4 w-4" /> Prev
                     </Button>
                     <Button variant="outline" size="sm" disabled={page >= pagination.pages}
                       onClick={() => setPage(p => p + 1)}
-                      className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                      className="border-white/[0.09] text-slate-300 hover:bg-white/[0.07]">
                       Next <ChevronRight className="h-4 w-4" />
                     </Button>
                   </div>

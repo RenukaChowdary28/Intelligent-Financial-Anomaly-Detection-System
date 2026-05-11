@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import {
@@ -26,7 +26,7 @@ const REASONS = [
 ];
 
 const STATUS_CONFIG = {
-  SUBMITTED:    { label: "Submitted",    color: "text-blue-400",   bg: "bg-blue-500/10 border-blue-500/30",    icon: Clock         },
+  SUBMITTED:    { label: "Submitted",    color: "text-cyan-400",   bg: "bg-blue-500/10 border-blue-500/30",    icon: Clock         },
   UNDER_REVIEW: { label: "Under Review", color: "text-yellow-400", bg: "bg-yellow-500/10 border-yellow-500/30", icon: Search        },
   RESOLVED:     { label: "Resolved",     color: "text-green-400",  bg: "bg-green-500/10 border-green-500/30",   icon: CheckCircle2  },
   REJECTED:     { label: "Rejected",     color: "text-red-400",    bg: "bg-red-500/10 border-red-500/30",       icon: XCircle       },
@@ -47,7 +47,7 @@ function DisputeCard({ dispute }) {
   const Icon = cfg.icon;
 
   return (
-    <Card className="bg-gray-800/60 border-gray-700">
+    <Card className="bg-gray-800/60 border-white/[0.07]">
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3" onClick={() => setExpanded(p => !p)} style={{ cursor: "pointer" }}>
           <div className="flex-1 min-w-0">
@@ -55,41 +55,41 @@ function DisputeCard({ dispute }) {
               <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border flex items-center gap-1 ${cfg.bg} ${cfg.color}`}>
                 <Icon className="h-3 w-3" /> {cfg.label}
               </span>
-              <span className="text-xs text-gray-500 font-mono">#{dispute.caseNumber}</span>
-              <span className="text-xs text-gray-500">{timeAgo(dispute.createdAt)}</span>
+              <span className="text-xs text-slate-500 font-mono">#{dispute.caseNumber}</span>
+              <span className="text-xs text-slate-500">{timeAgo(dispute.createdAt)}</span>
             </div>
             <p className="text-sm font-semibold text-white mt-1.5">
               {REASONS.find(r => r.value === dispute.reason)?.label || dispute.reason}
             </p>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-slate-400 mt-0.5">
               ₹{dispute.amount?.toLocaleString("en-IN")} · {dispute.recipientUPI || "—"}
             </p>
           </div>
-          <ChevronRight className={`h-4 w-4 text-gray-500 flex-shrink-0 transition-transform ${expanded ? "rotate-90" : ""}`} />
+          <ChevronRight className={`h-4 w-4 text-slate-500 flex-shrink-0 transition-transform ${expanded ? "rotate-90" : ""}`} />
         </div>
 
         <AnimatePresence>
           {expanded && (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-              <div className="mt-3 pt-3 border-t border-gray-700 space-y-2 text-xs">
+              <div className="mt-3 pt-3 border-t border-white/[0.07] space-y-2 text-xs">
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <p className="text-gray-500">Transaction ID</p>
-                    <p className="text-gray-300 font-mono">{dispute.transactionId || "—"}</p>
+                    <p className="text-slate-500">Transaction ID</p>
+                    <p className="text-slate-300 font-mono">{dispute.transactionId || "—"}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Estimated Resolution</p>
-                    <p className="text-gray-300">{dispute.estimatedResolution || "3-5 business days"}</p>
+                    <p className="text-slate-500">Estimated Resolution</p>
+                    <p className="text-slate-300">{dispute.estimatedResolution || "3-5 business days"}</p>
                   </div>
                 </div>
                 {dispute.description && (
                   <div>
-                    <p className="text-gray-500">Your description</p>
-                    <p className="text-gray-300 italic">"{dispute.description}"</p>
+                    <p className="text-slate-500">Your description</p>
+                    <p className="text-slate-300 italic">"{dispute.description}"</p>
                   </div>
                 )}
-                <div className="flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 px-3 py-2 rounded-lg">
+                <div className="flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 text-cyan-400 px-3 py-2 rounded-lg">
                   <Info className="h-3.5 w-3.5 flex-shrink-0" />
                   You'll receive an update via notification within 24 hours.
                 </div>
@@ -192,8 +192,8 @@ export default function DisputeCenter() {
   const pendingCount = disputes.filter(d => d.status === "SUBMITTED" || d.status === "UNDER_REVIEW").length;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
-      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-gray-800 bg-gray-900 overflow-y-auto">
+    <div className="flex min-h-screen text-white">
+      <aside className="hidden md:flex flex-col w-72 min-h-screen border-r border-white/[0.05] bg-slate-900/40 backdrop-blur-xl overflow-y-auto flex-shrink-0">
         <SidebarContent />
       </aside>
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -206,7 +206,7 @@ export default function DisputeCenter() {
               <h1 className="text-2xl font-bold flex items-center gap-2">
                 <FileWarning className="h-6 w-6 text-orange-400" /> Dispute Center
               </h1>
-              <p className="text-sm text-gray-400 mt-1">
+              <p className="text-sm text-slate-400 mt-1">
                 Report unauthorized or incorrect transactions
                 {pendingCount > 0 && <span className="ml-2 text-xs bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 px-2 py-0.5 rounded-full">{pendingCount} active</span>}
               </p>
@@ -227,7 +227,7 @@ export default function DisputeCenter() {
 
           {/* Info banner */}
           <div className="mb-5 flex items-start gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs px-3 py-2.5 rounded-lg">
-            <Shield className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-blue-400" />
+            <Shield className="h-3.5 w-3.5 flex-shrink-0 mt-0.5 text-cyan-400" />
             <span>
               AegisAI investigates all disputes within 3-5 business days. For HIGH_RISK flagged transactions,
               we prioritise review within 24 hours. You can track status below.
@@ -238,8 +238,8 @@ export default function DisputeCenter() {
           <AnimatePresence>
             {showForm && (
               <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} className="mb-6">
-                <Card className="bg-gray-800 border-gray-700">
-                  <CardHeader className="pb-3 border-b border-gray-700">
+                <Card className="bg-slate-900/80 border-white/[0.07]">
+                  <CardHeader className="pb-3 border-b border-white/[0.07]">
                     <h2 className="font-semibold text-white flex items-center gap-2">
                       <AlertTriangle className="h-4 w-4 text-orange-400" /> File a New Dispute
                     </h2>
@@ -248,19 +248,19 @@ export default function DisputeCenter() {
 
                     {/* Quick-fill from transactions */}
                     <div>
-                      <label className="text-xs text-gray-400 block mb-1">Search your recent transactions (optional)</label>
+                      <label className="text-xs text-slate-400 block mb-1">Search your recent transactions (optional)</label>
                       <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-500" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-500" />
                         <Input value={txSearch} onChange={e => setTxSearch(e.target.value)}
                           placeholder="Search by UPI, amount, or note…"
-                          className="bg-gray-700 border-gray-600 text-white h-9 pl-8 text-xs" />
+                          className="bg-white/[0.06] border-white/[0.08] text-white h-9 pl-8 text-xs" />
                       </div>
                       {filteredTx.length > 0 && (
-                        <div className="mt-1 bg-gray-700 border border-gray-600 rounded-lg overflow-hidden">
+                        <div className="mt-1 bg-white/[0.07] border border-white/[0.09] rounded-lg overflow-hidden">
                           {filteredTx.slice(0, 5).map(tx => (
                             <button key={tx.id} onClick={() => fillFromTx(tx)}
-                              className="w-full flex items-center justify-between px-3 py-2 hover:bg-gray-600 text-xs border-b border-gray-600 last:border-0">
-                              <span className="text-gray-300">{tx.recipientUPI}</span>
+                              className="w-full flex items-center justify-between px-3 py-2 hover:bg-white/[0.09] text-xs border-b border-white/[0.09] last:border-0">
+                              <span className="text-slate-300">{tx.recipientUPI}</span>
                               <span className="text-white font-medium">₹{tx.amount}</span>
                             </button>
                           ))}
@@ -270,27 +270,27 @@ export default function DisputeCenter() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Transaction Amount (₹) *</label>
+                        <label className="text-xs text-slate-400 block mb-1">Transaction Amount (₹) *</label>
                         <Input type="number" value={form.amount} onChange={e => update("amount", e.target.value)}
-                          placeholder="e.g. 5000" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. 5000" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                       <div>
-                        <label className="text-xs text-gray-400 block mb-1">Recipient UPI ID</label>
+                        <label className="text-xs text-slate-400 block mb-1">Recipient UPI ID</label>
                         <Input value={form.recipientUPI} onChange={e => update("recipientUPI", e.target.value)}
-                          placeholder="e.g. merchant@upi" className="bg-gray-700 border-gray-600 text-white h-9" />
+                          placeholder="e.g. merchant@upi" className="bg-white/[0.06] border-white/[0.08] text-white h-9" />
                       </div>
                     </div>
 
                     {/* Reason */}
                     <div>
-                      <label className="text-xs text-gray-400 block mb-2">Reason for Dispute *</label>
+                      <label className="text-xs text-slate-400 block mb-2">Reason for Dispute *</label>
                       <div className="space-y-1.5">
                         {REASONS.map(r => (
                           <label key={r.value}
                             className={`flex items-center gap-2.5 px-3 py-2 rounded-lg border cursor-pointer transition-colors ${
                               form.reason === r.value
                                 ? "border-orange-500/50 bg-orange-500/10 text-orange-300"
-                                : "border-gray-600 text-gray-400 hover:border-gray-500"
+                                : "border-white/[0.09] text-slate-400 hover:border-gray-500"
                             }`}>
                             <input type="radio" name="reason" value={r.value}
                               checked={form.reason === r.value}
@@ -303,13 +303,13 @@ export default function DisputeCenter() {
                     </div>
 
                     <div>
-                      <label className="text-xs text-gray-400 block mb-1">Additional Details (optional)</label>
+                      <label className="text-xs text-slate-400 block mb-1">Additional Details (optional)</label>
                       <textarea
                         value={form.description}
                         onChange={e => update("description", e.target.value)}
                         placeholder="Describe what happened in detail…"
                         rows={3}
-                        className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-xs resize-none focus:outline-none focus:ring-1 focus:ring-orange-500/50"
+                        className="w-full bg-white/[0.07] border border-white/[0.09] text-white rounded-lg px-3 py-2 text-xs resize-none focus:outline-none focus:ring-1 focus:ring-orange-500/50"
                       />
                     </div>
 
@@ -329,18 +329,18 @@ export default function DisputeCenter() {
           {loading ? (
             <div className="space-y-3">{[1, 2].map(i => <div key={i} className="h-20 rounded-xl bg-gray-800 animate-pulse" />)}</div>
           ) : disputes.length === 0 ? (
-            <Card className="bg-gray-800/50 border-gray-700">
+            <Card className="bg-slate-900/60 border-white/[0.06]">
               <CardContent className="flex flex-col items-center py-16 gap-3">
-                <FileWarning className="h-12 w-12 text-gray-600" />
-                <p className="text-gray-400">No disputes filed</p>
-                <p className="text-xs text-gray-600">
+                <FileWarning className="h-12 w-12 text-slate-600" />
+                <p className="text-slate-400">No disputes filed</p>
+                <p className="text-xs text-slate-600">
                   Spot a suspicious transaction? File a dispute and we'll investigate.
                 </p>
               </CardContent>
             </Card>
           ) : (
             <div className="space-y-3">
-              <p className="text-xs text-gray-500 mb-2">{disputes.length} dispute(s) total</p>
+              <p className="text-xs text-slate-500 mb-2">{disputes.length} dispute(s) total</p>
               <AnimatePresence>
                 {disputes.map(d => <DisputeCard key={d.id} dispute={d} />)}
               </AnimatePresence>
