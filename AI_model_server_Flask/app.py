@@ -11,23 +11,38 @@ import io
 import time
 from datetime import datetime
 from flask_cors import CORS
-from sklearn.ensemble import IsolationForest
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import (
-    confusion_matrix, roc_auc_score,
-    precision_score, recall_score, f1_score, roc_curve
-)
 import warnings
 warnings.filterwarnings('ignore')
+
+# Optional imports for Python 3.14+ compatibility
+try:
+    from sklearn.ensemble import IsolationForest
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.metrics import (
+        confusion_matrix, roc_auc_score,
+        precision_score, recall_score, f1_score, roc_curve
+    )
+    SKLEARN_AVAILABLE = True
+except ImportError:
+    SKLEARN_AVAILABLE = False
+    print("⚠️  scikit-learn not available (Python 3.14+ detected). ML features disabled.")
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 CORS(app)
 Swagger(app, template=SWAGGER_TEMPLATE, config=SWAGGER_CONFIG)
 
 # ── Model Loading ──────────────────────────────────────────────────────────────
-model_path = "best_rf_model (1).pkl"
-with open(model_path, "rb") as file:
-    rf_model = pickle.load(file)
+rf_model = None
+try:
+    model_path = "best_rf_model (1).pkl"
+    if os.path.exists(model_path):
+        with open(model_path, "rb") as file:
+            rf_model = pickle.load(file)
+        print("✓ Random Forest model loaded successfully")
+    else:
+        print(f"⚠️  Model file '{model_path}' not found. Using mock predictions.")
+except Exception as e:
+    print(f"⚠️  Could not load model: {e}. Using mock predictions.")
 
 SERVER_START = datetime.utcnow().isoformat() + "Z"
 
